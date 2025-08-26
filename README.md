@@ -1,6 +1,6 @@
 # DDT Application
 
-A modern web application built with React, Vite, and Express.
+A prototype for the new CDC P2P Reimagining
 
 ## Getting Started
 
