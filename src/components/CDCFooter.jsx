@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const CDCFooter = () => {
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <>
       {/* Main Footer - Dark Bar */}
@@ -21,10 +32,14 @@ const CDCFooter = () => {
             alignItems: 'flex-start',
             marginBottom: '30px',
             flexWrap: 'wrap',
-            gap: '20px'
+            gap: '20px',
+            flexDirection: isMobile ? 'column' : 'row'
           }}>
             {/* About CDC Section */}
-            <div style={{ flex: '1', minWidth: '300px' }}>
+            <div style={{ 
+              flex: '1', 
+              minWidth: isMobile ? '100%' : '300px' 
+            }}>
               <h3 style={{
                 fontSize: '18px',
                 fontWeight: 'bold',
@@ -51,7 +66,10 @@ const CDCFooter = () => {
             </div>
 
             {/* Social Media Section */}
-            <div style={{ flex: '0 0 auto' }}>
+            <div style={{ 
+              flex: '0 0 auto',
+              width: isMobile ? '100%' : 'auto'
+            }}>
               <h3 style={{
                 fontSize: '18px',
                 fontWeight: 'bold',
@@ -63,7 +81,9 @@ const CDCFooter = () => {
               <div style={{
                 display: 'flex',
                 gap: '15px',
-                alignItems: 'center'
+                alignItems: 'center',
+                justifyContent: isMobile ? 'flex-start' : 'center',
+                flexWrap: 'wrap'
               }}>
                 {/* Facebook */}
                 <a href="#" style={{
@@ -132,8 +152,10 @@ const CDCFooter = () => {
           {/* Footer Links Grid */}
           <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-            gap: '30px',
+            gridTemplateColumns: isMobile 
+              ? '1fr' 
+              : 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: isMobile ? '20px' : '30px',
             marginBottom: '30px',
             borderTop: '1px solid #34495e',
             paddingTop: '30px'

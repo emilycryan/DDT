@@ -1,6 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const CDCHeader = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768);
+      if (window.innerWidth > 768) {
+        setIsMenuOpen(false); // Close mobile menu when switching to desktop
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <>
       {/* Official US Government Banner */}
@@ -83,7 +98,8 @@ const CDCHeader = () => {
       <header style={{
         backgroundColor: '#fff',
         borderBottom: '1px solid #d6d7d9',
-        padding: '15px 0'
+        padding: '15px 0',
+        position: 'relative'
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -94,41 +110,51 @@ const CDCHeader = () => {
           justifyContent: 'space-between'
         }}>
           {/* CDC Logo and Title */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flex: '1' }}>
             <img 
               src="https://www.cdc.gov/homepage/images/cdc-logo.svg"
               alt="CDC Logo"
-              style={{ height: '40px' }}
+              style={{ height: '40px', minWidth: '40px' }}
               onError={(e) => {
                 e.target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiMwMDcxQkMiLz4KPHRleHQgeD0iMjAiIHk9IjI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIj5DREMgPC90ZXh0Pgo8L3N2Zz4K";
               }}
             />
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div style={{
-                fontSize: '24px',
+                fontSize: isMobile ? '18px' : '24px',
                 fontWeight: 'bold',
                 color: '#0071bc',
-                lineHeight: '1.2'
+                lineHeight: '1.2',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
               }}>
                 Path 2 Prevention
               </div>
               <div style={{
-                fontSize: '14px',
+                fontSize: isMobile ? '12px' : '14px',
                 color: '#666',
-                lineHeight: '1.2'
+                lineHeight: '1.2',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis'
               }}>
                 Centers for Disease Control and Prevention
               </div>
             </div>
           </div>
 
-          {/* Navigation Menu */}
-          <nav style={{ display: 'flex', gap: '30px' }}>
+          {/* Desktop Navigation Menu */}
+          <nav style={{ 
+            display: isMobile ? 'none' : 'flex', 
+            gap: '30px' 
+          }}>
             <a href="#" style={{
               color: '#0071bc',
               textDecoration: 'none',
               fontSize: '16px',
-              fontWeight: '500'
+              fontWeight: '500',
+              whiteSpace: 'nowrap'
             }}>
               What is The Path?
             </a>
@@ -136,7 +162,8 @@ const CDCHeader = () => {
               color: '#0071bc',
               textDecoration: 'none',
               fontSize: '16px',
-              fontWeight: '500'
+              fontWeight: '500',
+              whiteSpace: 'nowrap'
             }}>
               Why Does it Matter?
             </a>
@@ -144,7 +171,8 @@ const CDCHeader = () => {
               color: '#0071bc',
               textDecoration: 'none',
               fontSize: '16px',
-              fontWeight: '500'
+              fontWeight: '500',
+              whiteSpace: 'nowrap'
             }}>
               Plan My Path
             </a>
@@ -152,12 +180,96 @@ const CDCHeader = () => {
               color: '#0071bc',
               textDecoration: 'none',
               fontSize: '16px',
-              fontWeight: '500'
+              fontWeight: '500',
+              whiteSpace: 'nowrap'
             }}>
               Find a Program
             </a>
           </nav>
+
+          {/* Mobile Hamburger Menu */}
+          <button
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            style={{
+              display: isMobile ? 'block' : 'none',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: '5px',
+              marginLeft: '15px'
+            }}
+            aria-label="Toggle navigation menu"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#0071bc">
+              <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile Navigation Menu */}
+        {isMenuOpen && (
+          <div style={{
+            position: 'absolute',
+            top: '100%',
+            left: 0,
+            right: 0,
+            backgroundColor: '#fff',
+            borderBottom: '1px solid #d6d7d9',
+            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
+            zIndex: 1000,
+            display: isMobile ? 'block' : 'none'
+          }}>
+            <nav style={{
+              maxWidth: '1200px',
+              margin: '0 auto',
+              padding: '15px'
+            }}>
+              <a href="#" style={{
+                display: 'block',
+                color: '#0071bc',
+                textDecoration: 'none',
+                fontSize: '16px',
+                fontWeight: '500',
+                padding: '12px 0',
+                borderBottom: '1px solid #f1f1f1'
+              }}>
+                What is The Path?
+              </a>
+              <a href="#" style={{
+                display: 'block',
+                color: '#0071bc',
+                textDecoration: 'none',
+                fontSize: '16px',
+                fontWeight: '500',
+                padding: '12px 0',
+                borderBottom: '1px solid #f1f1f1'
+              }}>
+                Why Does it Matter?
+              </a>
+              <a href="#" style={{
+                display: 'block',
+                color: '#0071bc',
+                textDecoration: 'none',
+                fontSize: '16px',
+                fontWeight: '500',
+                padding: '12px 0',
+                borderBottom: '1px solid #f1f1f1'
+              }}>
+                Plan My Path
+              </a>
+              <a href="#" style={{
+                display: 'block',
+                color: '#0071bc',
+                textDecoration: 'none',
+                fontSize: '16px',
+                fontWeight: '500',
+                padding: '12px 0'
+              }}>
+                Find a Program
+              </a>
+            </nav>
+          </div>
+        )}
       </header>
     </>
   );

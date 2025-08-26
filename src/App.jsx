@@ -1,10 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import CDCHeader from './components/CDCHeader'
 import CDCFooter from './components/CDCFooter'
 
 function App() {
   const [count, setCount] = useState(0)
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 768)
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'white', margin: 0, padding: 0 }}>
@@ -15,13 +25,13 @@ function App() {
       <main style={{ 
         maxWidth: '800px', 
         margin: '0 auto', 
-        padding: '2rem 1rem', 
+        padding: isMobile ? '1rem 0.75rem' : '2rem 1rem', 
         textAlign: 'center' 
       }}>
         <h2 style={{ 
-          fontSize: '1.5rem', 
+          fontSize: isMobile ? '1.25rem' : '1.5rem', 
           color: '#374151', 
-          marginBottom: '2rem' 
+          marginBottom: isMobile ? '1.5rem' : '2rem' 
         }}>
           Start Your Path 2 Prevention
         </h2>
@@ -71,9 +81,9 @@ function App() {
 
         <div style={{ 
           display: 'grid', 
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(200px, 1fr))',
           gap: '1rem',
-          marginTop: '2rem'
+          marginTop: isMobile ? '1.5rem' : '2rem'
         }}>
           <div style={{ 
             backgroundColor: '#eff6ff',
