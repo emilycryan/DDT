@@ -1,22 +1,15 @@
 import { useState } from 'react'
 import './App.css'
+import CDCHeader from './components/CDCHeader'
+import CDCFooter from './components/CDCFooter'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'white', margin: 0, padding: 0 }}>
-      {/* Header */}
-      <header style={{ 
-        backgroundColor: '#1f2937', 
-        color: 'white', 
-        padding: '1rem 0',
-        textAlign: 'center'
-      }}>
-        <h1 style={{ margin: 0, fontSize: '2rem', fontWeight: 'bold' }}>
-          DDT Application
-        </h1>
-      </header>
+      {/* CDC Header */}
+      <CDCHeader />
 
       {/* Main Content */}
       <main style={{ 
@@ -30,7 +23,7 @@ function App() {
           color: '#374151', 
           marginBottom: '2rem' 
         }}>
-          Placeholder for the new DDT application
+          Start Your Path 2 Prevention
         </h2>
 
         <div style={{ 
@@ -45,7 +38,7 @@ function App() {
             color: '#6b7280',
             marginBottom: '1rem' 
           }}>
-            This is a starter template for your DDT application.
+            Get started on your path to preventing type 2 diabetes here. Path 2 Prevention is an online resource for people who may be at risk for developing type 2 diabetes.
           </p>
           
           <div style={{ marginBottom: '1rem' }}>
@@ -114,18 +107,8 @@ function App() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer style={{ 
-        backgroundColor: '#f9fafb', 
-        borderTop: '1px solid #e5e7eb',
-        padding: '2rem 0',
-        marginTop: '4rem',
-        textAlign: 'center'
-      }}>
-        <p style={{ color: '#6b7280', margin: 0 }}>
-          DDT Application - Built with React + Vite + Express
-        </p>
-      </footer>
+      {/* CDC Footer */}
+      <CDCFooter />
     </div>
   )
 }
