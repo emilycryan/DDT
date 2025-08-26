@@ -30,7 +30,7 @@ function App() {
           color: '#374151', 
           marginBottom: '2rem' 
         }}>
-          Welcome to your new DDT web application
+          Placeholder for the new DDT application
         </h2>
 
         <div style={{ 
