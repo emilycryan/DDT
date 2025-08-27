@@ -150,41 +150,45 @@ const CDCHeader = () => {
             gap: '30px' 
           }}>
             <a href="#" style={{
-              color: '#0071bc',
+              color: '#64748b',
               textDecoration: 'none',
               fontSize: '16px',
               fontWeight: '500',
               whiteSpace: 'nowrap'
             }}>
-              What is The Path?
+              About
             </a>
             <a href="#" style={{
-              color: '#0071bc',
+              color: '#64748b',
               textDecoration: 'none',
               fontSize: '16px',
               fontWeight: '500',
               whiteSpace: 'nowrap'
             }}>
-              Why Does it Matter?
+              Resources
             </a>
             <a href="#" style={{
-              color: '#0071bc',
+              color: '#64748b',
               textDecoration: 'none',
               fontSize: '16px',
               fontWeight: '500',
               whiteSpace: 'nowrap'
             }}>
-              Plan My Path
+              Support
             </a>
-            <a href="#" style={{
-              color: '#0071bc',
-              textDecoration: 'none',
-              fontSize: '16px',
-              fontWeight: '500',
+            <button style={{
+              backgroundColor: '#1e40af',
+              color: 'white',
+              padding: '0.5rem 1rem',
+              borderRadius: '0.375rem',
+              border: 'none',
+              fontSize: '14px',
+              fontWeight: '600',
+              cursor: 'pointer',
               whiteSpace: 'nowrap'
             }}>
-              Find a Program
-            </a>
+              Get Started
+            </button>
           </nav>
 
           {/* Mobile Hamburger Menu */}
@@ -226,47 +230,51 @@ const CDCHeader = () => {
             }}>
               <a href="#" style={{
                 display: 'block',
-                color: '#0071bc',
+                color: '#64748b',
                 textDecoration: 'none',
                 fontSize: '16px',
                 fontWeight: '500',
                 padding: '12px 0',
                 borderBottom: '1px solid #f1f1f1'
               }}>
-                What is The Path?
+                About
               </a>
               <a href="#" style={{
                 display: 'block',
-                color: '#0071bc',
+                color: '#64748b',
                 textDecoration: 'none',
                 fontSize: '16px',
                 fontWeight: '500',
                 padding: '12px 0',
                 borderBottom: '1px solid #f1f1f1'
               }}>
-                Why Does it Matter?
+                Resources
               </a>
               <a href="#" style={{
                 display: 'block',
-                color: '#0071bc',
+                color: '#64748b',
                 textDecoration: 'none',
                 fontSize: '16px',
                 fontWeight: '500',
                 padding: '12px 0',
                 borderBottom: '1px solid #f1f1f1'
               }}>
-                Plan My Path
+                Support
               </a>
-              <a href="#" style={{
-                display: 'block',
-                color: '#0071bc',
-                textDecoration: 'none',
+              <button style={{
+                backgroundColor: '#1e40af',
+                color: 'white',
+                padding: '0.75rem 1.5rem',
+                borderRadius: '0.375rem',
+                border: 'none',
                 fontSize: '16px',
-                fontWeight: '500',
-                padding: '12px 0'
+                fontWeight: '600',
+                cursor: 'pointer',
+                width: '100%',
+                marginTop: '12px'
               }}>
-                Find a Program
-              </a>
+                Get Started
+              </button>
             </nav>
           </div>
         )}
