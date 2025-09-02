@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import CDCHeader from './components/CDCHeader'
 import CDCFooter from './components/CDCFooter'
+import Chatbot from './components/Chatbot'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -40,36 +41,18 @@ function App() {
           <div style={{
             textAlign: isMobile ? 'center' : 'left'
           }}>
-            {/* Trust Badge */}
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
-              marginBottom: '2rem',
-              justifyContent: isMobile ? 'center' : 'flex-start'
-            }}>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="#22c55e">
-                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm3.78-9.72a.75.75 0 0 0-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l4.5-4.5z"/>
-              </svg>
-              <span style={{
-                color: '#22c55e',
-                fontSize: '14px',
-                fontWeight: '500'
-              }}>
-                Trusted by CDC
-              </span>
-            </div>
+
 
             {/* Main Heading */}
             <h1 style={{
-              fontSize: isMobile ? '2.5rem' : '3.5rem',
+              fontSize: isMobile ? '2.25rem' : '3rem',
               fontWeight: 'bold',
               color: '#1e293b',
               lineHeight: '1.1',
               marginBottom: '1.5rem',
               margin: '0 0 1.5rem 0'
             }}>
-              Your Path to Prevention Starts Here
+              Start Your Path to Prevention
             </h1>
 
             {/* Description */}
@@ -81,7 +64,7 @@ function App() {
               maxWidth: '500px',
               margin: isMobile ? '0 auto 2rem auto' : '0 0 2rem 0'
             }}>
-              Evidence-based tools and resources to help prevent diabetes and other chronic diseases. Take control of your health journey with CDC's trusted guidance.
+              Get started on your path to preventing chronic diseases here. Find videos, interactive tools, and personalized information to help you learn more about preventing conditions like heart disease, stroke, diabetes, asthma, and obesity in your life.
             </p>
 
             {/* CTA Buttons */}
@@ -103,7 +86,7 @@ function App() {
                 cursor: 'pointer',
                 minWidth: isMobile ? '200px' : 'auto'
               }}>
-                Begin Assessment
+                Am I at Risk?
               </button>
               <button style={{
                 backgroundColor: 'transparent',
@@ -116,50 +99,11 @@ function App() {
                 cursor: 'pointer',
                 minWidth: isMobile ? '200px' : 'auto'
               }}>
-                Learn More
+                How It Works
               </button>
             </div>
 
-            {/* Trust Indicators */}
-            <div style={{
-              display: 'flex',
-              gap: '2rem',
-              marginTop: '2rem',
-              alignItems: 'center',
-              justifyContent: isMobile ? 'center' : 'flex-start',
-              flexWrap: 'wrap'
-            }}>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="#22c55e">
-                  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm3.78-9.72a.75.75 0 0 0-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l4.5-4.5z"/>
-                </svg>
-                <span style={{
-                  fontSize: '14px',
-                  color: '#64748b'
-                }}>
-                  Free & Confidential
-                </span>
-              </div>
-              <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}>
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="#22c55e">
-                  <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm3.78-9.72a.75.75 0 0 0-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l4.5-4.5z"/>
-                </svg>
-                <span style={{
-                  fontSize: '14px',
-                  color: '#64748b'
-                }}>
-                  HIPAA Compliant
-                </span>
-              </div>
-            </div>
+
           </div>
 
           {/* Right Content - Personalized Health Journey Card */}
@@ -196,7 +140,7 @@ function App() {
               marginBottom: '1rem',
               margin: '0 0 1rem 0'
             }}>
-              Personalized Health Journey
+              Why Path to Prevention?
             </h3>
 
             <p style={{
@@ -206,25 +150,23 @@ function App() {
               marginBottom: '1.5rem',
               margin: '0 0 1.5rem 0'
             }}>
-              Get customized recommendations based on your unique health profile and risk factors.
+              Path to Prevention is an online resource for people who may be at risk for developing chronic diseases. Find videos, games, and other personalized information to help you learn more about prevention.
             </p>
 
             <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px'
+              backgroundColor: '#f8fafc',
+              padding: '1rem',
+              borderRadius: '0.5rem',
+              border: '1px solid #e2e8f0'
             }}>
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="#3b82f6">
-                <circle cx="8" cy="8" r="8"/>
-                <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm3.78-9.72a.75.75 0 0 0-1.06-1.06L6.75 9.19 5.28 7.72a.75.75 0 0 0-1.06 1.06l2 2a.75.75 0 0 0 1.06 0l4.5-4.5z" fill="white"/>
-              </svg>
-              <span style={{
-                fontSize: '14px',
-                color: '#3b82f6',
-                fontWeight: '500'
+              <p style={{
+                fontSize: '0.875rem',
+                color: '#475569',
+                margin: 0,
+                fontStyle: 'italic'
               }}>
-                Trusted by 2M+ Americans
-              </span>
+                "Many chronic diseases are preventable through lifestyle changes and early intervention."
+              </p>
             </div>
           </div>
         </section>
@@ -246,7 +188,7 @@ function App() {
               marginBottom: '1rem',
               margin: '0 0 1rem 0'
             }}>
-              Backed by Science, Trusted by Millions
+              Here's How It Works
             </h2>
 
             <p style={{
@@ -256,7 +198,7 @@ function App() {
               maxWidth: '600px',
               margin: '0 auto 3rem auto'
             }}>
-              Evidence-based prevention strategies from the nation's health protection agency
+              Click into a section below to find videos, interactive games, and more to start on your Path to Prevention.
             </p>
 
             {/* Three Column Features */}
@@ -265,9 +207,15 @@ function App() {
               gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
               gap: '2rem'
             }}>
-              {/* Evidence-Based */}
+              {/* What is The Path? */}
               <div style={{
-                textAlign: 'center'
+                textAlign: 'center',
+                backgroundColor: 'white',
+                padding: '2rem',
+                borderRadius: '0.75rem',
+                border: '1px solid #e2e8f0',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
               }}>
                 <div style={{
                   width: '80px',
@@ -280,7 +228,7 @@ function App() {
                   margin: '0 auto 1.5rem auto'
                 }}>
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
-                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                   </svg>
                 </div>
                 <h3 style={{
@@ -290,7 +238,7 @@ function App() {
                   marginBottom: '1rem',
                   margin: '0 0 1rem 0'
                 }}>
-                  Evidence-Based
+                  What is The Path?
                 </h3>
                 <p style={{
                   fontSize: '0.95rem',
@@ -298,13 +246,19 @@ function App() {
                   lineHeight: '1.5',
                   margin: 0
                 }}>
-                  All recommendations backed by rigorous scientific research and clinical studies
+                  Learn about chronic disease risk factors and how lifestyle changes can help prevent conditions like heart disease, stroke, and diabetes.
                 </p>
               </div>
 
-              {/* 2M+ Users */}
+              {/* Get the Facts */}
               <div style={{
-                textAlign: 'center'
+                textAlign: 'center',
+                backgroundColor: 'white',
+                padding: '2rem',
+                borderRadius: '0.75rem',
+                border: '1px solid #e2e8f0',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
               }}>
                 <div style={{
                   width: '80px',
@@ -317,7 +271,7 @@ function App() {
                   margin: '0 auto 1.5rem auto'
                 }}>
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
-                    <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                   </svg>
                 </div>
                 <h3 style={{
@@ -327,7 +281,7 @@ function App() {
                   marginBottom: '1rem',
                   margin: '0 0 1rem 0'
                 }}>
-                  2M+ Users
+                  Get the Facts
                 </h3>
                 <p style={{
                   fontSize: '0.95rem',
@@ -335,13 +289,19 @@ function App() {
                   lineHeight: '1.5',
                   margin: 0
                 }}>
-                  Helping millions of Americans make informed health decisions every year
+                  Access evidence-based information about preventing chronic diseases including obesity, asthma, and cardiovascular conditions.
                 </p>
               </div>
 
-              {/* CDC Certified */}
+              {/* Start Your Plan */}
               <div style={{
-                textAlign: 'center'
+                textAlign: 'center',
+                backgroundColor: 'white',
+                padding: '2rem',
+                borderRadius: '0.75rem',
+                border: '1px solid #e2e8f0',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease'
               }}>
                 <div style={{
                   width: '80px',
@@ -354,7 +314,7 @@ function App() {
                   margin: '0 auto 1.5rem auto'
                 }}>
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
-                    <path d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    <path d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                   </svg>
                 </div>
                 <h3 style={{
@@ -364,7 +324,7 @@ function App() {
                   marginBottom: '1rem',
                   margin: '0 0 1rem 0'
                 }}>
-                  CDC Certified
+                  Start Your Plan
                 </h3>
                 <p style={{
                   fontSize: '0.95rem',
@@ -372,7 +332,7 @@ function App() {
                   lineHeight: '1.5',
                   margin: 0
                 }}>
-                  Official CDC resource meeting the highest standards of health information
+                  Take a risk assessment and create a personalized action plan with interactive tools and resources tailored to your needs.
                 </p>
               </div>
             </div>
@@ -382,6 +342,9 @@ function App() {
 
       {/* CDC Footer */}
       <CDCFooter />
+      
+      {/* Chatbot */}
+      <Chatbot />
     </div>
   )
 }
