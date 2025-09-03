@@ -46,45 +46,96 @@ const Chatbot = () => {
     setInputValue('');
     setIsTyping(true);
 
-    // Simulate bot response
-    setTimeout(() => {
+    // Get AI response
+    try {
+      const botResponseText = await getBotResponse(inputValue);
       const botResponse = {
         id: Date.now() + 1,
-        text: getBotResponse(inputValue),
+        text: botResponseText,
         sender: 'bot',
         timestamp: new Date()
       };
       setMessages(prev => [...prev, botResponse]);
       setIsTyping(false);
-    }, 1000);
+    } catch (error) {
+      console.error('Error getting bot response:', error);
+      const errorResponse = {
+        id: Date.now() + 1,
+        text: "I'm sorry, I'm having trouble responding right now. Please try asking your question again.",
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorResponse]);
+      setIsTyping(false);
+    }
   };
 
-  const getBotResponse = (userInput) => {
-    const input = userInput.toLowerCase();
-    
-    if (input.includes('diabetes') || input.includes('blood sugar')) {
-      return "I can help you learn about diabetes prevention. Key steps include maintaining a healthy weight, eating a balanced diet, and staying physically active. Would you like to take our risk assessment?";
+  const getBotResponse = async (userInput) => {
+    try {
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_OPENAI_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'system',
+              content: `You are a Prevention Assistant for the CDC's Path to Prevention program. You help people learn about preventing chronic diseases including diabetes, heart disease, stroke, obesity, and asthma.
+
+Key guidelines:
+- Provide evidence-based health information
+- Keep responses concise and helpful (2-3 sentences max)
+- Always suggest taking risk assessments when appropriate
+- Mention lifestyle changes like diet, exercise, and avoiding tobacco
+- Be encouraging and supportive
+- If asked about medical advice, remind users to consult healthcare providers
+- Focus on prevention strategies and CDC resources
+- Use a professional but friendly tone appropriate for a government health website
+
+Available resources to mention:
+- Risk assessments for various chronic diseases
+- Local prevention programs
+- Educational videos and interactive tools
+- CDC prevention guidelines and recommendations`
+            },
+            {
+              role: 'user',
+              content: userInput
+            }
+          ],
+          max_tokens: 150,
+          temperature: 0.7
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`OpenAI API error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data.choices[0].message.content.trim();
+
+    } catch (error) {
+      console.error('Error calling OpenAI API:', error);
+      
+      // Fallback to basic responses if API fails
+      const input = userInput.toLowerCase();
+      
+      if (input.includes('diabetes')) {
+        return "I can help you learn about diabetes prevention. Key steps include maintaining a healthy weight, eating a balanced diet, and staying physically active. Would you like to take our risk assessment?";
+      }
+      if (input.includes('heart')) {
+        return "Heart disease is preventable through lifestyle changes like regular exercise, healthy eating, not smoking, and managing stress. What specific aspect would you like to know more about?";
+      }
+      if (input.includes('risk') || input.includes('assessment')) {
+        return "Our risk assessment can help identify your personal risk factors for chronic diseases. It takes just a few minutes and provides personalized recommendations. Would you like to start the assessment?";
+      }
+      
+      return "I'm here to help with chronic disease prevention information. You can ask me about diabetes, heart disease, stroke, obesity, or asthma prevention strategies.";
     }
-    if (input.includes('heart') || input.includes('cardiovascular')) {
-      return "Heart disease is preventable through lifestyle changes like regular exercise, healthy eating, not smoking, and managing stress. What specific aspect would you like to know more about?";
-    }
-    if (input.includes('obesity') || input.includes('weight')) {
-      return "Weight management is crucial for preventing many chronic diseases. I can provide information about healthy eating patterns and physical activity recommendations. What would be most helpful?";
-    }
-    if (input.includes('asthma')) {
-      return "Asthma management involves avoiding triggers, taking medications as prescribed, and having an action plan. Would you like information about asthma triggers or management strategies?";
-    }
-    if (input.includes('stroke')) {
-      return "Stroke prevention includes controlling blood pressure, not smoking, maintaining a healthy diet, and staying active. Many risk factors are controllable. What would you like to learn about?";
-    }
-    if (input.includes('risk') || input.includes('assessment')) {
-      return "Our risk assessment can help identify your personal risk factors for chronic diseases. It takes just a few minutes and provides personalized recommendations. Would you like to start the assessment?";
-    }
-    if (input.includes('help') || input.includes('start')) {
-      return "I can help you with information about preventing chronic diseases like diabetes, heart disease, stroke, obesity, and asthma. You can also take risk assessments or find local programs. What interests you most?";
-    }
-    
-    return "That's a great question! I'm here to help with chronic disease prevention information. You can ask me about specific conditions like diabetes, heart disease, or stroke, or I can guide you to our risk assessments and prevention programs.";
   };
 
   const handleKeyPress = (e) => {
@@ -101,9 +152,38 @@ const Chatbot = () => {
     "Find local programs"
   ];
 
-  const handleQuickAction = (action) => {
-    setInputValue(action);
-    handleSendMessage();
+  const handleQuickAction = async (action) => {
+    const userMessage = {
+      id: Date.now(),
+      text: action,
+      sender: 'user',
+      timestamp: new Date()
+    };
+
+    setMessages(prev => [...prev, userMessage]);
+    setIsTyping(true);
+
+    try {
+      const botResponseText = await getBotResponse(action);
+      const botResponse = {
+        id: Date.now() + 1,
+        text: botResponseText,
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, botResponse]);
+      setIsTyping(false);
+    } catch (error) {
+      console.error('Error getting bot response:', error);
+      const errorResponse = {
+        id: Date.now() + 1,
+        text: "I'm sorry, I'm having trouble responding right now. Please try asking your question again.",
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorResponse]);
+      setIsTyping(false);
+    }
   };
 
   return (
@@ -153,11 +233,14 @@ const Chatbot = () => {
                 color: 'white',
                 cursor: 'pointer',
                 padding: '4px',
-                borderRadius: '4px'
+                borderRadius: '4px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
               }}
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M6 18L18 6M6 6l12 12"/>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
+                <path d="M18 6L6 18M6 6l12 12"/>
               </svg>
             </button>
           </div>
