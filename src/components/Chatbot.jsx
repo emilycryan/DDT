@@ -1,12 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const Chatbot = () => {
+const Chatbot = ({ onNavigate }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [messages, setMessages] = useState([
     {
       id: 1,
-      text: "Hello! I'm here to help you learn about chronic disease prevention. How can I assist you today?",
+      text: "Hello! I'm here to help you learn about chronic disease prevention. How can I help you today?",
       sender: 'bot',
       timestamp: new Date()
     }
@@ -14,6 +14,14 @@ const Chatbot = () => {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
+  
+  // State management for personalization and routing
+  const [userState, setUserState] = useState({
+    userName: null,
+    careRecipientName: null,
+    assessmentType: null, // 'self', 'caregiver', 'curious'
+    conversationContext: []
+  });
 
   useEffect(() => {
     const handleResize = () => {
@@ -26,6 +34,110 @@ const Chatbot = () => {
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Helper function to extract names and context from user input
+  const extractUserContext = (userInput) => {
+    const input = userInput.toLowerCase();
+    
+    // Detect names (simple pattern matching)
+    const namePatterns = [
+      /my name is (\w+)/i,
+      /i'm (\w+)/i,
+      /call me (\w+)/i,
+      /i am (\w+)/i
+    ];
+    
+    const carePatterns = [
+      /my (\w+) (\w+)/i, // "my mom Sarah", "my dad John"
+      /(\w+) is my (\w+)/i, // "Sarah is my mom"
+      /caring for (\w+)/i,
+      /worried about (\w+)/i,
+      /(\w+)'s health/i
+    ];
+
+    let detectedUserName = userState.userName;
+    let detectedCareRecipient = userState.careRecipientName;
+    let detectedAssessmentType = userState.assessmentType;
+
+    // Extract user name
+    for (const pattern of namePatterns) {
+      const match = userInput.match(pattern);
+      if (match && match[1]) {
+        detectedUserName = match[1].charAt(0).toUpperCase() + match[1].slice(1);
+        break;
+      }
+    }
+
+    // Extract care recipient name and determine assessment type
+    for (const pattern of carePatterns) {
+      const match = userInput.match(pattern);
+      if (match) {
+        if (pattern.toString().includes('my (\\\w+) (\\\w+)')) {
+          // "my mom Sarah" format
+          detectedCareRecipient = match[2].charAt(0).toUpperCase() + match[2].slice(1);
+          detectedAssessmentType = 'caregiver';
+        } else if (pattern.toString().includes('(\\\w+) is my')) {
+          // "Sarah is my mom" format
+          detectedCareRecipient = match[1].charAt(0).toUpperCase() + match[1].slice(1);
+          detectedAssessmentType = 'caregiver';
+        } else {
+          detectedCareRecipient = match[1].charAt(0).toUpperCase() + match[1].slice(1);
+          detectedAssessmentType = 'caregiver';
+        }
+        break;
+      }
+    }
+
+    // Detect assessment intent
+    if (input.includes('myself') || input.includes('my health') || input.includes('my risk')) {
+      detectedAssessmentType = 'self';
+    } else if (input.includes('just curious') || input.includes('general information') || input.includes('learning about')) {
+      detectedAssessmentType = 'curious';
+    }
+
+    return {
+      userName: detectedUserName,
+      careRecipientName: detectedCareRecipient,
+      assessmentType: detectedAssessmentType
+    };
+  };
+
+  // Check if user wants to take assessment (more specific now)
+  const shouldRouteToAssessment = (userInput) => {
+    const directAssessmentKeywords = [
+      'take assessment', 'take the assessment', 'start assessment', 'start the assessment',
+      'i want to take', 'begin assessment', 'do the assessment', 'answer questions',
+      'answer some questions', 'take test', 'start test'
+    ];
+    
+    return directAssessmentKeywords.some(keyword => 
+      userInput.toLowerCase().includes(keyword)
+    );
+  };
+
+  // Check if user wants assessment for someone else
+  const isAssessmentForOthers = (userInput) => {
+    const input = userInput.toLowerCase();
+    const forOthersKeywords = [
+      'assessment for', 'take it for', 'for my', 'for someone', 'for a family member',
+      'for my mom', 'for my dad', 'for my husband', 'for my wife', 'for my parent',
+      'for my child', 'for my partner', 'on behalf of', 'help someone else',
+      'someone i care about', 'family member', 'loved one'
+    ];
+    
+    return forOthersKeywords.some(keyword => input.includes(keyword));
+  };
+
+  // Check if user is asking about risk (but not requesting assessment)
+  const isRiskInquiry = (userInput) => {
+    const riskKeywords = [
+      'am i at risk', 'my risk', 'risk for', 'check my risk', 'evaluate my risk'
+    ];
+    
+    return riskKeywords.some(keyword => 
+      userInput.toLowerCase().includes(keyword)
+    ) && !shouldRouteToAssessment(userInput);
   };
 
   useEffect(() => {
@@ -43,12 +155,102 @@ const Chatbot = () => {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    
+    // Extract context and update user state
+    const contextUpdate = extractUserContext(inputValue);
+    setUserState(prev => ({
+      ...prev,
+      ...contextUpdate,
+      conversationContext: [...prev.conversationContext, inputValue]
+    }));
+
+    // Check if user wants to take assessment for someone else
+    if (isAssessmentForOthers(inputValue)) {
+      setIsTyping(true);
+      const caregiverMessage = {
+        id: Date.now() + 1,
+        text: `That's wonderful that you're looking out for ${contextUpdate.careRecipientName || 'someone you care about'}${contextUpdate.userName ? `, ${contextUpdate.userName}` : ''}! Taking an assessment on behalf of a family member or loved one shows how much you care about their health.`,
+        sender: 'bot',
+        timestamp: new Date(),
+        quickOptions: ["Take assessment for them", "Learn about caregiver resources", "Tell me more about their health"]
+      };
+      setMessages(prev => [...prev, caregiverMessage]);
+      setIsTyping(false);
+      setInputValue('');
+      return;
+    }
+
+    // Check if user wants to take assessment
+    if (shouldRouteToAssessment(inputValue)) {
+      setIsTyping(true);
+      
+      // Determine context for routing message
+      const isForOthers = contextUpdate.assessmentType === 'caregiver' || contextUpdate.careRecipientName;
+      const recipientName = contextUpdate.careRecipientName;
+      
+      // First message - announce the routing
+      const routingMessage1 = {
+        id: Date.now() + 1,
+        text: `Excellent!${contextUpdate.userName ? ` ${contextUpdate.userName}, ` : ' '}I'll take you to our risk assessment page where you can get a ${isForOthers ? `personalized evaluation for ${recipientName || 'your loved one'}` : 'personalized evaluation'}.`,
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, routingMessage1]);
+      
+      // Add a pause and second message
+      setTimeout(() => {
+        const routingMessage2 = {
+          id: Date.now() + 2,
+          text: isForOthers ? 
+            `Taking you there now... The assessment will help us understand ${recipientName ? `${recipientName}'s` : 'their'} specific situation and provide tailored recommendations for their care.` :
+            "Taking you there now... The assessment will help us understand your specific situation and provide tailored recommendations.",
+          sender: 'bot',
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, routingMessage2]);
+        setIsTyping(false);
+        
+        // Route to assessment page after longer delay but keep chat open
+        setTimeout(() => {
+          if (onNavigate) {
+            onNavigate('risk-assessment');
+            // Scroll to the assessment selection section
+            setTimeout(() => {
+              const element = document.getElementById('assessment-selection');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 100);
+          }
+        }, 3000);
+      }, 2000);
+      
+      setInputValue('');
+      return;
+    }
+
+    // Check if user is asking about risk (provide guidance instead of immediate routing)
+    if (isRiskInquiry(inputValue)) {
+      setIsTyping(true);
+      const riskGuidanceMessage = {
+        id: Date.now() + 1,
+        text: `That's a great question${contextUpdate.userName ? `, ${contextUpdate.userName}` : ''}! Understanding your personal risk factors is important. I'd recommend taking our risk assessment to get personalized insights. Would you like to get started?`,
+        sender: 'bot',
+        timestamp: new Date(),
+        quickOptions: ["Answer some questions", "Learn more about diabetes", "Tell me about prevention"]
+      };
+      setMessages(prev => [...prev, riskGuidanceMessage]);
+      setIsTyping(false);
+      setInputValue('');
+      return;
+    }
+
     setInputValue('');
     setIsTyping(true);
 
-    // Get AI response
+    // Get AI response with context
     try {
-      const botResponseText = await getBotResponse(inputValue);
+      const botResponseText = await getBotResponse(inputValue, contextUpdate);
       const botResponse = {
         id: Date.now() + 1,
         text: botResponseText,
@@ -70,8 +272,25 @@ const Chatbot = () => {
     }
   };
 
-  const getBotResponse = async (userInput) => {
+  const getBotResponse = async (userInput, contextUpdate = null) => {
     try {
+      // Build personalized context
+      const currentState = contextUpdate || userState;
+      const personalContext = [];
+      
+      if (currentState.userName) {
+        personalContext.push(`User's name: ${currentState.userName}`);
+      }
+      if (currentState.careRecipientName) {
+        personalContext.push(`Care recipient: ${currentState.careRecipientName}`);
+      }
+      if (currentState.assessmentType) {
+        personalContext.push(`Assessment context: ${currentState.assessmentType}`);
+      }
+
+      const contextString = personalContext.length > 0 ? 
+        `\n\nPersonal Context: ${personalContext.join(', ')}` : '';
+
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -83,20 +302,28 @@ const Chatbot = () => {
           messages: [
             {
               role: 'system',
-              content: `You are a Prevention Assistant for the CDC's Path to Prevention program. You help people learn about preventing chronic diseases including diabetes, heart disease, stroke, obesity, and asthma.
+              content: `You are a Chronic Disease Prevention Assistant for the CDC's Path to Prevention program. You help people learn about preventing chronic diseases including diabetes, heart disease, stroke, COPD, and obesity.${contextString}
 
 Key guidelines:
 - Provide evidence-based health information
 - Keep responses concise and helpful (2-3 sentences max)
-- Always suggest taking risk assessments when appropriate
+- Utilize plain language and avoid using jargon
+- Always suggest taking risk assessment when appropriate
 - Mention lifestyle changes like diet, exercise, and avoiding tobacco
 - Be encouraging and supportive
 - If asked about medical advice, remind users to consult healthcare providers
 - Focus on prevention strategies and CDC resources
 - Use a professional but friendly tone appropriate for a government health website
+- If you know the user's name, use it occasionally to personalize the conversation
+- If they mention someone they care for, remember their name and ask about them
+- If someone asks about taking an assessment or mentions risk evaluation, encourage them to take the risk assessment
+- Be attentive to whether they're asking for themselves, someone they care about, or just general information
+- When someone wants to take an assessment for a family member or loved one, acknowledge their caring role and provide caregiver-focused guidance
+- Use names of care recipients when known (e.g., "Sarah's health", "your mom's risk factors")
+- Be supportive of caregivers and recognize the challenges of advocating for someone else's health
 
 Available resources to mention:
-- Risk assessments for various chronic diseases
+- The risk assessment on this website for various chronic diseases
 - Local prevention programs
 - Educational videos and interactive tools
 - CDC prevention guidelines and recommendations`
@@ -131,10 +358,10 @@ Available resources to mention:
         return "Heart disease is preventable through lifestyle changes like regular exercise, healthy eating, not smoking, and managing stress. What specific aspect would you like to know more about?";
       }
       if (input.includes('risk') || input.includes('assessment')) {
-        return "Our risk assessment can help identify your personal risk factors for chronic diseases. It takes just a few minutes and provides personalized recommendations. Would you like to start the assessment?";
+        return "Our risk assessment can help identify your personal risk factors for chronic diseases. It takes just a few minutes and provides personalized recommendations. Would you like to try it out?";
       }
       
-      return "I'm here to help with chronic disease prevention information. You can ask me about diabetes, heart disease, stroke, obesity, or asthma prevention strategies.";
+      return "I'm here to help with chronic disease prevention information. You can ask me about diabetes, heart disease, stroke and obesity prevention strategies.";
     }
   };
 
@@ -147,9 +374,9 @@ Available resources to mention:
 
   const quickActions = [
     "Am I at risk for diabetes?",
-    "Heart disease prevention",
-    "Take risk assessment",
-    "Find local programs"
+    "Heart disease prevention", 
+    "Take the risk assessment",
+    "Find local prevention programs"
   ];
 
   const handleQuickAction = async (action) => {
@@ -161,6 +388,95 @@ Available resources to mention:
     };
 
     setMessages(prev => [...prev, userMessage]);
+
+    // Check if this action is caregiver-specific
+    if (action === "Take assessment for them") {
+      setIsTyping(true);
+      
+      // First message - announce the routing for caregiver
+      const routingMessage1 = {
+        id: Date.now() + 1,
+        text: `Perfect! I'll take you to our risk assessment page where you can complete an evaluation for ${userState.careRecipientName || 'your loved one'}.`,
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, routingMessage1]);
+      
+      // Add a pause and second message
+      setTimeout(() => {
+        const routingMessage2 = {
+          id: Date.now() + 2,
+          text: `Navigating to the assessment now... This will help create a prevention plan tailored for ${userState.careRecipientName ? `${userState.careRecipientName}'s` : 'their'} specific needs.`,
+          sender: 'bot',
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, routingMessage2]);
+        setIsTyping(false);
+        
+        // Route to assessment page after longer delay but keep chat open
+        setTimeout(() => {
+          if (onNavigate) {
+            onNavigate('risk-assessment');
+            // Scroll to the assessment selection section
+            setTimeout(() => {
+              const element = document.getElementById('assessment-selection');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 100);
+          }
+        }, 3000);
+      }, 2000);
+      return;
+    }
+
+    // Check if this action should route to assessment
+    if (shouldRouteToAssessment(action)) {
+      setIsTyping(true);
+      
+      // Determine context for routing message
+      const isForOthers = userState.assessmentType === 'caregiver' || userState.careRecipientName;
+      const recipientName = userState.careRecipientName;
+      
+      // First message - announce the routing
+      const routingMessage1 = {
+        id: Date.now() + 1,
+        text: `Perfect! Let me take you to our risk assessment page where you can get a ${isForOthers ? `personalized evaluation for ${recipientName || 'your loved one'}` : 'personalized evaluation'}.`,
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, routingMessage1]);
+      
+      // Add a pause and second message
+      setTimeout(() => {
+        const routingMessage2 = {
+          id: Date.now() + 2,
+          text: isForOthers ? 
+            `Navigating to the assessment now... This will help create a prevention plan tailored for ${recipientName ? `${recipientName}'s` : 'their'} specific needs.` :
+            "Navigating to the assessment now... This will help us create a prevention plan tailored just for you!",
+          sender: 'bot',
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, routingMessage2]);
+        setIsTyping(false);
+        
+        // Route to assessment page after longer delay but keep chat open
+        setTimeout(() => {
+          if (onNavigate) {
+            onNavigate('risk-assessment');
+            // Scroll to the assessment selection section
+            setTimeout(() => {
+              const element = document.getElementById('assessment-selection');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }, 100);
+          }
+        }, 3000);
+      }, 2000);
+      return;
+    }
+
     setIsTyping(true);
 
     try {
@@ -255,25 +571,65 @@ Available resources to mention:
             gap: '12px'
           }}>
             {messages.map((message) => (
-              <div
-                key={message.id}
-                style={{
-                  display: 'flex',
-                  justifyContent: message.sender === 'user' ? 'flex-end' : 'flex-start'
-                }}
-              >
-                <div style={{
-                  backgroundColor: message.sender === 'user' ? '#1e40af' : '#f1f5f9',
-                  color: message.sender === 'user' ? 'white' : '#334155',
-                  padding: '12px 16px',
-                  borderRadius: '18px',
-                  maxWidth: '80%',
-                  fontSize: '14px',
-                  lineHeight: '1.4',
-                  wordWrap: 'break-word'
-                }}>
-                  {message.text}
+              <div key={message.id}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: message.sender === 'user' ? 'flex-end' : 'flex-start'
+                  }}
+                >
+                  <div style={{
+                    backgroundColor: message.sender === 'user' ? '#1e40af' : '#f1f5f9',
+                    color: message.sender === 'user' ? 'white' : '#334155',
+                    padding: '12px 16px',
+                    borderRadius: '18px',
+                    maxWidth: '80%',
+                    fontSize: '14px',
+                    lineHeight: '1.4',
+                    wordWrap: 'break-word'
+                  }}>
+                    {message.text}
+                  </div>
                 </div>
+                {/* Quick Options for this message */}
+                {message.quickOptions && (
+                  <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '6px',
+                    marginTop: '8px',
+                    marginLeft: '8px'
+                  }}>
+                    {message.quickOptions.map((option, index) => (
+                      <button
+                        key={index}
+                        onClick={() => handleQuickAction(option)}
+                        style={{
+                          backgroundColor: 'white',
+                          border: '1px solid #e2e8f0',
+                          borderRadius: '15px',
+                          padding: '6px 12px',
+                          fontSize: '12px',
+                          color: '#475569',
+                          cursor: 'pointer',
+                          textAlign: 'left',
+                          transition: 'all 0.2s ease',
+                          alignSelf: 'flex-start'
+                        }}
+                        onMouseOver={(e) => {
+                          e.target.style.backgroundColor = '#f8fafc';
+                          e.target.style.borderColor = '#cbd5e1';
+                        }}
+                        onMouseOut={(e) => {
+                          e.target.style.backgroundColor = 'white';
+                          e.target.style.borderColor = '#e2e8f0';
+                        }}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
             

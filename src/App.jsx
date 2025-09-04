@@ -3,10 +3,16 @@ import './App.css'
 import CDCHeader from './components/CDCHeader'
 import CDCFooter from './components/CDCFooter'
 import Chatbot from './components/Chatbot'
+import RiskAssessment from './components/RiskAssessment'
+import About from './components/About'
+import Resources from './components/Resources'
+import Support from './components/Support'
+import HowItWorks from './components/HowItWorks'
 
 function App() {
   const [count, setCount] = useState(0)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
+  const [currentPage, setCurrentPage] = useState('home') // home or risk-assessment
 
   useEffect(() => {
     const handleResize = () => {
@@ -20,13 +26,14 @@ function App() {
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'white', margin: 0, padding: 0 }}>
       {/* CDC Header */}
-      <CDCHeader />
+      <CDCHeader onNavigate={setCurrentPage} currentPage={currentPage} />
 
       {/* Main Content */}
-      <main style={{ 
-        backgroundColor: '#f8fafc',
-        minHeight: '80vh'
-      }}>
+      {currentPage === 'home' ? (
+        <main style={{ 
+          backgroundColor: '#f8fafc',
+          minHeight: '80vh'
+        }}>
         {/* Hero Section */}
         <section style={{
           maxWidth: '1200px',
@@ -64,7 +71,7 @@ function App() {
               maxWidth: '500px',
               margin: isMobile ? '0 auto 2rem auto' : '0 0 2rem 0'
             }}>
-              Get started on your path to preventing chronic diseases here. Find videos, interactive tools, and personalized information to help you learn more about preventing conditions like heart disease, stroke, diabetes, asthma, and obesity in your life.
+              Get started on your path to preventing chronic diseases here. Find videos, interactive tools, and personalized information to help you learn more about preventing conditions like heart disease, stroke, diabetes, COPD, and obesity in your life.
             </p>
 
             {/* CTA Buttons */}
@@ -75,30 +82,36 @@ function App() {
               alignItems: 'center',
               justifyContent: isMobile ? 'center' : 'flex-start'
             }}>
-              <button style={{
-                backgroundColor: '#1e40af',
-                color: 'white',
-                padding: '1rem 2rem',
-                borderRadius: '0.5rem',
-                border: 'none',
-                fontSize: '1rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                minWidth: isMobile ? '200px' : 'auto'
-              }}>
+              <button 
+                onClick={() => setCurrentPage('risk-assessment')}
+                style={{
+                  backgroundColor: '#1e40af',
+                  color: 'white',
+                  padding: '1rem 2rem',
+                  borderRadius: '0.5rem',
+                  border: 'none',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  minWidth: isMobile ? '200px' : 'auto'
+                }}
+              >
                 Am I at Risk?
               </button>
-              <button style={{
-                backgroundColor: 'transparent',
-                color: '#1e40af',
-                padding: '1rem 2rem',
-                borderRadius: '0.5rem',
-                border: '2px solid #1e40af',
-                fontSize: '1rem',
-                fontWeight: '600',
-                cursor: 'pointer',
-                minWidth: isMobile ? '200px' : 'auto'
-              }}>
+              <button 
+                onClick={() => setCurrentPage('how-it-works')}
+                style={{
+                  backgroundColor: 'transparent',
+                  color: '#1e40af',
+                  padding: '1rem 2rem',
+                  borderRadius: '0.5rem',
+                  border: '2px solid #1e40af',
+                  fontSize: '1rem',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  minWidth: isMobile ? '200px' : 'auto'
+                }}
+              >
                 How It Works
               </button>
             </div>
@@ -208,15 +221,26 @@ function App() {
               gap: '2rem'
             }}>
               {/* What is The Path? */}
-              <div style={{
-                textAlign: 'center',
-                backgroundColor: 'white',
-                padding: '2rem',
-                borderRadius: '0.75rem',
-                border: '1px solid #e2e8f0',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease'
-              }}>
+              <div 
+                onClick={() => setCurrentPage('about')}
+                style={{
+                  textAlign: 'center',
+                  backgroundColor: 'white',
+                  padding: '2rem',
+                  borderRadius: '0.75rem',
+                  border: '1px solid #e2e8f0',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 15px 35px -5px rgba(0, 0, 0, 0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                }}
+              >
                 <div style={{
                   width: '80px',
                   height: '80px',
@@ -251,15 +275,26 @@ function App() {
               </div>
 
               {/* Get the Facts */}
-              <div style={{
-                textAlign: 'center',
-                backgroundColor: 'white',
-                padding: '2rem',
-                borderRadius: '0.75rem',
-                border: '1px solid #e2e8f0',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease'
-              }}>
+              <div 
+                onClick={() => setCurrentPage('resources')}
+                style={{
+                  textAlign: 'center',
+                  backgroundColor: 'white',
+                  padding: '2rem',
+                  borderRadius: '0.75rem',
+                  border: '1px solid #e2e8f0',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 15px 35px -5px rgba(0, 0, 0, 0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                }}
+              >
                 <div style={{
                   width: '80px',
                   height: '80px',
@@ -289,20 +324,31 @@ function App() {
                   lineHeight: '1.5',
                   margin: 0
                 }}>
-                  Access evidence-based information about preventing chronic diseases including obesity, asthma, and cardiovascular conditions.
+                  Access evidence-based information about preventing chronic diseases including obesity, COPD, and cardiovascular conditions.
                 </p>
               </div>
 
               {/* Start Your Plan */}
-              <div style={{
-                textAlign: 'center',
-                backgroundColor: 'white',
-                padding: '2rem',
-                borderRadius: '0.75rem',
-                border: '1px solid #e2e8f0',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease'
-              }}>
+              <div 
+                onClick={() => setCurrentPage('risk-assessment')}
+                style={{
+                  textAlign: 'center',
+                  backgroundColor: 'white',
+                  padding: '2rem',
+                  borderRadius: '0.75rem',
+                  border: '1px solid #e2e8f0',
+                  cursor: 'pointer',
+                  transition: 'all 0.2s ease'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px)';
+                  e.currentTarget.style.boxShadow = '0 15px 35px -5px rgba(0, 0, 0, 0.15)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                }}
+              >
                 <div style={{
                   width: '80px',
                   height: '80px',
@@ -339,12 +385,25 @@ function App() {
           </div>
         </section>
       </main>
+      ) : currentPage === 'risk-assessment' ? (
+        <RiskAssessment />
+      ) : currentPage === 'about' ? (
+        <About />
+      ) : currentPage === 'resources' ? (
+        <Resources />
+      ) : currentPage === 'support' ? (
+        <Support />
+      ) : currentPage === 'how-it-works' ? (
+        <HowItWorks />
+      ) : (
+        <div>Page not found</div>
+      )}
 
       {/* CDC Footer */}
       <CDCFooter />
       
       {/* Chatbot */}
-      <Chatbot />
+      <Chatbot onNavigate={setCurrentPage} />
     </div>
   )
 }

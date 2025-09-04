@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const CDCHeader = () => {
+const CDCHeader = ({ onNavigate, currentPage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -120,15 +120,19 @@ const CDCHeader = () => {
               }}
             />
             <div style={{ minWidth: 0 }}>
-              <div style={{
-                fontSize: isMobile ? '18px' : '24px',
-                fontWeight: 'bold',
-                color: '#0071bc',
-                lineHeight: '1.2',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis'
-              }}>
+              <div 
+                onClick={() => onNavigate && onNavigate('home')}
+                style={{
+                  fontSize: isMobile ? '18px' : '24px',
+                  fontWeight: 'bold',
+                  color: '#0071bc',
+                  lineHeight: '1.2',
+                  whiteSpace: 'nowrap',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  cursor: 'pointer'
+                }}
+              >
                 Path 2 Prevention
               </div>
               <div style={{
@@ -149,44 +153,50 @@ const CDCHeader = () => {
             display: isMobile ? 'none' : 'flex', 
             gap: '30px' 
           }}>
-            <a href="#" style={{
+            <a onClick={() => onNavigate && onNavigate('about')} style={{
               color: '#64748b',
               textDecoration: 'none',
               fontSize: '16px',
               fontWeight: '500',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              cursor: 'pointer'
             }}>
               About
             </a>
-            <a href="#" style={{
+            <a onClick={() => onNavigate && onNavigate('resources')} style={{
               color: '#64748b',
               textDecoration: 'none',
               fontSize: '16px',
               fontWeight: '500',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              cursor: 'pointer'
             }}>
               Resources
             </a>
-            <a href="#" style={{
+            <a onClick={() => onNavigate && onNavigate('support')} style={{
               color: '#64748b',
               textDecoration: 'none',
               fontSize: '16px',
               fontWeight: '500',
-              whiteSpace: 'nowrap'
+              whiteSpace: 'nowrap',
+              cursor: 'pointer'
             }}>
               Support
             </a>
-            <button style={{
-              backgroundColor: '#1e40af',
-              color: 'white',
-              padding: '0.5rem 1rem',
-              borderRadius: '0.375rem',
-              border: 'none',
-              fontSize: '14px',
-              fontWeight: '600',
-              cursor: 'pointer',
-              whiteSpace: 'nowrap'
-            }}>
+            <button 
+              onClick={() => onNavigate && onNavigate('risk-assessment')}
+              style={{
+                backgroundColor: '#1e40af',
+                color: 'white',
+                padding: '0.5rem 1rem',
+                borderRadius: '0.375rem',
+                border: 'none',
+                fontSize: '14px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap'
+              }}
+            >
               Get Started
             </button>
           </nav>
@@ -228,51 +238,57 @@ const CDCHeader = () => {
               margin: '0 auto',
               padding: '15px'
             }}>
-              <a href="#" style={{
+              <a onClick={() => {onNavigate && onNavigate('about'); setIsMenuOpen(false);}} style={{
                 display: 'block',
                 color: '#64748b',
                 textDecoration: 'none',
                 fontSize: '16px',
                 fontWeight: '500',
                 padding: '12px 0',
-                borderBottom: '1px solid #f1f1f1'
+                borderBottom: '1px solid #f1f1f1',
+                cursor: 'pointer'
               }}>
                 About
               </a>
-              <a href="#" style={{
+              <a onClick={() => {onNavigate && onNavigate('resources'); setIsMenuOpen(false);}} style={{
                 display: 'block',
                 color: '#64748b',
                 textDecoration: 'none',
                 fontSize: '16px',
                 fontWeight: '500',
                 padding: '12px 0',
-                borderBottom: '1px solid #f1f1f1'
+                borderBottom: '1px solid #f1f1f1',
+                cursor: 'pointer'
               }}>
                 Resources
               </a>
-              <a href="#" style={{
+              <a onClick={() => {onNavigate && onNavigate('support'); setIsMenuOpen(false);}} style={{
                 display: 'block',
                 color: '#64748b',
                 textDecoration: 'none',
                 fontSize: '16px',
                 fontWeight: '500',
                 padding: '12px 0',
-                borderBottom: '1px solid #f1f1f1'
+                borderBottom: '1px solid #f1f1f1',
+                cursor: 'pointer'
               }}>
                 Support
               </a>
-              <button style={{
-                backgroundColor: '#1e40af',
-                color: 'white',
-                padding: '0.75rem 1.5rem',
-                borderRadius: '0.375rem',
-                border: 'none',
-                fontSize: '16px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                width: '100%',
-                marginTop: '12px'
-              }}>
+              <button 
+                onClick={() => {onNavigate && onNavigate('risk-assessment'); setIsMenuOpen(false);}}
+                style={{
+                  backgroundColor: '#1e40af',
+                  color: 'white',
+                  padding: '0.75rem 1.5rem',
+                  borderRadius: '0.375rem',
+                  border: 'none',
+                  fontSize: '16px',
+                  fontWeight: '600',
+                  cursor: 'pointer',
+                  width: '100%',
+                  marginTop: '12px'
+                }}
+              >
                 Get Started
               </button>
             </nav>
