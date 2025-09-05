@@ -8,6 +8,7 @@ import About from './components/About'
 import Resources from './components/Resources'
 import Support from './components/Support'
 import HowItWorks from './components/HowItWorks'
+import LifestylePrograms from './components/LifestylePrograms'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -99,7 +100,12 @@ function App() {
                 Am I at Risk?
               </button>
               <button 
-                onClick={() => setCurrentPage('how-it-works')}
+                onClick={() => {
+                  setCurrentPage('how-it-works');
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
+                }}
                 style={{
                   backgroundColor: 'transparent',
                   color: '#1e40af',
@@ -222,7 +228,12 @@ function App() {
             }}>
               {/* What is The Path? */}
               <div 
-                onClick={() => setCurrentPage('about')}
+                onClick={() => {
+                  setCurrentPage('about');
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
+                }}
                 style={{
                   textAlign: 'center',
                   backgroundColor: 'white',
@@ -276,7 +287,12 @@ function App() {
 
               {/* Get the Facts */}
               <div 
-                onClick={() => setCurrentPage('resources')}
+                onClick={() => {
+                  setCurrentPage('resources');
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
+                }}
                 style={{
                   textAlign: 'center',
                   backgroundColor: 'white',
@@ -395,6 +411,8 @@ function App() {
         <Support />
       ) : currentPage === 'how-it-works' ? (
         <HowItWorks />
+      ) : currentPage === 'lifestyle-programs' ? (
+        <LifestylePrograms />
       ) : (
         <div>Page not found</div>
       )}

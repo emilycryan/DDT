@@ -106,7 +106,7 @@ const Chatbot = ({ onNavigate }) => {
   // Check if user wants to take assessment (more specific now)
   const shouldRouteToAssessment = (userInput) => {
     const directAssessmentKeywords = [
-      'take assessment', 'take the assessment', 'start assessment', 'start the assessment',
+      'take assessment', 'take the assessment', 'take the risk assessment', 'start assessment', 'start the assessment',
       'i want to take', 'begin assessment', 'do the assessment', 'answer questions',
       'answer some questions', 'take test', 'start test'
     ];
@@ -138,6 +138,19 @@ const Chatbot = ({ onNavigate }) => {
     return riskKeywords.some(keyword => 
       userInput.toLowerCase().includes(keyword)
     ) && !shouldRouteToAssessment(userInput);
+  };
+
+  // Check if user wants to find lifestyle programs
+  const shouldRouteToPrograms = (userInput) => {
+    const programKeywords = [
+      'find prevention programs', 'find programs', 'lifestyle programs',
+      'prevention programs', 'local programs', 'find a program', 'program near me',
+      'diabetes prevention program', 'lifestyle change program'
+    ];
+    
+    return programKeywords.some(keyword => 
+      userInput.toLowerCase().includes(keyword)
+    );
   };
 
   useEffect(() => {
@@ -213,6 +226,7 @@ const Chatbot = ({ onNavigate }) => {
         // Route to assessment page after longer delay but keep chat open
         setTimeout(() => {
           if (onNavigate) {
+            console.log('Chatbot: Attempting to navigate to risk-assessment page');
             onNavigate('risk-assessment');
             // Scroll to the assessment selection section
             setTimeout(() => {
@@ -221,6 +235,51 @@ const Chatbot = ({ onNavigate }) => {
                 element.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }
             }, 100);
+          } else {
+            console.error('Chatbot: onNavigate function not available');
+          }
+        }, 3000);
+      }, 2000);
+      
+      setInputValue('');
+      return;
+    }
+
+    // Check if user wants to find programs
+    if (shouldRouteToPrograms(inputValue)) {
+      setIsTyping(true);
+      
+      // First message - announce the routing
+      const routingMessage1 = {
+        id: Date.now() + 1,
+        text: `Great idea${contextUpdate.userName ? `, ${contextUpdate.userName}` : ''}! I'll take you to our lifestyle change programs page where you can find CDC-recognized programs in your area.`,
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, routingMessage1]);
+      
+      // Add a pause and second message
+      setTimeout(() => {
+        const routingMessage2 = {
+          id: Date.now() + 2,
+          text: "Taking you there now... You'll be able to search for programs by location and choose between in-person, virtual, or on-demand options.",
+          sender: 'bot',
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, routingMessage2]);
+        setIsTyping(false);
+        
+        // Route to programs page after longer delay but keep chat open
+        setTimeout(() => {
+          if (onNavigate) {
+            console.log('Chatbot: Attempting to navigate to lifestyle-programs page');
+            onNavigate('lifestyle-programs');
+            // Scroll to top for programs page
+            setTimeout(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+          } else {
+            console.error('Chatbot: onNavigate function not available for programs');
           }
         }, 3000);
       }, 2000);
@@ -324,9 +383,10 @@ Key guidelines:
 
 Available resources to mention:
 - The risk assessment on this website for various chronic diseases
-- Local prevention programs
+- Local lifestyle change programs (CDC-recognized programs that reduce diabetes risk by 58%)
 - Educational videos and interactive tools
-- CDC prevention guidelines and recommendations`
+- CDC prevention guidelines and recommendations
+- In-person, virtual, and on-demand program options`
             },
             {
               role: 'user',
@@ -376,7 +436,7 @@ Available resources to mention:
     "Am I at risk for diabetes?",
     "Heart disease prevention", 
     "Take the risk assessment",
-    "Find local prevention programs"
+    "Find a program"
   ];
 
   const handleQuickAction = async (action) => {
@@ -423,6 +483,44 @@ Available resources to mention:
               if (element) {
                 element.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }
+            }, 100);
+          }
+        }, 3000);
+      }, 2000);
+      return;
+    }
+
+    // Check if this action should route to programs
+    if (shouldRouteToPrograms(action)) {
+      setIsTyping(true);
+      
+      // First message - announce the routing to programs
+      const routingMessage1 = {
+        id: Date.now() + 1,
+        text: "Perfect! I'll take you to our lifestyle change programs page where you can find CDC-recognized programs in your area.",
+        sender: 'bot',
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, routingMessage1]);
+      
+      // Add a pause and second message
+      setTimeout(() => {
+        const routingMessage2 = {
+          id: Date.now() + 2,
+          text: "Taking you there now... You'll find programs available in-person, virtually, or on-demand to fit your schedule and preferences.",
+          sender: 'bot',
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, routingMessage2]);
+        setIsTyping(false);
+        
+        // Route to programs page after longer delay but keep chat open
+        setTimeout(() => {
+          if (onNavigate) {
+            onNavigate('lifestyle-programs');
+            // Scroll to top for programs page
+            setTimeout(() => {
+              window.scrollTo({ top: 0, behavior: 'smooth' });
             }, 100);
           }
         }, 3000);

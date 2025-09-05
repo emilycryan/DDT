@@ -121,7 +121,14 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
             />
             <div style={{ minWidth: 0 }}>
               <div 
-                onClick={() => onNavigate && onNavigate('home')}
+                onClick={() => {
+                  if (onNavigate) {
+                    onNavigate('home');
+                    setTimeout(() => {
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 100);
+                  }
+                }}
                 style={{
                   fontSize: isMobile ? '18px' : '24px',
                   fontWeight: 'bold',
@@ -153,7 +160,14 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
             display: isMobile ? 'none' : 'flex', 
             gap: '30px' 
           }}>
-            <a onClick={() => onNavigate && onNavigate('about')} style={{
+            <a onClick={() => {
+              if (onNavigate) {
+                onNavigate('about');
+                setTimeout(() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 100);
+              }
+            }} style={{
               color: '#64748b',
               textDecoration: 'none',
               fontSize: '16px',
@@ -163,7 +177,14 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
             }}>
               About
             </a>
-            <a onClick={() => onNavigate && onNavigate('resources')} style={{
+            <a onClick={() => {
+              if (onNavigate) {
+                onNavigate('resources');
+                setTimeout(() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 100);
+              }
+            }} style={{
               color: '#64748b',
               textDecoration: 'none',
               fontSize: '16px',
@@ -173,7 +194,14 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
             }}>
               Resources
             </a>
-            <a onClick={() => onNavigate && onNavigate('support')} style={{
+            <a onClick={() => {
+              if (onNavigate) {
+                onNavigate('support');
+                setTimeout(() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 100);
+              }
+            }} style={{
               color: '#64748b',
               textDecoration: 'none',
               fontSize: '16px',
@@ -238,7 +266,15 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
               margin: '0 auto',
               padding: '15px'
             }}>
-              <a onClick={() => {onNavigate && onNavigate('about'); setIsMenuOpen(false);}} style={{
+              <a onClick={() => {
+                if (onNavigate) {
+                  onNavigate('about');
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
+                }
+                setIsMenuOpen(false);
+              }} style={{
                 display: 'block',
                 color: '#64748b',
                 textDecoration: 'none',
@@ -250,7 +286,15 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
               }}>
                 About
               </a>
-              <a onClick={() => {onNavigate && onNavigate('resources'); setIsMenuOpen(false);}} style={{
+              <a onClick={() => {
+                if (onNavigate) {
+                  onNavigate('resources');
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
+                }
+                setIsMenuOpen(false);
+              }} style={{
                 display: 'block',
                 color: '#64748b',
                 textDecoration: 'none',
@@ -262,7 +306,15 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
               }}>
                 Resources
               </a>
-              <a onClick={() => {onNavigate && onNavigate('support'); setIsMenuOpen(false);}} style={{
+              <a onClick={() => {
+                if (onNavigate) {
+                  onNavigate('support');
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
+                }
+                setIsMenuOpen(false);
+              }} style={{
                 display: 'block',
                 color: '#64748b',
                 textDecoration: 'none',
