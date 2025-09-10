@@ -361,7 +361,7 @@ const Chatbot = ({ onNavigate }) => {
           messages: [
             {
               role: 'system',
-              content: `You are a Chronic Disease Prevention Assistant for the CDC's Path to Prevention program. You help people learn about preventing chronic diseases including diabetes, heart disease, stroke, COPD, and obesity.${contextString}
+              content: `You are a Chronic Disease Prevention Assistant for the CDC: Path2Prevention program. You help people learn about preventing chronic diseases including diabetes, heart disease, stroke, COPD, and obesity.${contextString}
 
 Key guidelines:
 - Provide evidence-based health information

@@ -1,6 +1,6 @@
-# DDT Application
+# CDC: Path2Prevention Application
 
-A prototype for the new CDC P2P Reimagining
+A prototype for the new CDC: Path2Prevention platform
 
 ## Getting Started
 

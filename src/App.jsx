@@ -60,7 +60,7 @@ function App() {
               marginBottom: '1.5rem',
               margin: '0 0 1.5rem 0'
             }}>
-              Start Your Path to Prevention
+              Start Your CDC: Path2Prevention
             </h1>
 
             {/* Description */}
@@ -72,7 +72,7 @@ function App() {
               maxWidth: '500px',
               margin: isMobile ? '0 auto 2rem auto' : '0 0 2rem 0'
             }}>
-              Get started on your path to preventing chronic diseases here. Find videos, interactive tools, and personalized information to help you learn more about preventing conditions like heart disease, stroke, diabetes, COPD, and obesity in your life.
+              Get started on your CDC: Path2Prevention journey to prevent chronic diseases. Find videos, interactive tools, and personalized information to help you learn more about preventing conditions like heart disease, stroke, diabetes, COPD, and obesity in your life.
             </p>
 
             {/* CTA Buttons */}
@@ -159,7 +159,7 @@ function App() {
               marginBottom: '1rem',
               margin: '0 0 1rem 0'
             }}>
-              Why Path to Prevention?
+              Why CDC: Path2Prevention?
             </h3>
 
             <p style={{
@@ -169,7 +169,7 @@ function App() {
               marginBottom: '1.5rem',
               margin: '0 0 1.5rem 0'
             }}>
-              Path to Prevention is an online resource for people who may be at risk for developing chronic diseases. Find videos, games, and other personalized information to help you learn more about prevention.
+              CDC: Path2Prevention is an online resource for people who may be at risk for developing chronic diseases. Find videos, games, and other personalized information to help you learn more about prevention.
             </p>
 
             <div style={{
@@ -217,7 +217,7 @@ function App() {
               maxWidth: '600px',
               margin: '0 auto 3rem auto'
             }}>
-              Click into a section below to find videos, interactive games, and more to start on your Path to Prevention.
+              Click into a section below to find videos, interactive games, and more to start on your CDC: Path2Prevention.
             </p>
 
             {/* Three Column Features */}

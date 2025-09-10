@@ -140,7 +140,7 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
                   cursor: 'pointer'
                 }}
               >
-                Path 2 Prevention
+                CDC: Path2Prevention
               </div>
               <div style={{
                 fontSize: isMobile ? '12px' : '14px',

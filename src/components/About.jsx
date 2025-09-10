@@ -20,7 +20,7 @@ const About = () => {
           marginBottom: '1.5rem',
           margin: '0 0 1.5rem 0'
         }}>
-          About Path to Prevention
+          About CDC: Path2Prevention
         </h1>
 
         <p style={{

@@ -15,7 +15,7 @@ app.use(express.json());
 // Sample API endpoint
 app.get('/api/hello', (req, res) => {
   res.json({ 
-    message: 'Hello from DDT API!',
+    message: 'Hello from CDC: Path2Prevention API!',
     timestamp: new Date().toISOString()
   });
 });
@@ -24,7 +24,7 @@ app.get('/api/hello', (req, res) => {
 app.get('/api/health', (req, res) => {
   res.json({ 
     status: 'OK',
-    service: 'DDT API',
+    service: 'CDC: Path2Prevention API',
     timestamp: new Date().toISOString()
   });
 });
@@ -50,7 +50,7 @@ app.post('/api/data', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 DDT API server running on http://localhost:${PORT}`);
+  console.log(`🚀 CDC: Path2Prevention API server running on http://localhost:${PORT}`);
   console.log('Available endpoints:');
   console.log(`  GET  http://localhost:${PORT}/api/hello`);
   console.log(`  GET  http://localhost:${PORT}/api/health`);
