@@ -40,7 +40,18 @@ export default async function handler(req, res) {
       `;
 
       // Get row count
-      const count = await sql.unsafe(`SELECT COUNT(*) as count FROM ${table.tablename}`);
+      let count;
+      if (table.tablename === 'programs') {
+        count = await sql`SELECT COUNT(*) as count FROM programs`;
+      } else if (table.tablename === 'program_locations') {
+        count = await sql`SELECT COUNT(*) as count FROM program_locations`;
+      } else if (table.tablename === 'program_details') {
+        count = await sql`SELECT COUNT(*) as count FROM program_details`;
+      } else if (table.tablename === 'assessment_results') {
+        count = await sql`SELECT COUNT(*) as count FROM assessment_results`;
+      } else {
+        count = { rows: [{ count: 0 }] };
+      }
 
       tableStructures[table.tablename] = {
         columns: columns.rows,
