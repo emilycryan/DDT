@@ -622,7 +622,7 @@ Available resources to mention:
         }}>
           {/* Header */}
           <div style={{
-            backgroundColor: '#1e40af',
+            backgroundColor: 'var(--mood-dark-navy)',
             color: 'white',
             padding: '16px',
             borderTopLeftRadius: '12px',
@@ -632,10 +632,10 @@ Available resources to mention:
             alignItems: 'center'
           }}>
             <div>
-              <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '600', color: '#e0f2fe' }}>
+              <h3 style={{ margin: 0, fontSize: '16px', fontWeight: '600', color: 'white' }}>
                 Prevention Assistant
               </h3>
-              <p style={{ margin: 0, fontSize: '12px', opacity: 0.9, color: '#bfdbfe' }}>
+              <p style={{ margin: 0, fontSize: '12px', opacity: 0.8, color: 'white' }}>
                 Ask me about chronic disease prevention
               </p>
             </div>
@@ -677,7 +677,7 @@ Available resources to mention:
                   }}
                 >
                   <div style={{
-                    backgroundColor: message.sender === 'user' ? '#1e40af' : '#f1f5f9',
+                    backgroundColor: message.sender === 'user' ? 'var(--mood-dark-navy)' : '#f1f5f9',
                     color: message.sender === 'user' ? 'white' : '#334155',
                     padding: '12px 16px',
                     borderRadius: '18px',
@@ -827,7 +827,7 @@ Available resources to mention:
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim()}
                 style={{
-                  backgroundColor: inputValue.trim() ? '#1e40af' : '#94a3b8',
+                  backgroundColor: inputValue.trim() ? 'var(--mood-dark-navy)' : '#94a3b8',
                   color: 'white',
                   border: 'none',
                   borderRadius: '50%',
@@ -858,7 +858,7 @@ Available resources to mention:
           right: '20px',
           width: '60px',
           height: '60px',
-          backgroundColor: '#1e40af',
+          backgroundColor: 'var(--mood-dark-navy)',
           color: 'white',
           border: 'none',
           borderRadius: '50%',
@@ -874,13 +874,13 @@ Available resources to mention:
         onMouseOver={(e) => {
           if (!isOpen) {
             e.target.style.transform = 'scale(1.1)';
-            e.target.style.backgroundColor = '#1e3a8a';
+            e.target.style.filter = 'brightness(1.1)';
           }
         }}
         onMouseOut={(e) => {
           if (!isOpen) {
             e.target.style.transform = 'scale(1)';
-            e.target.style.backgroundColor = '#1e40af';
+            e.target.style.filter = 'brightness(1)';
           }
         }}
       >

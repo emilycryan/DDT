@@ -20,8 +20,8 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
     <>
       {/* Official US Government Banner */}
       <div style={{
-        backgroundColor: '#f1f1f1',
-        borderBottom: '1px solid #d6d7d9',
+        backgroundColor: 'var(--neutral-off-white)',
+        borderBottom: '1px solid var(--neutral-light-grey)',
         fontSize: '13px',
         padding: '8px 0'
       }}>
@@ -76,18 +76,19 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
             <circle cx="7" cy="4" r="0.3" fill="white"/>
             <circle cx="7" cy="5" r="0.3" fill="white"/>
           </svg>
-          <span style={{ color: '#5a5a5a' }}>
+          <span style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
             An official website of the United States government
           </span>
           <button style={{
             background: 'none',
             border: 'none',
-            color: '#0071bc',
+            color: 'var(--primary-dark)',
             textDecoration: 'underline',
             cursor: 'pointer',
             fontSize: '13px',
             padding: '0',
-            marginLeft: '8px'
+            marginLeft: '8px',
+            fontFamily: 'var(--font-body)'
           }}>
             Here's how you know
           </button>
@@ -96,8 +97,8 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
 
       {/* CDC Header */}
       <header style={{
-        backgroundColor: '#fff',
-        borderBottom: '1px solid #d6d7d9',
+        backgroundColor: 'var(--bg-primary)',
+        borderBottom: '1px solid var(--neutral-light-grey)',
         padding: '15px 0',
         position: 'relative'
       }}>
@@ -131,8 +132,9 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
                 }}
                 style={{
                   fontSize: isMobile ? '18px' : '24px',
-                  fontWeight: 'bold',
-                  color: '#0071bc',
+                  fontFamily: 'var(--font-header)',
+                  fontWeight: '700',
+                  color: 'var(--primary-dark)',
                   lineHeight: '1.2',
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
@@ -144,7 +146,8 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
               </div>
               <div style={{
                 fontSize: isMobile ? '12px' : '14px',
-                color: '#666',
+                fontFamily: 'var(--font-body)',
+                color: 'var(--text-secondary)',
                 lineHeight: '1.2',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
@@ -168,9 +171,10 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
                 }, 100);
               }
             }} style={{
-              color: '#64748b',
+              color: 'var(--text-secondary)',
               textDecoration: 'none',
               fontSize: '16px',
+              fontFamily: 'var(--font-body)',
               fontWeight: '500',
               whiteSpace: 'nowrap',
               cursor: 'pointer'
@@ -185,9 +189,10 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
                 }, 100);
               }
             }} style={{
-              color: '#64748b',
+              color: 'var(--text-secondary)',
               textDecoration: 'none',
               fontSize: '16px',
+              fontFamily: 'var(--font-body)',
               fontWeight: '500',
               whiteSpace: 'nowrap',
               cursor: 'pointer'
@@ -202,9 +207,10 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
                 }, 100);
               }
             }} style={{
-              color: '#64748b',
+              color: 'var(--text-secondary)',
               textDecoration: 'none',
               fontSize: '16px',
+              fontFamily: 'var(--font-body)',
               fontWeight: '500',
               whiteSpace: 'nowrap',
               cursor: 'pointer'
@@ -242,7 +248,7 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
             }}
             aria-label="Toggle navigation menu"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="#0071bc">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-dark)">
               <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </button>
@@ -255,8 +261,8 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
             top: '100%',
             left: 0,
             right: 0,
-            backgroundColor: '#fff',
-            borderBottom: '1px solid #d6d7d9',
+            backgroundColor: 'var(--bg-primary)',
+            borderBottom: '1px solid var(--neutral-light-grey)',
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
             zIndex: 1000,
             display: isMobile ? 'block' : 'none'
@@ -281,7 +287,7 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
                 fontSize: '16px',
                 fontWeight: '500',
                 padding: '12px 0',
-                borderBottom: '1px solid #f1f1f1',
+                borderBottom: '1px solid var(--neutral-off-white)',
                 cursor: 'pointer'
               }}>
                 About
@@ -301,7 +307,7 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
                 fontSize: '16px',
                 fontWeight: '500',
                 padding: '12px 0',
-                borderBottom: '1px solid #f1f1f1',
+                borderBottom: '1px solid var(--neutral-off-white)',
                 cursor: 'pointer'
               }}>
                 Resources
@@ -321,7 +327,7 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
                 fontSize: '16px',
                 fontWeight: '500',
                 padding: '12px 0',
-                borderBottom: '1px solid #f1f1f1',
+                borderBottom: '1px solid var(--neutral-off-white)',
                 cursor: 'pointer'
               }}>
                 Support

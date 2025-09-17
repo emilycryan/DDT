@@ -14,7 +14,7 @@ const RiskAssessment = () => {
 
   return (
     <main style={{ 
-      backgroundColor: '#f8fafc',
+      backgroundColor: 'var(--bg-secondary)',
       minHeight: '80vh'
     }}>
       {/* Hero Section */}
@@ -27,8 +27,9 @@ const RiskAssessment = () => {
         {/* Main Heading */}
         <h1 style={{
           fontSize: isMobile ? '2.25rem' : '3rem',
-          fontWeight: 'bold',
-          color: '#1e293b',
+          fontFamily: 'var(--font-header)',
+          fontWeight: '800',
+          color: 'var(--text-primary)',
           lineHeight: '1.1',
           marginBottom: '1.5rem',
           margin: '0 0 1.5rem 0'
@@ -39,7 +40,8 @@ const RiskAssessment = () => {
         {/* Description */}
         <p style={{
           fontSize: isMobile ? '1rem' : '1.125rem',
-          color: '#64748b',
+          fontFamily: 'var(--font-body)',
+          color: 'var(--text-secondary)',
           lineHeight: '1.6',
           marginBottom: '2rem',
           maxWidth: '600px',
@@ -60,15 +62,8 @@ const RiskAssessment = () => {
                 element.scrollIntoView({ behavior: 'smooth', block: 'start' });
               }
             }}
+            className="btn btn-primary"
             style={{
-              backgroundColor: '#1e40af',
-              color: 'white',
-              padding: '1rem 2rem',
-              borderRadius: '0.5rem',
-              border: 'none',
-              fontSize: '1rem',
-              fontWeight: '600',
-              cursor: 'pointer',
               minWidth: '200px'
             }}
           >
@@ -81,7 +76,7 @@ const RiskAssessment = () => {
       <section 
         id="assessment-selection"
         style={{
-          backgroundColor: 'white',
+          backgroundColor: 'var(--bg-primary)',
           padding: isMobile ? '3rem 1rem' : '4rem 2rem',
           textAlign: 'center'
         }}
@@ -92,8 +87,9 @@ const RiskAssessment = () => {
         }}>
           <h2 style={{
             fontSize: isMobile ? '2rem' : '2.5rem',
-            fontWeight: 'bold',
-            color: '#1e293b',
+            fontFamily: 'var(--font-header)',
+            fontWeight: '700',
+            color: 'var(--text-primary)',
             marginBottom: '1rem',
             margin: '0 0 1rem 0'
           }}>
@@ -102,7 +98,8 @@ const RiskAssessment = () => {
 
           <p style={{
             fontSize: '1.125rem',
-            color: '#64748b',
+            fontFamily: 'var(--font-body)',
+            color: 'var(--text-secondary)',
             marginBottom: '3rem',
             maxWidth: '600px',
             margin: '0 auto 3rem auto'
@@ -118,31 +115,17 @@ const RiskAssessment = () => {
           }}>
             {/* For Myself - Concerned */}
             <div 
+              className="card"
               style={{
                 textAlign: 'center',
-                backgroundColor: 'white',
                 padding: '2rem',
-                borderRadius: '0.75rem',
-                border: '1px solid #e2e8f0',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
-                e.currentTarget.style.borderColor = '#1e40af';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.borderColor = '#e2e8f0';
+                cursor: 'pointer'
               }}
             >
               <div style={{
                 width: '60px',
                 height: '60px',
-                backgroundColor: '#1e40af',
+                backgroundColor: 'var(--mood-dark-navy)',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
@@ -155,8 +138,9 @@ const RiskAssessment = () => {
               </div>
               <h3 style={{
                 fontSize: '1.25rem',
-                fontWeight: 'bold',
-                color: '#1e293b',
+                fontFamily: 'var(--font-header)',
+                fontWeight: '600',
+                color: 'var(--text-primary)',
                 marginBottom: '1rem',
                 margin: '0 0 1rem 0'
               }}>
@@ -164,7 +148,8 @@ const RiskAssessment = () => {
               </h3>
               <p style={{
                 fontSize: '0.95rem',
-                color: '#64748b',
+                fontFamily: 'var(--font-body)',
+                color: 'var(--text-secondary)',
                 lineHeight: '1.5',
                 margin: 0
               }}>
@@ -174,31 +159,17 @@ const RiskAssessment = () => {
 
             {/* For Someone Else - Caregiver */}
             <div 
+              className="card"
               style={{
                 textAlign: 'center',
-                backgroundColor: 'white',
                 padding: '2rem',
-                borderRadius: '0.75rem',
-                border: '1px solid #e2e8f0',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
-                e.currentTarget.style.borderColor = '#059669';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.borderColor = '#e2e8f0';
+                cursor: 'pointer'
               }}
             >
               <div style={{
                 width: '60px',
                 height: '60px',
-                backgroundColor: '#059669',
+                backgroundColor: 'var(--mood-golden-yellow)',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
@@ -211,8 +182,9 @@ const RiskAssessment = () => {
               </div>
               <h3 style={{
                 fontSize: '1.25rem',
-                fontWeight: 'bold',
-                color: '#1e293b',
+                fontFamily: 'var(--font-header)',
+                fontWeight: '600',
+                color: 'var(--text-primary)',
                 marginBottom: '1rem',
                 margin: '0 0 1rem 0'
               }}>
@@ -220,7 +192,8 @@ const RiskAssessment = () => {
               </h3>
               <p style={{
                 fontSize: '0.95rem',
-                color: '#64748b',
+                fontFamily: 'var(--font-body)',
+                color: 'var(--text-secondary)',
                 lineHeight: '1.5',
                 margin: 0
               }}>
@@ -230,31 +203,17 @@ const RiskAssessment = () => {
 
             {/* Just Curious - Denial Friendly */}
             <div 
+              className="card"
               style={{
                 textAlign: 'center',
-                backgroundColor: 'white',
                 padding: '2rem',
-                borderRadius: '0.75rem',
-                border: '1px solid #e2e8f0',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-4px)';
-                e.currentTarget.style.boxShadow = '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)';
-                e.currentTarget.style.borderColor = '#0ea5e9';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-                e.currentTarget.style.borderColor = '#e2e8f0';
+                cursor: 'pointer'
               }}
             >
               <div style={{
                 width: '60px',
                 height: '60px',
-                backgroundColor: '#0ea5e9',
+                backgroundColor: 'var(--mood-dark-grey)',
                 borderRadius: '50%',
                 display: 'flex',
                 alignItems: 'center',
@@ -267,8 +226,9 @@ const RiskAssessment = () => {
               </div>
               <h3 style={{
                 fontSize: '1.25rem',
-                fontWeight: 'bold',
-                color: '#1e293b',
+                fontFamily: 'var(--font-header)',
+                fontWeight: '600',
+                color: 'var(--text-primary)',
                 marginBottom: '1rem',
                 margin: '0 0 1rem 0'
               }}>
@@ -276,7 +236,8 @@ const RiskAssessment = () => {
               </h3>
               <p style={{
                 fontSize: '0.95rem',
-                color: '#64748b',
+                fontFamily: 'var(--font-body)',
+                color: 'var(--text-secondary)',
                 lineHeight: '1.5',
                 margin: 0
               }}>
@@ -286,17 +247,15 @@ const RiskAssessment = () => {
           </div>
 
           {/* Additional Info */}
-          <div style={{
+          <div className="quote-card" style={{
             marginTop: '3rem',
-            backgroundColor: '#f8fafc',
-            padding: '2rem',
-            borderRadius: '0.75rem',
-            border: '1px solid #e2e8f0'
+            padding: '2rem'
           }}>
             <h3 style={{
               fontSize: '1.25rem',
-              fontWeight: 'bold',
-              color: '#1e293b',
+              fontFamily: 'var(--font-header)',
+              fontWeight: '600',
+              color: 'var(--text-primary)',
               marginBottom: '1rem',
               margin: '0 0 1rem 0'
             }}>
@@ -312,7 +271,8 @@ const RiskAssessment = () => {
                 <h4 style={{
                   fontSize: '1rem',
                   fontWeight: '600',
-                  color: '#1e40af',
+                  fontFamily: 'var(--font-header)',
+                  color: 'var(--primary-dark)',
                   marginBottom: '0.5rem',
                   margin: '0 0 0.5rem 0'
                 }}>
@@ -320,7 +280,8 @@ const RiskAssessment = () => {
                 </h4>
                 <p style={{
                   fontSize: '0.875rem',
-                  color: '#64748b',
+                  fontFamily: 'var(--font-body)',
+                  color: 'var(--text-secondary)',
                   margin: 0
                 }}>
                   Answer questions about your health, lifestyle, and family history.
@@ -330,7 +291,8 @@ const RiskAssessment = () => {
                 <h4 style={{
                   fontSize: '1rem',
                   fontWeight: '600',
-                  color: '#1e40af',
+                  fontFamily: 'var(--font-header)',
+                  color: 'var(--primary-dark)',
                   marginBottom: '0.5rem',
                   margin: '0 0 0.5rem 0'
                 }}>
@@ -338,7 +300,8 @@ const RiskAssessment = () => {
                 </h4>
                 <p style={{
                   fontSize: '0.875rem',
-                  color: '#64748b',
+                  fontFamily: 'var(--font-body)',
+                  color: 'var(--text-secondary)',
                   margin: 0
                 }}>
                   Receive personalized risk assessment and prevention recommendations.
@@ -348,7 +311,8 @@ const RiskAssessment = () => {
                 <h4 style={{
                   fontSize: '1rem',
                   fontWeight: '600',
-                  color: '#1e40af',
+                  fontFamily: 'var(--font-header)',
+                  color: 'var(--primary-dark)',
                   marginBottom: '0.5rem',
                   margin: '0 0 0.5rem 0'
                 }}>
@@ -356,7 +320,8 @@ const RiskAssessment = () => {
                 </h4>
                 <p style={{
                   fontSize: '0.875rem',
-                  color: '#64748b',
+                  fontFamily: 'var(--font-body)',
+                  color: 'var(--text-secondary)',
                   margin: 0
                 }}>
                   Access resources, programs, and tools to support your prevention journey.
