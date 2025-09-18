@@ -108,7 +108,7 @@ const Chatbot = ({ onNavigate }) => {
     const directAssessmentKeywords = [
       'take assessment', 'take the assessment', 'take the risk assessment', 'start assessment', 'start the assessment',
       'i want to take', 'begin assessment', 'do the assessment', 'answer questions',
-      'answer some questions', 'take test', 'start test'
+      'answer some questions', 'take test', 'start test','quiz', 'take quiz','test', 'start test', 'take test'
     ];
     
     return directAssessmentKeywords.some(keyword => 
@@ -386,7 +386,7 @@ Available resources to mention:
 - Local lifestyle change programs (CDC-recognized programs that reduce diabetes risk by 58%)
 - Educational videos and interactive tools
 - CDC prevention guidelines and recommendations
-- In-person, virtual, and on-demand program options`
+- In-person, hybrid,virtual, and on-demand program options`
             },
             {
               role: 'user',
