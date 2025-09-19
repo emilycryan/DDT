@@ -1,4 +1,8 @@
+import dotenv from 'dotenv';
 import { initializeDatabase, sql } from '../lib/db.js';
+
+// Load environment variables from .env.local
+dotenv.config({ path: '.env.local' });
 
 async function testDatabase() {
   try {

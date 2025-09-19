@@ -153,6 +153,79 @@ const Chatbot = ({ onNavigate }) => {
     );
   };
 
+  // Check if user is asking about a specific program or organization
+  const shouldSearchPrograms = (userInput) => {
+    const input = userInput.toLowerCase();
+    const searchKeywords = [
+      'tell me about', 'more about', 'information about', 'details about',
+      'what is', 'describe', 'explain', 'lci', 'community health center',
+      'health center', 'medical center', 'clinic', 'hospital'
+    ];
+    
+    // Check if user mentions a program-related search
+    return searchKeywords.some(keyword => input.includes(keyword)) && 
+           (input.includes('program') || input.includes('center') || input.includes('lci') || 
+            input.includes('clinic') || input.includes('hospital') || input.includes('organization'));
+  };
+
+  // Function to search for programs via API
+  const searchProgramsFromDatabase = async (searchTerm) => {
+    try {
+      const response = await fetch(`http://localhost:3004/api/programs/search-by-name?name=${encodeURIComponent(searchTerm)}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch programs');
+      }
+      const data = await response.json();
+      return data.programs || [];
+    } catch (error) {
+      console.error('Error searching programs:', error);
+      return [];
+    }
+  };
+
+  // Function to format program information for chat display
+  const formatProgramInfo = (program) => {
+    let info = `${program.organization_name}\n\n`;
+    
+    if (program.description) {
+      info += `${program.description}\n\n`;
+    }
+    
+    info += `📍 Location: ${program.city}, ${program.state} ${program.zip_code}\n`;
+    
+    if (program.delivery_mode) {
+      info += `🏥 Delivery: ${program.delivery_mode}\n`;
+    }
+    
+    if (program.cost) {
+      info += `💰 Cost: $${program.cost}\n`;
+    }
+    
+    if (program.duration_weeks) {
+      info += `📅 Duration: ${program.duration_weeks} weeks\n`;
+    }
+    
+    if (program.class_schedule) {
+      info += `🕐 Schedule: ${program.class_schedule}\n`;
+    }
+    
+    if (program.enrollment_status) {
+      const statusEmoji = program.enrollment_status === 'open' ? '✅' : 
+                         program.enrollment_status === 'closed' ? '❌' : '⏳';
+      info += `${statusEmoji} Status: ${program.enrollment_status}\n`;
+    }
+    
+    if (program.contact_phone) {
+      info += `📞 Phone: ${program.contact_phone}\n`;
+    }
+    
+    if (program.contact_email) {
+      info += `📧 Email: ${program.contact_email}\n`;
+    }
+    
+    return info;
+  };
+
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -241,6 +314,75 @@ const Chatbot = ({ onNavigate }) => {
         }, 3000);
       }, 2000);
       
+      setInputValue('');
+      return;
+    }
+
+    // Check if user is asking about specific programs first
+    if (shouldSearchPrograms(inputValue)) {
+      setIsTyping(true);
+      
+      // Extract search term from user input
+      let searchTerm = inputValue.toLowerCase()
+        .replace(/tell me about|more about|information about|details about|what is|describe|explain/g, '')
+        .replace(/program|center|clinic|hospital|organization/g, '')
+        .trim();
+      
+      // If user mentions LCI specifically, search for community health centers
+      if (inputValue.toLowerCase().includes('lci')) {
+        searchTerm = 'community health center';
+      }
+      
+      try {
+        const programs = await searchProgramsFromDatabase(searchTerm);
+        
+        if (programs.length > 0) {
+          // Show the first program found
+          const program = programs[0];
+          const programInfo = formatProgramInfo(program);
+          
+          const responseMessage = {
+            id: Date.now() + 1,
+            text: `Here's information about ${program.organization_name}:\n\n${programInfo}`,
+            sender: 'bot',
+            timestamp: new Date()
+          };
+          setMessages(prev => [...prev, responseMessage]);
+          
+          // If multiple programs found, mention them
+          if (programs.length > 1) {
+            setTimeout(() => {
+              const additionalMessage = {
+                id: Date.now() + 2,
+                text: `I found ${programs.length} programs matching your search. Would you like information about the other programs, or would you like to search for programs in a specific location?`,
+                sender: 'bot',
+                timestamp: new Date()
+              };
+              setMessages(prev => [...prev, additionalMessage]);
+            }, 1000);
+          }
+        } else {
+          const noResultsMessage = {
+            id: Date.now() + 1,
+            text: `I couldn't find any programs matching "${searchTerm}". Would you like me to help you search for programs in your area instead? I can help you find CDC-recognized diabetes prevention programs.`,
+            sender: 'bot',
+            timestamp: new Date()
+          };
+          setMessages(prev => [...prev, noResultsMessage]);
+        }
+        
+      } catch (error) {
+        console.error('Error searching programs:', error);
+        const errorMessage = {
+          id: Date.now() + 1,
+          text: "I'm having trouble accessing the program database right now. Let me take you to our programs page where you can search directly.",
+          sender: 'bot',
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, errorMessage]);
+      }
+      
+      setIsTyping(false);
       setInputValue('');
       return;
     }
