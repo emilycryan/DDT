@@ -183,6 +183,103 @@ const Chatbot = ({ onNavigate }) => {
     }
   };
 
+  // Function to perform semantic search using vector embeddings
+  const performSemanticSearch = async (query, conversationHistory = []) => {
+    try {
+      const response = await fetch('http://localhost:3004/api/programs/semantic-search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query,
+          conversation_history: conversationHistory,
+          limit: 5
+        })
+      });
+      
+      if (!response.ok) {
+        throw new Error('Failed to perform semantic search');
+      }
+      
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error performing semantic search:', error);
+      return null;
+    }
+  };
+
+  // Function to search programs by delivery mode (fallback)
+  const searchProgramsByDeliveryMode = async (deliveryMode) => {
+    try {
+      const response = await fetch(`http://localhost:3004/api/programs/all`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch programs');
+      }
+      const data = await response.json();
+      
+      // Filter by delivery mode
+      const filteredPrograms = data.programs.filter(program => 
+        program.delivery_mode && program.delivery_mode.toLowerCase() === deliveryMode.toLowerCase()
+      );
+      
+      return filteredPrograms || [];
+    } catch (error) {
+      console.error('Error searching programs by delivery mode:', error);
+      return [];
+    }
+  };
+
+  // Function to detect if user is asking for specific delivery mode
+  const detectDeliveryModeRequest = (userInput) => {
+    const input = userInput.toLowerCase();
+    
+    if (input.includes('hybrid') || input.includes('combination') || input.includes('mixed')) {
+      return 'hybrid';
+    }
+    if (input.includes('in-person') || input.includes('in person') || input.includes('face to face') || input.includes('face-to-face')) {
+      return 'in-person';
+    }
+    if (input.includes('virtual') || input.includes('online') || input.includes('remote')) {
+      return 'virtual-live';
+    }
+    
+    return null;
+  };
+
+  // Function to render formatted text with bold support
+  const renderFormattedText = (text) => {
+    if (!text) return null;
+    
+    // Split text by newlines and process each line
+    const lines = text.split('\n');
+    
+    return lines.map((line, lineIndex) => {
+      // Skip empty lines but preserve spacing
+      if (line.trim() === '') {
+        return <div key={lineIndex} style={{ height: '0.8em' }}></div>;
+      }
+      
+      // Process bold formatting **text** -> <strong>text</strong>
+      const parts = line.split(/\*\*(.*?)\*\*/g);
+      
+      const formattedLine = parts.map((part, partIndex) => {
+        // Every odd index is between ** markers, so should be bold
+        if (partIndex % 2 === 1) {
+          return <strong key={partIndex} style={{ fontWeight: '700', color: 'inherit' }}>{part}</strong>;
+        }
+        return part;
+      });
+      
+      return (
+        <div key={lineIndex} style={{ marginBottom: lineIndex < lines.length - 1 ? '0.2em' : '0' }}>
+          {formattedLine}
+        </div>
+      );
+    });
+  };
+
   // Function to format program information for chat display
   const formatProgramInfo = (program) => {
     let info = `${program.organization_name}\n\n`;
@@ -318,7 +415,113 @@ const Chatbot = ({ onNavigate }) => {
       return;
     }
 
-    // Check if user is asking about specific programs first
+    // Check if user is asking about programs using semantic search
+    const programKeywords = ['program', 'class', 'course', 'prevention', 'diabetes', 'hybrid', 'virtual', 'in-person', 'online', 'help me find', 'looking for', 'need', 'want'];
+    const isAboutPrograms = programKeywords.some(keyword => inputValue.toLowerCase().includes(keyword));
+    
+    if (isAboutPrograms) {
+      console.log('Chatbot Debug: Detected program-related query, using semantic search');
+      setIsTyping(true);
+      
+      try {
+        // Use semantic search with conversation context
+        const conversationContext = userState.conversationContext || [];
+        const searchResult = await performSemanticSearch(inputValue, conversationContext);
+        
+        if (searchResult && searchResult.results && searchResult.results.length > 0) {
+          const programs = searchResult.results;
+          const intentAnalysis = searchResult.intent_analysis;
+          
+          // Show up to 3 most relevant programs
+          const programsToShow = programs.slice(0, 3);
+          let responseText = `I found some great programs that match what you're looking for:\n\n`;
+          
+          programsToShow.forEach((program, index) => {
+            responseText += `${index + 1}. **${program.organization_name}**\n`;
+            responseText += `📍 ${program.city}, ${program.state}\n`;
+            if (program.delivery_mode) responseText += `🏥 Format: ${program.delivery_mode}\n`;
+            if (program.cost) responseText += `💰 Cost: $${program.cost}\n`;
+            if (program.duration_weeks) responseText += `📅 Duration: ${program.duration_weeks} weeks\n`;
+            if (program.similarity) responseText += `🎯 Match score: ${Math.round(program.similarity * 100)}%\n`;
+            responseText += `\n`;
+          });
+          
+          // Add intelligent follow-up questions based on intent analysis
+          if (intentAnalysis && intentAnalysis.questions_to_ask && intentAnalysis.questions_to_ask.length > 0) {
+            const followUpQuestion = intentAnalysis.questions_to_ask[0];
+            responseText += `To help me find the perfect program for you: ${followUpQuestion}`;
+          } else {
+            responseText += `Would you like more details about any of these programs, or shall I help you narrow down the options?`;
+          }
+          
+          // Generate smart quick options based on the search results
+          let quickOptions = ["Tell me more about these programs", "Help me choose"];
+          
+          // Add context-specific options
+          const deliveryModes = [...new Set(programs.map(p => p.delivery_mode).filter(Boolean))];
+          if (deliveryModes.length > 1) {
+            quickOptions.push(`Compare ${deliveryModes.join(' vs ')}`);
+          }
+          
+          const locations = [...new Set(programs.map(p => p.city).filter(Boolean))];
+          if (locations.length > 1) {
+            quickOptions.push("Filter by location");
+          }
+          
+          quickOptions.push("Take risk assessment");
+          
+          const responseMessage = {
+            id: Date.now() + 1,
+            text: responseText,
+            sender: 'bot',
+            timestamp: new Date(),
+            quickOptions: quickOptions.slice(0, 4) // Limit to 4 options
+          };
+          setMessages(prev => [...prev, responseMessage]);
+          
+        } else {
+          // Fallback to delivery mode search if semantic search fails
+          const requestedDeliveryMode = detectDeliveryModeRequest(inputValue);
+          if (requestedDeliveryMode) {
+            const programs = await searchProgramsByDeliveryMode(requestedDeliveryMode);
+            if (programs.length > 0) {
+              let responseText = `I found ${programs.length} ${requestedDeliveryMode} program${programs.length > 1 ? 's' : ''} for you. Let me ask a few questions to find the best match:\n\n`;
+              responseText += `What's most important to you in a prevention program?`;
+              
+              const responseMessage = {
+                id: Date.now() + 1,
+                text: responseText,
+                sender: 'bot',
+                timestamp: new Date(),
+                quickOptions: ["Cost is important", "Convenient location", "Flexible schedule", "Small class size"]
+              };
+              setMessages(prev => [...prev, responseMessage]);
+            } else {
+              throw new Error('No programs found');
+            }
+          } else {
+            throw new Error('No relevant programs found');
+          }
+        }
+        
+      } catch (error) {
+        console.error('Error in semantic search:', error);
+        const errorMessage = {
+          id: Date.now() + 1,
+          text: "I'm having trouble finding programs right now, but I'd love to help! Can you tell me more about what you're looking for? For example, do you prefer in-person, virtual, or hybrid programs?",
+          sender: 'bot',
+          timestamp: new Date(),
+          quickOptions: ["In-person programs", "Virtual programs", "Hybrid programs", "I'm not sure"]
+        };
+        setMessages(prev => [...prev, errorMessage]);
+      }
+      
+      setIsTyping(false);
+      setInputValue('');
+      return;
+    }
+
+    // Check if user is asking about specific programs by name
     if (shouldSearchPrograms(inputValue)) {
       setIsTyping(true);
       
@@ -562,8 +765,14 @@ Available resources to mention:
       if (input.includes('risk') || input.includes('assessment')) {
         return "Our risk assessment can help identify your personal risk factors for chronic diseases. It takes just a few minutes and provides personalized recommendations. Would you like to try it out?";
       }
+      if (input.includes('hybrid') || input.includes('in-person') || input.includes('virtual') || input.includes('online')) {
+        return "I can help you find programs with different delivery formats. We have in-person, virtual, and hybrid programs available. What type of program delivery would work best for you?";
+      }
+      if (input.includes('program') || input.includes('classes')) {
+        return "We have CDC-recognized diabetes prevention programs available in various formats: in-person, virtual live sessions, and hybrid options. Would you like me to help you find programs in your area?";
+      }
       
-      return "I'm here to help with chronic disease prevention information. You can ask me about diabetes, heart disease, stroke and obesity prevention strategies.";
+      return "I'm here to help with chronic disease prevention information. You can ask me about diabetes, heart disease, stroke and obesity prevention strategies, or help you find prevention programs.";
     }
   };
 
@@ -828,7 +1037,7 @@ Available resources to mention:
                     lineHeight: '1.4',
                     wordWrap: 'break-word'
                   }}>
-                    {message.text}
+                    {renderFormattedText(message.text)}
                   </div>
                 </div>
                 {/* Quick Options for this message */}

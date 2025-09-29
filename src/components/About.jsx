@@ -61,7 +61,7 @@ const About = () => {
               <span style={{
                 position: 'absolute',
                 left: '0',
-                top: '0.125rem',
+                top: '0.6rem',
                 width: '0.5rem',
                 height: '0.5rem',
                 backgroundColor: 'var(--accent-yellow)',
@@ -73,7 +73,7 @@ const About = () => {
               <span style={{
                 position: 'absolute',
                 left: '0',
-                top: '0.125rem',
+                top: '0.6rem',
                 width: '0.5rem',
                 height: '0.5rem',
                 backgroundColor: 'var(--accent-yellow)',
@@ -85,7 +85,7 @@ const About = () => {
               <span style={{
                 position: 'absolute',
                 left: '0',
-                top: '0.125rem',
+                top: '0.6rem',
                 width: '0.5rem',
                 height: '0.5rem',
                 backgroundColor: 'var(--accent-yellow)',
@@ -97,7 +97,7 @@ const About = () => {
               <span style={{
                 position: 'absolute',
                 left: '0',
-                top: '0.125rem',
+                top: '0.6rem',
                 width: '0.5rem',
                 height: '0.5rem',
                 backgroundColor: 'var(--accent-yellow)',
@@ -113,11 +113,10 @@ const About = () => {
 
           <p style={{
             fontSize: '1.25rem',
-            fontWeight: '600',
+            fontWeight: '500',
             color: 'var(--primary-dark)',
             textAlign: 'center',
-            marginTop: '2rem',
-            fontStyle: 'italic'
+            marginTop: '2rem'
           }}>
             Every visit to this site is a step toward health that lasts.
           </p>

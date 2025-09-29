@@ -387,6 +387,6 @@ p {
   padding: 1.5rem;
   border-radius: 0.5rem;
   border-left: 4px solid var(--accent-yellow);
-  font-style: italic;
+  font-weight: 500;
   color: var(--text-secondary);
 }

@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { searchProgramsByLocation, searchProgramsByName, getProgramById } from './lib/local-db.js';
+import { generateProgramEmbeddings, semanticSearch, analyzeUserIntent } from './lib/vector-search.js';
 
 // Load environment variables
 dotenv.config({ path: '.env.local' });
@@ -12,6 +13,33 @@ const PORT = 3004;
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Global cache for program embeddings
+let programEmbeddingsCache = null;
+let embeddingsCacheTime = null;
+const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
+
+// Initialize embeddings cache
+async function initializeEmbeddings() {
+  try {
+    console.log('🧠 Initializing vector search embeddings...');
+    const programs = await searchProgramsByLocation(null, null, null, 999);
+    programEmbeddingsCache = await generateProgramEmbeddings(programs);
+    embeddingsCacheTime = Date.now();
+    console.log(`✅ Generated embeddings for ${programEmbeddingsCache.length} programs`);
+  } catch (error) {
+    console.error('❌ Failed to initialize embeddings:', error);
+  }
+}
+
+// Get cached embeddings or refresh if needed
+async function getCachedEmbeddings() {
+  if (!programEmbeddingsCache || !embeddingsCacheTime || 
+      (Date.now() - embeddingsCacheTime) > CACHE_DURATION) {
+    await initializeEmbeddings();
+  }
+  return programEmbeddingsCache;
+}
 
 // Sample API endpoint
 app.get('/api/hello', (req, res) => {
@@ -28,6 +56,73 @@ app.get('/api/health', (req, res) => {
     service: 'CDC: Path2Prevention API',
     timestamp: new Date().toISOString()
   });
+});
+
+// Vector search endpoint for intelligent program matching
+app.post('/api/programs/semantic-search', async (req, res) => {
+  try {
+    const { query, conversation_history = [], limit = 5 } = req.body;
+
+    if (!query) {
+      return res.status(400).json({ 
+        message: 'Search query is required' 
+      });
+    }
+
+    // Get cached embeddings
+    const programsWithEmbeddings = await getCachedEmbeddings();
+    
+    if (!programsWithEmbeddings || programsWithEmbeddings.length === 0) {
+      return res.status(500).json({
+        message: 'Program embeddings not available'
+      });
+    }
+
+    // Analyze user intent
+    const intentAnalysis = await analyzeUserIntent(query, conversation_history);
+    
+    // Perform semantic search
+    const searchResults = await semanticSearch(query, programsWithEmbeddings, limit);
+    
+    return res.status(200).json({
+      success: true,
+      query,
+      intent_analysis: intentAnalysis,
+      results: searchResults.map(program => ({
+        ...program,
+        embedding: undefined, // Don't send embeddings back to client
+        searchText: undefined // Don't send search text back
+      })),
+      count: searchResults.length
+    });
+
+  } catch (error) {
+    console.error('Semantic search error:', error);
+    return res.status(500).json({ 
+      message: 'Error performing semantic search',
+      error: error.message 
+    });
+  }
+});
+
+// Get all programs endpoint (for chatbot delivery mode filtering)
+app.get('/api/programs/all', async (req, res) => {
+  try {
+    const programs = await searchProgramsByLocation(null, null, null, 999);
+
+    return res.status(200).json({
+      success: true,
+      count: programs.length,
+      programs: programs
+    });
+
+  } catch (error) {
+    console.error('Get all programs error:', error);
+    return res.status(500).json({ 
+      message: 'Error getting all programs',
+      error: error.message 
+    });
+  }
 });
 
 // Program search endpoints
@@ -152,13 +247,18 @@ app.post('/api/data', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`🚀 CDC: Path2Prevention API server running on http://localhost:${PORT}`);
   console.log('Available endpoints:');
   console.log(`  GET  http://localhost:${PORT}/api/hello`);
   console.log(`  GET  http://localhost:${PORT}/api/health`);
+  console.log(`  GET  http://localhost:${PORT}/api/programs/all`);
+  console.log(`  POST http://localhost:${PORT}/api/programs/semantic-search`);
   console.log(`  GET  http://localhost:${PORT}/api/programs/search?state=GA&city=Atlanta`);
   console.log(`  GET  http://localhost:${PORT}/api/programs/search-by-name?name=Sample`);
   console.log(`  GET  http://localhost:${PORT}/api/programs/1`);
   console.log(`  POST http://localhost:${PORT}/api/data`);
+  
+  // Initialize embeddings in background
+  initializeEmbeddings().catch(console.error);
 });

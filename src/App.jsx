@@ -163,7 +163,7 @@ function App() {
                 fontFamily: 'var(--font-body)',
                 color: 'var(--text-secondary)',
                 margin: 0,
-                fontStyle: 'italic'
+                fontWeight: '500'
               }}>
                 "Many chronic diseases are preventable through lifestyle changes and early intervention."
               </p>
