@@ -15,13 +15,45 @@ const Chatbot = ({ onNavigate }) => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
   
-  // State management for personalization and routing
+  // Enhanced state management for personalization, routing, and conversation memory
   const [userState, setUserState] = useState({
     userName: null,
     careRecipientName: null,
     assessmentType: null, // 'self', 'caregiver', 'curious'
-    conversationContext: []
+    conversationContext: [],
+    conversationHistory: [], // Full message history with metadata
+    userPreferences: {
+      preferredProgramType: null, // 'in-person', 'virtual', 'hybrid'
+      topicsOfInterest: [], // ['diabetes', 'heart-disease', 'nutrition', etc.]
+      previousAssessments: [], // Track completed assessments
+      locationPreference: null,
+      communicationStyle: 'friendly' // 'formal', 'friendly', 'casual'
+    },
+    sessionMetadata: {
+      sessionId: Date.now().toString(),
+      startTime: new Date().toISOString(),
+      lastActivity: new Date().toISOString(),
+      messageCount: 0,
+      topicsDiscussed: [],
+      questionsAsked: [],
+      resourcesShared: []
+    }
   });
+
+  // Enhanced conversation memory state
+  const [conversationMemory, setConversationMemory] = useState({
+    keyTopics: [], // Important topics discussed
+    userGoals: [], // What the user is trying to achieve
+    previousRecommendations: [], // Recommendations already given
+    followUpNeeded: [], // Items that need follow-up
+    conversationSummary: '', // AI-generated summary of key points
+    contextualCues: [], // Important context for future responses
+    questionsAsked: [], // Track what questions have been asked to avoid loops
+    formatPreferenceSet: false // Track if user has already specified format preference
+  });
+
+  // Note: Removed localStorage persistence - chatbot now clears on browser refresh
+  // but maintains context within the current session
 
   useEffect(() => {
     const handleResize = () => {
@@ -34,6 +66,475 @@ const Chatbot = ({ onNavigate }) => {
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  // Helper function to update conversation memory
+  const updateConversationMemory = (userInput, botResponse, extractedContext) => {
+    const topics = extractTopicsFromText(userInput + ' ' + botResponse);
+    const goals = extractGoalsFromText(userInput);
+    const recommendations = extractRecommendationsFromText(botResponse);
+    
+    setConversationMemory(prev => ({
+      ...prev,
+      keyTopics: [...new Set([...prev.keyTopics, ...topics])],
+      userGoals: [...new Set([...prev.userGoals, ...goals])],
+      previousRecommendations: [...new Set([...prev.previousRecommendations, ...recommendations])],
+      contextualCues: [
+        ...prev.contextualCues.slice(-10), // Keep last 10 cues
+        {
+          timestamp: new Date().toISOString(),
+          userInput: userInput,
+          botResponse: botResponse,
+          extractedContext: extractedContext,
+          topics: topics,
+          recommendations: recommendations
+        }
+      ]
+    }));
+  };
+
+  // Helper function to extract recommendations from bot responses
+  const extractRecommendationsFromText = (text) => {
+    const recommendationKeywords = [
+      'recommend', 'suggest', 'try', 'consider', 'should', 'might want to',
+      'assessment', 'program', 'exercise', 'diet', 'lifestyle change'
+    ];
+    
+    const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 10);
+    const recommendations = [];
+    
+    sentences.forEach(sentence => {
+      const lowerSentence = sentence.toLowerCase();
+      if (recommendationKeywords.some(keyword => lowerSentence.includes(keyword))) {
+        recommendations.push(sentence.trim());
+      }
+    });
+    
+    return recommendations.slice(0, 3); // Keep top 3 recommendations per response
+  };
+
+  // Helper function to extract topics from text
+  const extractTopicsFromText = (text) => {
+    const topicKeywords = {
+      'diabetes': ['diabetes', 'diabetic', 'blood sugar', 'glucose', 'insulin'],
+      'heart-disease': ['heart', 'cardiac', 'cardiovascular', 'blood pressure', 'cholesterol'],
+      'nutrition': ['diet', 'food', 'eating', 'nutrition', 'meal', 'calories'],
+      'exercise': ['exercise', 'physical activity', 'workout', 'fitness', 'walking'],
+      'weight': ['weight', 'obesity', 'bmi', 'overweight', 'lose weight'],
+      'smoking': ['smoking', 'tobacco', 'cigarette', 'quit smoking'],
+      'stress': ['stress', 'anxiety', 'mental health', 'depression'],
+      'programs': ['program', 'class', 'course', 'prevention program'],
+      'assessment': ['assessment', 'risk', 'evaluation', 'test', 'quiz']
+    };
+
+    const detectedTopics = [];
+    const lowerText = text.toLowerCase();
+
+    Object.entries(topicKeywords).forEach(([topic, keywords]) => {
+      if (keywords.some(keyword => lowerText.includes(keyword))) {
+        detectedTopics.push(topic);
+      }
+    });
+
+    return detectedTopics;
+  };
+
+  // Helper function to extract user goals from text
+  const extractGoalsFromText = (text) => {
+    const goalPatterns = [
+      /want to (.*?)(?:\.|$)/gi,
+      /need to (.*?)(?:\.|$)/gi,
+      /trying to (.*?)(?:\.|$)/gi,
+      /looking for (.*?)(?:\.|$)/gi,
+      /help me (.*?)(?:\.|$)/gi,
+      /i'd like to (.*?)(?:\.|$)/gi
+    ];
+
+    const goals = [];
+    goalPatterns.forEach(pattern => {
+      const matches = text.matchAll(pattern);
+      for (const match of matches) {
+        if (match[1] && match[1].trim().length > 3) {
+          goals.push(match[1].trim());
+        }
+      }
+    });
+
+    return goals;
+  };
+
+  // Helper function to update user preferences based on conversation
+  const updateUserPreferences = (userInput, extractedContext) => {
+    setUserState(prev => {
+      const newPreferences = { ...prev.userPreferences };
+      
+      // Update program type preference
+      if (userInput.toLowerCase().includes('virtual') || userInput.toLowerCase().includes('online')) {
+        newPreferences.preferredProgramType = 'virtual';
+      } else if (userInput.toLowerCase().includes('in-person') || userInput.toLowerCase().includes('face to face')) {
+        newPreferences.preferredProgramType = 'in-person';
+      } else if (userInput.toLowerCase().includes('hybrid') || userInput.toLowerCase().includes('combination')) {
+        newPreferences.preferredProgramType = 'hybrid';
+      }
+
+      // Update topics of interest
+      const topics = extractTopicsFromText(userInput);
+      newPreferences.topicsOfInterest = [...new Set([...newPreferences.topicsOfInterest, ...topics])];
+
+      // Update session metadata
+      const newSessionMetadata = {
+        ...prev.sessionMetadata,
+        lastActivity: new Date().toISOString(),
+        messageCount: prev.sessionMetadata.messageCount + 1,
+        topicsDiscussed: [...new Set([...prev.sessionMetadata.topicsDiscussed, ...topics])]
+      };
+
+      return {
+        ...prev,
+        userPreferences: newPreferences,
+        sessionMetadata: newSessionMetadata,
+        conversationHistory: [
+          ...prev.conversationHistory,
+          {
+            timestamp: new Date().toISOString(),
+            userInput: userInput,
+            extractedContext: extractedContext,
+            topics: topics
+          }
+        ]
+      };
+    });
+  };
+
+  // Function to generate conversation summary for AI context
+  const generateConversationSummary = () => {
+    const recentHistory = userState.conversationHistory.slice(-10); // Last 10 interactions
+    const keyTopics = conversationMemory.keyTopics.slice(0, 5); // Top 5 topics
+    const userGoals = conversationMemory.userGoals.slice(0, 3); // Top 3 goals
+    
+    let summary = '';
+    
+    if (userState.userName) {
+      summary += `User: ${userState.userName}. `;
+    }
+    
+    if (userState.careRecipientName) {
+      summary += `Caring for: ${userState.careRecipientName}. `;
+    }
+    
+    if (keyTopics.length > 0) {
+      summary += `Topics discussed: ${keyTopics.join(', ')}. `;
+    }
+    
+    if (userGoals.length > 0) {
+      summary += `User goals: ${userGoals.join('; ')}. `;
+    }
+    
+    if (userState.userPreferences.preferredProgramType) {
+      summary += `Prefers ${userState.userPreferences.preferredProgramType} programs. `;
+    }
+    
+    if (conversationMemory.previousRecommendations.length > 0) {
+      summary += `Previous recommendations: ${conversationMemory.previousRecommendations.slice(-3).join('; ')}. `;
+    }
+
+    return summary;
+  };
+
+  // Helper function to detect if user is responding to a question
+  const detectQuestionResponse = (userInput, messages) => {
+    if (messages.length < 2) return null;
+    
+    const lastBotMessage = [...messages].reverse().find(msg => msg.sender === 'bot');
+    if (!lastBotMessage) return null;
+    
+    const input = userInput.toLowerCase().trim();
+    const botText = lastBotMessage.text.toLowerCase();
+    
+    // Check if the last bot message contained a question
+    const hasQuestion = botText.includes('?') || 
+                       botText.includes('would you like') ||
+                       botText.includes('do you') ||
+                       botText.includes('are you') ||
+                       botText.includes('can you') ||
+                       botText.includes('should i') ||
+                       botText.includes('which') ||
+                       botText.includes('what') ||
+                       botText.includes('how') ||
+                       botText.includes('when') ||
+                       botText.includes('where');
+    
+    if (!hasQuestion) return null;
+    
+    // Detect yes/no responses
+    const yesPatterns = [
+      /^yes$/i, /^yeah$/i, /^yep$/i, /^sure$/i, /^okay$/i, /^ok$/i, /^y$/i,
+      /^yes please$/i, /^yes i would$/i, /^yes i do$/i, /^yes i am$/i,
+      /^that would be great$/i, /^sounds good$/i, /^i would like that$/i,
+      /^absolutely$/i, /^definitely$/i, /^of course$/i
+    ];
+    
+    const noPatterns = [
+      /^no$/i, /^nope$/i, /^nah$/i, /^n$/i, /^no thanks$/i, /^no thank you$/i,
+      /^not really$/i, /^not interested$/i, /^i don't think so$/i,
+      /^maybe later$/i, /^not now$/i, /^not right now$/i
+    ];
+    
+    const isYes = yesPatterns.some(pattern => pattern.test(input));
+    const isNo = noPatterns.some(pattern => pattern.test(input));
+    
+    if (isYes || isNo) {
+      return {
+        type: 'yes_no',
+        answer: isYes ? 'yes' : 'no',
+        originalQuestion: lastBotMessage.text,
+        questionContext: extractQuestionContext(lastBotMessage.text)
+      };
+    }
+    
+    // Detect specific answer patterns
+    const specificAnswers = detectSpecificAnswers(input, botText);
+    if (specificAnswers) {
+      return {
+        type: 'specific',
+        answer: specificAnswers,
+        originalQuestion: lastBotMessage.text,
+        questionContext: extractQuestionContext(lastBotMessage.text)
+      };
+    }
+    
+    return null;
+  };
+
+  // Helper function to extract context from questions
+  const extractQuestionContext = (questionText) => {
+    const text = questionText.toLowerCase();
+    
+    if (text.includes('assessment') || text.includes('risk')) {
+      return 'assessment';
+    }
+    if (text.includes('program') || text.includes('class')) {
+      return 'programs';
+    }
+    if (text.includes('cost') || text.includes('budget') || text.includes('afford')) {
+      return 'cost';
+    }
+    if (text.includes('location') || text.includes('area') || text.includes('city')) {
+      return 'location';
+    }
+    if (text.includes('schedule') || text.includes('time') || text.includes('when')) {
+      return 'schedule';
+    }
+    if (text.includes('virtual') || text.includes('online') || text.includes('in-person')) {
+      return 'delivery_mode';
+    }
+    if (text.includes('insurance') || text.includes('medicare') || text.includes('medicaid')) {
+      return 'insurance';
+    }
+    
+    return 'general';
+  };
+
+  // Helper function to detect specific answers (not just yes/no)
+  const detectSpecificAnswers = (input, questionText) => {
+    // Detect delivery mode preferences - improved detection
+    if (questionText.includes('format') || questionText.includes('delivery') || questionText.includes('virtual') || questionText.includes('in-person') || questionText.includes('program')) {
+      if (input.includes('virtual') || input.includes('online') || input.includes('remote') || input.includes('zoom') || input.includes('video')) {
+        return { type: 'delivery_mode', value: 'virtual-live' };
+      }
+      if (input.includes('in-person') || input.includes('face to face') || input.includes('physical') || input.includes('person') || input.includes('location')) {
+        return { type: 'delivery_mode', value: 'in-person' };
+      }
+      if (input.includes('hybrid') || input.includes('both') || input.includes('combination') || input.includes('mixed')) {
+        return { type: 'delivery_mode', value: 'hybrid' };
+      }
+    }
+    
+    // Detect location answers
+    if (questionText.includes('location') || questionText.includes('area') || questionText.includes('city')) {
+      // Simple city/state detection
+      const locationMatch = input.match(/([a-zA-Z\s]+),?\s*([A-Z]{2})/);
+      if (locationMatch) {
+        return { type: 'location', value: { city: locationMatch[1].trim(), state: locationMatch[2] } };
+      }
+      // Just city name
+      const cityMatch = input.match(/^([a-zA-Z\s]+)$/);
+      if (cityMatch && cityMatch[1].length > 2) {
+        return { type: 'location', value: { city: cityMatch[1].trim() } };
+      }
+    }
+    
+    // Detect cost preferences
+    if (questionText.includes('cost') || questionText.includes('budget') || questionText.includes('afford')) {
+      const costMatch = input.match(/\$?(\d+)/);
+      if (costMatch) {
+        return { type: 'cost', value: parseInt(costMatch[1]) };
+      }
+      if (input.includes('free') || input.includes('no cost')) {
+        return { type: 'cost', value: 0 };
+      }
+      if (input.includes('low cost') || input.includes('cheap') || input.includes('affordable')) {
+        return { type: 'cost', value: 'low' };
+      }
+    }
+    
+    return null;
+  };
+
+  // Function to handle question responses
+  const handleQuestionResponse = async (questionResponse, userInput, contextUpdate) => {
+    const { type, answer, questionContext } = questionResponse;
+    
+    let responseText = '';
+    let quickOptions = [];
+    
+    if (type === 'yes_no') {
+      if (answer === 'yes') {
+        switch (questionContext) {
+          case 'assessment':
+            responseText = `Great! I'll help you get started with the risk assessment. This will give you personalized insights about your health risks and prevention strategies.`;
+            quickOptions = ["Take assessment now", "Tell me more about it first"];
+            break;
+          case 'programs':
+            responseText = `Excellent! I'd be happy to help you find the right prevention program. Let me search for options that match your needs.`;
+            quickOptions = ["Find programs near me", "virtual programs", "Show me all options"];
+            break;
+          case 'cost':
+            responseText = `I understand cost is important to you. Let me focus on affordable and free program options.`;
+            // Update user preferences
+            updateUserPreferences('cost is important', contextUpdate);
+            break;
+          case 'location':
+            responseText = `Perfect! Location is definitely important for in-person programs. What area would work best for you?`;
+            quickOptions = ["Atlanta area", "Savannah area", "I'm flexible with location"];
+            break;
+          default:
+            responseText = `Great! I'm here to help you with whatever you need regarding chronic disease prevention.`;
+            quickOptions = ["Find prevention programs", "Take risk assessment", "Learn about healthy lifestyle"];
+        }
+      } else { // answer === 'no'
+        switch (questionContext) {
+          case 'assessment':
+            responseText = `No problem! Is there something specific about chronic disease prevention you'd like to learn about instead?`;
+            quickOptions = ["Tell me about diabetes prevention", "Find prevention programs", "Learn about healthy eating"];
+            break;
+          case 'programs':
+            responseText = `That's okay! Maybe I can help you with information about prevention strategies or answer any questions you have.`;
+            quickOptions = ["Learn prevention tips", "Ask a question", "Take risk assessment"];
+            break;
+          case 'cost':
+            responseText = `I understand. Let me show you all available options regardless of cost.`;
+            break;
+          default:
+            responseText = `No worries! What would you like to know about chronic disease prevention?`;
+            quickOptions = ["Prevention tips", "Risk factors", "Healthy lifestyle advice"];
+        }
+      }
+    } else if (type === 'specific') {
+      const specificAnswer = questionResponse.answer;
+      
+      if (specificAnswer.type === 'delivery_mode') {
+        // Update user preferences first
+        updateUserPreferences(`${specificAnswer.value} programs preferred`, contextUpdate);
+        
+        // Mark that format preference has been set
+        setConversationMemory(prev => ({
+          ...prev,
+          formatPreferenceSet: true,
+          questionsAsked: [...prev.questionsAsked, 'format_preference']
+        }));
+        
+        // Now search for programs with this preference
+        try {
+          const programs = await searchProgramsByDeliveryMode(specificAnswer.value);
+          if (programs.length > 0) {
+            responseText = `Perfect! I found ${programs.length} ${specificAnswer.value} program${programs.length > 1 ? 's' : ''} for you:\n\n`;
+            
+            // Show first 3 programs
+            const programsToShow = programs.slice(0, 3);
+            programsToShow.forEach((program, index) => {
+              responseText += `${index + 1}. **${program.organization_name}**\n`;
+              responseText += `📍 ${program.city}, ${program.state}\n`;
+              if (program.cost) responseText += `💰 Cost: $${program.cost}\n`;
+              if (program.duration_weeks) responseText += `📅 Duration: ${program.duration_weeks} weeks\n`;
+              responseText += `\n`;
+            });
+            
+            responseText += `Would you like more details about any of these programs?`;
+            quickOptions = ["Tell me more about these programs", "Find programs in my area", "Compare with other formats"];
+          } else {
+            responseText = `I understand you prefer ${specificAnswer.value} programs. Let me search more broadly for programs that might work for you.`;
+            quickOptions = ["Search all programs", "Tell me about other formats", "Help me find alternatives"];
+          }
+        } catch (error) {
+          responseText = `Perfect! I'll focus on ${specificAnswer.value} programs for you. Let me search for options that match your preference.`;
+          quickOptions = ["Find programs now", "Tell me more about this format", "I want to compare options"];
+        }
+      } else if (specificAnswer.type === 'location') {
+        const location = specificAnswer.value;
+        responseText = `Great! I'll look for programs in ${location.city}${location.state ? `, ${location.state}` : ''}. Let me search for options in your area.`;
+        quickOptions = ["Search programs now", "I'm flexible with nearby areas", "Show me virtual options too"];
+      } else if (specificAnswer.type === 'cost') {
+        if (specificAnswer.value === 0) {
+          responseText = `Perfect! I'll focus on free programs for you. There are several no-cost options available.`;
+        } else if (specificAnswer.value === 'low') {
+          responseText = `I understand you're looking for affordable options. I'll show you low-cost and sliding-scale programs.`;
+        } else {
+          responseText = `Got it! I'll look for programs within your $${specificAnswer.value} budget.`;
+        }
+        quickOptions = ["Find affordable programs", "Tell me about free options", "Show me all programs"];
+      }
+    }
+    
+    return {
+      id: Date.now() + 1,
+      text: responseText,
+      sender: 'bot',
+      timestamp: new Date(),
+      quickOptions: quickOptions.length > 0 ? quickOptions : undefined
+    };
+  };
+
+  // Function to clear conversation history and reset memory
+  const clearConversationHistory = () => {
+    // Reset messages to initial state
+    setMessages([
+      {
+        id: 1,
+        text: "Hello! I'm here to help you learn about chronic disease prevention. How can I help you today?",
+        sender: 'bot',
+        timestamp: new Date()
+      }
+    ]);
+
+    // Reset conversation memory but keep user preferences
+    setConversationMemory({
+      keyTopics: [],
+      userGoals: [],
+      previousRecommendations: [],
+      followUpNeeded: [],
+      conversationSummary: '',
+      contextualCues: [],
+      questionsAsked: [],
+      formatPreferenceSet: false
+    });
+
+    // Reset conversation history but keep basic user info
+    setUserState(prev => ({
+      ...prev,
+      conversationContext: [],
+      conversationHistory: [],
+      sessionMetadata: {
+        ...prev.sessionMetadata,
+        sessionId: Date.now().toString(),
+        startTime: new Date().toISOString(),
+        lastActivity: new Date().toISOString(),
+        messageCount: 0,
+        topicsDiscussed: [],
+        questionsAsked: [],
+        resourcesShared: []
+      }
+    }));
   };
 
   // Helper function to extract names and context from user input
@@ -235,16 +736,25 @@ const Chatbot = ({ onNavigate }) => {
   const detectDeliveryModeRequest = (userInput) => {
     const input = userInput.toLowerCase();
     
-    if (input.includes('hybrid') || input.includes('combination') || input.includes('mixed')) {
+    console.log('Detecting delivery mode for input:', input);
+    
+    // Check for hybrid programs
+    if (input.includes('hybrid') || input.includes('combination') || input.includes('mixed') || input.includes('both') || input.includes('hybrid programs')) {
+      console.log('Detected hybrid preference');
       return 'hybrid';
     }
-    if (input.includes('in-person') || input.includes('in person') || input.includes('face to face') || input.includes('face-to-face')) {
+    // Check for in-person programs
+    if (input.includes('in-person') || input.includes('in person') || input.includes('face to face') || input.includes('face-to-face') || input.includes('person') || input.includes('location') || input.includes('in-person programs')) {
+      console.log('Detected in-person preference');
       return 'in-person';
     }
-    if (input.includes('virtual') || input.includes('online') || input.includes('remote')) {
+    // Check for virtual programs
+    if (input.includes('virtual') || input.includes('online') || input.includes('remote') || input.includes('zoom') || input.includes('video') || input.includes('virtual programs') || input.includes('online programs')) {
+      console.log('Detected virtual preference');
       return 'virtual-live';
     }
     
+    console.log('No delivery mode detected');
     return null;
   };
 
@@ -341,11 +851,30 @@ const Chatbot = ({ onNavigate }) => {
     
     // Extract context and update user state
     const contextUpdate = extractUserContext(inputValue);
+    
+    // Update user preferences and conversation memory
+    updateUserPreferences(inputValue, contextUpdate);
+    
     setUserState(prev => ({
       ...prev,
       ...contextUpdate,
       conversationContext: [...prev.conversationContext, inputValue]
     }));
+
+    // Check if user is responding to a previous question
+    const questionResponse = detectQuestionResponse(inputValue, messages);
+    if (questionResponse) {
+      setIsTyping(true);
+      const responseMessage = await handleQuestionResponse(questionResponse, inputValue, contextUpdate);
+      setMessages(prev => [...prev, responseMessage]);
+      
+      // Update conversation memory
+      updateConversationMemory(inputValue, responseMessage.text, contextUpdate);
+      
+      setIsTyping(false);
+      setInputValue('');
+      return;
+    }
 
     // Check if user wants to take assessment for someone else
     if (isAssessmentForOthers(inputValue)) {
@@ -416,12 +945,57 @@ const Chatbot = ({ onNavigate }) => {
     }
 
     // Check if user is asking about programs using semantic search
-    const programKeywords = ['program', 'class', 'course', 'prevention', 'diabetes', 'hybrid', 'virtual', 'in-person', 'online', 'help me find', 'looking for', 'need', 'want'];
+    const programKeywords = ['program', 'class', 'course', 'prevention', 'diabetes', 'hybrid', 'virtual', 'in-person', 'online', 'help me find', 'looking for', 'need', 'want', 'find', 'search', 'show me'];
     const isAboutPrograms = programKeywords.some(keyword => inputValue.toLowerCase().includes(keyword));
     
-    if (isAboutPrograms) {
+    // Also check if user clicked a format-specific quick option
+    const formatQuickOptions = ['virtual programs', 'in-person programs', 'hybrid programs', 'online programs'];
+    const isFormatQuickOption = formatQuickOptions.some(option => inputValue.toLowerCase().includes(option.toLowerCase()));
+    
+    console.log('Program detection - input:', inputValue);
+    console.log('Program detection - isAboutPrograms:', isAboutPrograms);
+    console.log('Program detection - isFormatQuickOption:', isFormatQuickOption);
+    
+    if (isAboutPrograms || isFormatQuickOption) {
       console.log('Chatbot Debug: Detected program-related query, using semantic search');
       setIsTyping(true);
+      
+      // First try to detect if user has specified a format preference
+      const requestedDeliveryMode = detectDeliveryModeRequest(inputValue);
+      if (requestedDeliveryMode) {
+        try {
+          const programs = await searchProgramsByDeliveryMode(requestedDeliveryMode);
+          if (programs.length > 0) {
+            let responseText = `I found ${programs.length} ${requestedDeliveryMode} program${programs.length > 1 ? 's' : ''} for you:\n\n`;
+            
+            // Show first 3 programs
+            const programsToShow = programs.slice(0, 3);
+            programsToShow.forEach((program, index) => {
+              responseText += `${index + 1}. **${program.organization_name}**\n`;
+              responseText += `📍 ${program.city}, ${program.state}\n`;
+              if (program.cost) responseText += `💰 Cost: $${program.cost}\n`;
+              if (program.duration_weeks) responseText += `📅 Duration: ${program.duration_weeks} weeks\n`;
+              responseText += `\n`;
+            });
+            
+            responseText += `Would you like more details about any of these programs?`;
+            
+            const responseMessage = {
+              id: Date.now() + 1,
+              text: responseText,
+              sender: 'bot',
+              timestamp: new Date(),
+              quickOptions: ["Tell me more about these programs", "Find programs in my area", "Compare with other formats"]
+            };
+            setMessages(prev => [...prev, responseMessage]);
+            setIsTyping(false);
+            setInputValue('');
+            return;
+          }
+        } catch (error) {
+          console.error('Direct delivery mode search failed:', error);
+        }
+      }
       
       try {
         // Use semantic search with conversation context
@@ -506,13 +1080,63 @@ const Chatbot = ({ onNavigate }) => {
         
       } catch (error) {
         console.error('Error in semantic search:', error);
-        const errorMessage = {
-          id: Date.now() + 1,
-          text: "I'm having trouble finding programs right now, but I'd love to help! Can you tell me more about what you're looking for? For example, do you prefer in-person, virtual, or hybrid programs?",
-          sender: 'bot',
-          timestamp: new Date(),
-          quickOptions: ["In-person programs", "Virtual programs", "Hybrid programs", "I'm not sure"]
-        };
+        
+        // Try direct delivery mode search as fallback
+        const requestedDeliveryMode = detectDeliveryModeRequest(inputValue);
+        if (requestedDeliveryMode) {
+          try {
+            const programs = await searchProgramsByDeliveryMode(requestedDeliveryMode);
+            if (programs.length > 0) {
+              let responseText = `I found ${programs.length} ${requestedDeliveryMode} program${programs.length > 1 ? 's' : ''} for you:\n\n`;
+              
+              // Show first 3 programs
+              const programsToShow = programs.slice(0, 3);
+              programsToShow.forEach((program, index) => {
+                responseText += `${index + 1}. **${program.organization_name}**\n`;
+                responseText += `📍 ${program.city}, ${program.state}\n`;
+                if (program.cost) responseText += `💰 Cost: $${program.cost}\n`;
+                if (program.duration_weeks) responseText += `📅 Duration: ${program.duration_weeks} weeks\n`;
+                responseText += `\n`;
+              });
+              
+              responseText += `Would you like more details about any of these programs?`;
+              
+              const responseMessage = {
+                id: Date.now() + 1,
+                text: responseText,
+                sender: 'bot',
+                timestamp: new Date(),
+                quickOptions: ["Tell me more about these programs", "Find programs in my area", "Compare with other formats"]
+              };
+              setMessages(prev => [...prev, responseMessage]);
+              setIsTyping(false);
+              setInputValue('');
+              return;
+            }
+          } catch (fallbackError) {
+            console.error('Fallback search also failed:', fallbackError);
+          }
+        }
+        
+        // Final fallback - check if format preference has already been set to avoid asking again
+        let errorMessage;
+        if (conversationMemory.formatPreferenceSet) {
+          errorMessage = {
+            id: Date.now() + 1,
+            text: "I'm having trouble finding programs right now, but I'd love to help! Can you tell me more about what you're looking for?",
+            sender: 'bot',
+            timestamp: new Date(),
+            quickOptions: ["Search all programs", "Tell me about programs", "Take risk assessment", "I'm not sure"]
+          };
+        } else {
+          errorMessage = {
+            id: Date.now() + 1,
+            text: "I'm having trouble finding programs right now, but I'd love to help! Can you tell me more about what you're looking for? For example, do you prefer in-person, virtual, or hybrid programs?",
+            sender: 'bot',
+            timestamp: new Date(),
+            quickOptions: ["in-person programs", "virtual programs", "hybrid programs", "I'm not sure"]
+          };
+        }
         setMessages(prev => [...prev, errorMessage]);
       }
       
@@ -662,6 +1286,10 @@ const Chatbot = ({ onNavigate }) => {
         timestamp: new Date()
       };
       setMessages(prev => [...prev, botResponse]);
+      
+      // Update conversation memory with the bot response
+      updateConversationMemory(inputValue, botResponseText, contextUpdate);
+      
       setIsTyping(false);
     } catch (error) {
       console.error('Error getting bot response:', error);
@@ -678,8 +1306,10 @@ const Chatbot = ({ onNavigate }) => {
 
   const getBotResponse = async (userInput, contextUpdate = null) => {
     try {
-      // Build personalized context
+      // Build comprehensive personalized context
       const currentState = contextUpdate || userState;
+      const conversationSummary = generateConversationSummary();
+      
       const personalContext = [];
       
       if (currentState.userName) {
@@ -692,8 +1322,36 @@ const Chatbot = ({ onNavigate }) => {
         personalContext.push(`Assessment context: ${currentState.assessmentType}`);
       }
 
+      // Add conversation memory context
+      if (conversationMemory.keyTopics.length > 0) {
+        personalContext.push(`Previous topics: ${conversationMemory.keyTopics.slice(0, 5).join(', ')}`);
+      }
+      
+      if (conversationMemory.userGoals.length > 0) {
+        personalContext.push(`User goals: ${conversationMemory.userGoals.slice(0, 3).join('; ')}`);
+      }
+
+      if (userState.userPreferences.preferredProgramType) {
+        personalContext.push(`Program preference: ${userState.userPreferences.preferredProgramType}`);
+      }
+
+      if (conversationMemory.previousRecommendations.length > 0) {
+        personalContext.push(`Previous recommendations: ${conversationMemory.previousRecommendations.slice(-2).join('; ')}`);
+      }
+
+      // Add recent conversation context
+      const recentMessages = messages.slice(-6).map(msg => 
+        `${msg.sender}: ${msg.text.substring(0, 100)}${msg.text.length > 100 ? '...' : ''}`
+      ).join(' | ');
+
       const contextString = personalContext.length > 0 ? 
         `\n\nPersonal Context: ${personalContext.join(', ')}` : '';
+      
+      const conversationContextString = recentMessages ? 
+        `\n\nRecent Conversation: ${recentMessages}` : '';
+      
+      const summaryString = conversationSummary ? 
+        `\n\nConversation Summary: ${conversationSummary}` : '';
 
       const response = await fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
@@ -706,7 +1364,7 @@ const Chatbot = ({ onNavigate }) => {
           messages: [
             {
               role: 'system',
-              content: `You are a Chronic Disease Prevention Assistant for the CDC: Path2Prevention program. You help people learn about preventing chronic diseases including diabetes, heart disease, stroke, COPD, and obesity.${contextString}
+              content: `You are a Chronic Disease Prevention Assistant for the CDC: Path2Prevention program. You help people learn about preventing chronic diseases including diabetes, heart disease, stroke, COPD, and obesity.${contextString}${conversationContextString}${summaryString}
 
 Key guidelines:
 - Provide evidence-based health information
@@ -719,12 +1377,14 @@ Key guidelines:
 - Focus on prevention strategies and CDC resources
 - Use a professional but friendly tone appropriate for a government health website
 - If you know the user's name, use it occasionally to personalize the conversation
-- If they mention someone they care for, remember their name and ask about them
-- If someone asks about taking an assessment or mentions risk evaluation, encourage them to take the risk assessment
 - Be attentive to whether they're asking for themselves, someone they care about, or just general information
 - When someone wants to take an assessment for a family member or loved one, acknowledge their caring role and provide caregiver-focused guidance
 - Use names of care recipients when known (e.g., "Sarah's health", "your mom's risk factors")
 - Be supportive of caregivers and recognize the challenges of advocating for someone else's health
+- IMPORTANT: Reference previous conversation topics and user preferences when relevant to show continuity
+- Avoid repeating the same recommendations if they were already discussed
+- Build upon previous conversations and show that you remember what was discussed
+- If the user has expressed specific goals or interests, tailor your responses accordingly
 
 Available resources to mention:
 - The risk assessment on this website for various chronic diseases
@@ -757,19 +1417,25 @@ Available resources to mention:
       const input = userInput.toLowerCase();
       
       if (input.includes('diabetes')) {
-        return "I can help you learn about diabetes prevention. Key steps include maintaining a healthy weight, eating a balanced diet, and staying physically active. Would you like to take our risk assessment?";
+        return "I can help you learn about diabetes prevention. Key steps include maintaining a healthy weight, eating a balanced diet, and staying physically active. Would you like to take our risk assessment to get personalized recommendations?";
       }
       if (input.includes('heart')) {
-        return "Heart disease is preventable through lifestyle changes like regular exercise, healthy eating, not smoking, and managing stress. What specific aspect would you like to know more about?";
+        return "Heart disease is preventable through lifestyle changes like regular exercise, healthy eating, not smoking, and managing stress. Are you interested in learning about specific prevention strategies or finding a program to help?";
       }
       if (input.includes('risk') || input.includes('assessment')) {
-        return "Our risk assessment can help identify your personal risk factors for chronic diseases. It takes just a few minutes and provides personalized recommendations. Would you like to try it out?";
+        return "Our risk assessment can help identify your personal risk factors for chronic diseases. It takes just a few minutes and provides personalized recommendations. Would you like to get started with the assessment?";
       }
       if (input.includes('hybrid') || input.includes('in-person') || input.includes('virtual') || input.includes('online')) {
-        return "I can help you find programs with different delivery formats. We have in-person, virtual, and hybrid programs available. What type of program delivery would work best for you?";
+        return "I understand you're interested in programs. Let me help you find the right format. What type of program would work best for you - in-person, virtual, or hybrid?";
       }
       if (input.includes('program') || input.includes('classes')) {
-        return "We have CDC-recognized diabetes prevention programs available in various formats: in-person, virtual live sessions, and hybrid options. Would you like me to help you find programs in your area?";
+        return "We have CDC-recognized diabetes prevention programs available in various formats: in-person, virtual live sessions, and hybrid options. Would you like me to help you find programs in your area, or do you have questions about what these programs include?";
+      }
+      if (input.includes('cost') || input.includes('afford') || input.includes('expensive')) {
+        return "I understand cost is an important consideration. We have programs at various price points, including free options. Are you looking for low-cost or free programs specifically?";
+      }
+      if (input.includes('location') || input.includes('near me') || input.includes('area')) {
+        return "Location is definitely important for finding the right program. What area are you located in, or would you prefer virtual programs that you can access from anywhere?";
       }
       
       return "I'm here to help with chronic disease prevention information. You can ask me about diabetes, heart disease, stroke and obesity prevention strategies, or help you find prevention programs.";
@@ -937,6 +1603,11 @@ Available resources to mention:
         timestamp: new Date()
       };
       setMessages(prev => [...prev, botResponse]);
+      
+      // Update conversation memory for quick actions too
+      updateConversationMemory(action, botResponseText, {});
+      updateUserPreferences(action, {});
+      
       setIsTyping(false);
     } catch (error) {
       console.error('Error getting bot response:', error);
@@ -987,27 +1658,29 @@ Available resources to mention:
                 Prevention Assistant
               </h3>
               <p style={{ margin: 0, fontSize: '12px', opacity: 0.8, color: 'white' }}>
-                Ask me about chronic disease prevention
+                {userState.userName ? `Hi ${userState.userName}! ` : ''}Ask me about chronic disease prevention
               </p>
             </div>
-            <button
-              onClick={() => setIsOpen(false)}
-              style={{
-                background: 'none',
-                border: 'none',
-                color: 'white',
-                cursor: 'pointer',
-                padding: '4px',
-                borderRadius: '4px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
-                <path d="M18 6L6 18M6 6l12 12"/>
-              </svg>
-            </button>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <button
+                onClick={() => setIsOpen(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'white',
+                  cursor: 'pointer',
+                  padding: '4px',
+                  borderRadius: '4px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round">
+                  <path d="M18 6L6 18M6 6l12 12"/>
+                </svg>
+              </button>
+            </div>
           </div>
 
           {/* Messages Area */}

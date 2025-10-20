@@ -335,7 +335,7 @@ function App() {
       ) : currentPage === 'about' ? (
         <About />
       ) : currentPage === 'resources' ? (
-        <Resources />
+        <Resources onNavigate={setCurrentPage} />
       ) : currentPage === 'support' ? (
         <Support />
       ) : currentPage === 'how-it-works' ? (

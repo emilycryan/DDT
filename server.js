@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import { searchProgramsByLocation, searchProgramsByName, getProgramById } from './lib/local-db.js';
-import { generateProgramEmbeddings, semanticSearch, analyzeUserIntent } from './lib/vector-search.js';
+import { semanticSearch, analyzeUserIntent, generateFollowUpQuestions } from './lib/vector-search-pgvector.js';
+import { getProgramStats } from './lib/pgvector-db.js';
 
 // Load environment variables
 dotenv.config({ path: '.env.local' });
@@ -14,31 +15,16 @@ const PORT = 3004;
 app.use(cors());
 app.use(express.json());
 
-// Global cache for program embeddings
-let programEmbeddingsCache = null;
-let embeddingsCacheTime = null;
-const CACHE_DURATION = 1000 * 60 * 60; // 1 hour
-
-// Initialize embeddings cache
-async function initializeEmbeddings() {
+// Check pgvector status
+async function checkPgVectorStatus() {
   try {
-    console.log('🧠 Initializing vector search embeddings...');
-    const programs = await searchProgramsByLocation(null, null, null, 999);
-    programEmbeddingsCache = await generateProgramEmbeddings(programs);
-    embeddingsCacheTime = Date.now();
-    console.log(`✅ Generated embeddings for ${programEmbeddingsCache.length} programs`);
+    const stats = await getProgramStats();
+    console.log(`📊 pgvector status: ${stats.programs_with_embeddings}/${stats.total_programs} programs with embeddings`);
+    return stats.programs_with_embeddings > 0;
   } catch (error) {
-    console.error('❌ Failed to initialize embeddings:', error);
+    console.error('⚠️  pgvector not available:', error.message);
+    return false;
   }
-}
-
-// Get cached embeddings or refresh if needed
-async function getCachedEmbeddings() {
-  if (!programEmbeddingsCache || !embeddingsCacheTime || 
-      (Date.now() - embeddingsCacheTime) > CACHE_DURATION) {
-    await initializeEmbeddings();
-  }
-  return programEmbeddingsCache;
 }
 
 // Sample API endpoint
@@ -58,7 +44,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Vector search endpoint for intelligent program matching
+// Vector search endpoint for intelligent program matching (using pgvector)
 app.post('/api/programs/semantic-search', async (req, res) => {
   try {
     const { query, conversation_history = [], limit = 5 } = req.body;
@@ -69,31 +55,47 @@ app.post('/api/programs/semantic-search', async (req, res) => {
       });
     }
 
-    // Get cached embeddings
-    const programsWithEmbeddings = await getCachedEmbeddings();
+    // Check if pgvector is available
+    const pgvectorAvailable = await checkPgVectorStatus();
     
-    if (!programsWithEmbeddings || programsWithEmbeddings.length === 0) {
-      return res.status(500).json({
-        message: 'Program embeddings not available'
+    if (!pgvectorAvailable) {
+      // Fallback to local database search
+      console.log('🔄 pgvector not available, using fallback search...');
+      const fallbackResults = await searchProgramsByLocation(null, null, null, limit * 2);
+      
+      return res.status(200).json({
+        success: true,
+        query,
+        intent_analysis: { intent: 'search_programs', confidence: 0.5 },
+        results: fallbackResults.slice(0, limit),
+        count: Math.min(fallbackResults.length, limit),
+        fallback: true
       });
     }
 
     // Analyze user intent
     const intentAnalysis = await analyzeUserIntent(query, conversation_history);
     
-    // Perform semantic search
-    const searchResults = await semanticSearch(query, programsWithEmbeddings, limit);
+    // Perform semantic search with pgvector
+    const searchResults = await semanticSearch(query, null, limit);
+    
+    // Generate follow-up questions
+    const followUpQuestions = generateFollowUpQuestions(searchResults, intentAnalysis.preferences);
     
     return res.status(200).json({
       success: true,
       query,
-      intent_analysis: intentAnalysis,
+      intent_analysis: {
+        ...intentAnalysis,
+        questions_to_ask: followUpQuestions
+      },
       results: searchResults.map(program => ({
         ...program,
         embedding: undefined, // Don't send embeddings back to client
         searchText: undefined // Don't send search text back
       })),
-      count: searchResults.length
+      count: searchResults.length,
+      pgvector: true
     });
 
   } catch (error) {
@@ -259,6 +261,14 @@ app.listen(PORT, async () => {
   console.log(`  GET  http://localhost:${PORT}/api/programs/1`);
   console.log(`  POST http://localhost:${PORT}/api/data`);
   
-  // Initialize embeddings in background
-  initializeEmbeddings().catch(console.error);
+  // Check pgvector status
+  console.log('\n🔍 Checking pgvector status...');
+  const pgvectorStatus = await checkPgVectorStatus();
+  
+  if (pgvectorStatus) {
+    console.log('✅ pgvector is ready for semantic search');
+  } else {
+    console.log('⚠️  pgvector not available - using fallback search');
+    console.log('   To set up pgvector, run: node scripts/setup-pgvector.js');
+  }
 });
