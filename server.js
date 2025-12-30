@@ -1,8 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { searchProgramsByLocation, searchProgramsByName, getProgramById } from './lib/local-db.js';
-import { semanticSearch, analyzeUserIntent, generateFollowUpQuestions } from './lib/vector-search-pgvector.js';
+import { searchProgramsByLocation, searchProgramsByName, getProgramById, searchProgramsByDeliveryMode } from './lib/local-db.js';
+import { semanticSearch, analyzeUserIntent, generateFollowUpQuestions } from './lib/vector-search.js';
 import { getProgramStats } from './lib/pgvector-db.js';
 
 // Load environment variables
@@ -130,16 +130,44 @@ app.get('/api/programs/all', async (req, res) => {
 // Program search endpoints
 app.get('/api/programs/search', async (req, res) => {
   try {
-    const { zipCode, state, city, radius } = req.query;
+    const { zipCode, state, city, radius, deliveryMode } = req.query;
+    
+    console.log('🔍 Search request received:', {
+      zipCode,
+      state,
+      city,
+      radius,
+      deliveryMode,
+      allQueryParams: req.query
+    });
 
-    // Validate required parameters
-    if (!zipCode && !state && !city) {
-      return res.status(400).json({ 
-        message: 'At least one location parameter (zipCode, state, or city) is required' 
+    let programs = [];
+
+    // If deliveryMode is specified, search by delivery mode (no location required)
+    if (deliveryMode) {
+      console.log('✅ Searching by delivery mode:', deliveryMode);
+      programs = await searchProgramsByDeliveryMode(deliveryMode);
+      
+      return res.status(200).json({
+        success: true,
+        count: programs.length,
+        programs: programs,
+        searchCriteria: {
+          deliveryMode: deliveryMode,
+          locationBased: false
+        }
       });
     }
 
-    const programs = await searchProgramsByLocation(
+    // Otherwise, require location parameters
+    if (!zipCode && !state && !city) {
+      console.log('❌ No location parameters and no deliveryMode provided');
+      return res.status(400).json({ 
+        message: 'At least one location parameter (zipCode, state, or city) is required, or specify deliveryMode' 
+      });
+    }
+
+    programs = await searchProgramsByLocation(
       zipCode || null, 
       state || null, 
       city || null, 
@@ -154,12 +182,16 @@ app.get('/api/programs/search', async (req, res) => {
         zipCode: zipCode || null,
         state: state || null,
         city: city || null,
-        radius: parseInt(radius) || 25
+        radius: parseInt(radius) || 25,
+        locationBased: true
       }
     });
 
   } catch (error) {
-    console.error('Program search error:', error);
+    console.error('❌ Program search error:', error.message);
+    console.error('   Code:', error.code);
+    console.error('   Detail:', error.detail);
+    console.error('   Stack:', error.stack);
     return res.status(500).json({ 
       message: 'Error searching programs',
       error: error.message 

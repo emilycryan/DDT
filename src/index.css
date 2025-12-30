@@ -390,3 +390,19 @@ p {
   font-weight: 500;
   color: var(--text-secondary);
 }
+
+/* Leaflet Map Styles */
+.leaflet-container {
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+}
+
+.leaflet-popup-content-wrapper {
+  border-radius: 0.5rem;
+}
+
+.leaflet-popup-content {
+  margin: 0.75rem;
+  font-family: var(--font-body);
+}
