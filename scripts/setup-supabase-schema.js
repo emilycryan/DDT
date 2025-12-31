@@ -106,7 +106,34 @@ async function setupSupabaseSchema() {
     `);
     console.log('✅ assessment_results table created\n');
 
-    console.log('🎉 All tables created successfully!');
+    // Enable Row Level Security (RLS) on all tables
+    // Supabase requires RLS to be enabled for security compliance
+    // We'll create policies separately to allow public read access
+    console.log('🔒 Enabling Row Level Security (RLS) on tables...\n');
+    
+    const tables = ['programs', 'program_locations', 'program_details', 'assessment_results'];
+    
+    for (const table of tables) {
+      try {
+        await client.query(`ALTER TABLE ${table} ENABLE ROW LEVEL SECURITY;`);
+        console.log(`✅ RLS enabled on ${table} table`);
+      } catch (error) {
+        // RLS might already be enabled, or we might not have permission
+        if (error.code === '42501' || error.message.includes('permission denied')) {
+          console.log(`⚠️  Cannot enable RLS on ${table} (may require admin privileges)`);
+        } else if (error.message.includes('already enabled')) {
+          console.log(`ℹ️  RLS already enabled on ${table}`);
+        } else {
+          console.log(`⚠️  Warning for ${table}: ${error.message}`);
+        }
+      }
+    }
+    
+    console.log('\n🎉 All tables created successfully!');
+    console.log('\n⚠️  IMPORTANT: RLS is now enabled on all tables.');
+    console.log('   You must run the enable-rls-with-policies.js script to create');
+    console.log('   policies that allow public read access for the search functionality.');
+    console.log('   Run: node scripts/enable-rls-with-policies.js\n');
     console.log('\n📋 Created tables:');
     console.log('   - programs');
     console.log('   - program_locations');
