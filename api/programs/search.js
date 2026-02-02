@@ -1,4 +1,4 @@
-import { searchProgramsByLocation } from '../../lib/db.js';
+import { searchProgramsByLocation } from '../../lib/local-db.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {

@@ -1,0 +1,133 @@
+{
+  "tableName": "program_details",
+  "rowCount": 3,
+  "columns": [
+    {
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('program_details_id_seq'::regclass)",
+      "character_maximum_length": null,
+      "numeric_precision": 32,
+      "numeric_scale": 0
+    },
+    {
+      "column_name": "program_id",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null,
+      "numeric_precision": 32,
+      "numeric_scale": 0
+    },
+    {
+      "column_name": "delivery_mode",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 50,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "language",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": "'English'::character varying",
+      "character_maximum_length": 50,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "class_schedule",
+      "data_type": "text",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "duration_weeks",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null,
+      "numeric_precision": 32,
+      "numeric_scale": 0
+    },
+    {
+      "column_name": "cost",
+      "data_type": "numeric",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null,
+      "numeric_precision": 10,
+      "numeric_scale": 2
+    },
+    {
+      "column_name": "insurance_accepted",
+      "data_type": "ARRAY",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "max_participants",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null,
+      "numeric_precision": 32,
+      "numeric_scale": 0
+    },
+    {
+      "column_name": "current_participants",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": "0",
+      "character_maximum_length": null,
+      "numeric_precision": 32,
+      "numeric_scale": 0
+    },
+    {
+      "column_name": "enrollment_status",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": "'open'::character varying",
+      "character_maximum_length": 20,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": "now()",
+      "character_maximum_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "updated_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": "now()",
+      "character_maximum_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null
+    }
+  ],
+  "primaryKey": [
+    "id"
+  ],
+  "foreignKeys": [
+    {
+      "column_name": "program_id",
+      "foreign_table_name": "programs",
+      "foreign_column_name": "id"
+    }
+  ]
+}

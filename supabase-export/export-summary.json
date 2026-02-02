@@ -1,0 +1,31 @@
+{
+  "exportDate": "2026-01-21T21:26:50.160Z",
+  "totalTables": 4,
+  "tables": [
+    "assessment_results",
+    "program_details",
+    "program_locations",
+    "programs"
+  ],
+  "exportLocation": "/Users/63172/Sites/DDT/DDT/supabase-export",
+  "files": {
+    "csv": [
+      "csv/assessment_results.csv",
+      "csv/program_details.csv",
+      "csv/program_locations.csv",
+      "csv/programs.csv"
+    ],
+    "json": [
+      "json/assessment_results.json",
+      "json/program_details.json",
+      "json/program_locations.json",
+      "json/programs.json"
+    ],
+    "schema": [
+      "schema/assessment_results-schema.json",
+      "schema/program_details-schema.json",
+      "schema/program_locations-schema.json",
+      "schema/programs-schema.json"
+    ]
+  }
+}

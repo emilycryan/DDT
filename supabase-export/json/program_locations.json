@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "program_id": 1,
+    "address_line1": "456 Community Way",
+    "address_line2": null,
+    "city": "Atlanta",
+    "state": "GA",
+    "zip_code": "30310",
+    "latitude": "33.75150000",
+    "longitude": "-84.39600000",
+    "created_at": "2025-12-24T20:04:27.897Z"
+  },
+  {
+    "id": 2,
+    "program_id": 2,
+    "address_line1": "789 Wellness Blvd",
+    "address_line2": null,
+    "city": "Decatur",
+    "state": "GA",
+    "zip_code": "30030",
+    "latitude": "33.77480000",
+    "longitude": "-84.29630000",
+    "created_at": "2025-12-24T20:04:27.897Z"
+  },
+  {
+    "id": 3,
+    "program_id": 3,
+    "address_line1": "Online/Virtual",
+    "address_line2": null,
+    "city": "Statewide",
+    "state": "GA",
+    "zip_code": "30000",
+    "latitude": null,
+    "longitude": null,
+    "created_at": "2025-12-24T20:04:27.897Z"
+  }
+]

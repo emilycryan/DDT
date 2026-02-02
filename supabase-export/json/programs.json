@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "organization_name": "LCI Health Community Centers",
+    "cdc_recognition_status": "CDC-Recognized",
+    "mdpp_supplier": true,
+    "contact_phone": "(555) 234-5678",
+    "contact_email": "programs@lcihealth.org",
+    "website_url": null,
+    "description": "LCI Health offers comprehensive diabetes prevention programs with personalized coaching and support groups in a community-centered environment.",
+    "created_at": "2025-12-24T20:04:27.897Z",
+    "updated_at": "2025-12-24T20:04:27.897Z"
+  },
+  {
+    "id": 2,
+    "organization_name": "Riverside Medical Center",
+    "cdc_recognition_status": "CDC-Recognized",
+    "mdpp_supplier": true,
+    "contact_phone": "(555) 345-6789",
+    "contact_email": "wellness@riverside.org",
+    "website_url": null,
+    "description": "Evidence-based diabetes prevention program with virtual and in-person options, including nutrition counseling and fitness support.",
+    "created_at": "2025-12-24T20:04:27.897Z",
+    "updated_at": "2025-12-24T20:04:27.897Z"
+  },
+  {
+    "id": 3,
+    "organization_name": "Georgia Virtual Wellness",
+    "cdc_recognition_status": "CDC-Recognized",
+    "mdpp_supplier": true,
+    "contact_phone": "(555) 456-7890",
+    "contact_email": "support@gavirtual.org",
+    "website_url": "https://gavirtual.org",
+    "description": "Fully virtual diabetes prevention program accessible from anywhere in Georgia. Features live coaching sessions and mobile app support.",
+    "created_at": "2025-12-24T20:04:27.897Z",
+    "updated_at": "2025-12-24T20:04:27.897Z"
+  }
+]

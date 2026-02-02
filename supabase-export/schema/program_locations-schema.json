@@ -1,0 +1,106 @@
+{
+  "tableName": "program_locations",
+  "rowCount": 3,
+  "columns": [
+    {
+      "column_name": "id",
+      "data_type": "integer",
+      "is_nullable": "NO",
+      "column_default": "nextval('program_locations_id_seq'::regclass)",
+      "character_maximum_length": null,
+      "numeric_precision": 32,
+      "numeric_scale": 0
+    },
+    {
+      "column_name": "program_id",
+      "data_type": "integer",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null,
+      "numeric_precision": 32,
+      "numeric_scale": 0
+    },
+    {
+      "column_name": "address_line1",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "address_line2",
+      "data_type": "character varying",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": 255,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "city",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 100,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "state",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 2,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "zip_code",
+      "data_type": "character varying",
+      "is_nullable": "NO",
+      "column_default": null,
+      "character_maximum_length": 10,
+      "numeric_precision": null,
+      "numeric_scale": null
+    },
+    {
+      "column_name": "latitude",
+      "data_type": "numeric",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null,
+      "numeric_precision": 10,
+      "numeric_scale": 8
+    },
+    {
+      "column_name": "longitude",
+      "data_type": "numeric",
+      "is_nullable": "YES",
+      "column_default": null,
+      "character_maximum_length": null,
+      "numeric_precision": 11,
+      "numeric_scale": 8
+    },
+    {
+      "column_name": "created_at",
+      "data_type": "timestamp without time zone",
+      "is_nullable": "YES",
+      "column_default": "now()",
+      "character_maximum_length": null,
+      "numeric_precision": null,
+      "numeric_scale": null
+    }
+  ],
+  "primaryKey": [
+    "id"
+  ],
+  "foreignKeys": [
+    {
+      "column_name": "program_id",
+      "foreign_table_name": "programs",
+      "foreign_column_name": "id"
+    }
+  ]
+}
