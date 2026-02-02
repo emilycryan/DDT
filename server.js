@@ -1,7 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import { searchProgramsByLocation, searchProgramsByName, getProgramById, searchProgramsByDeliveryMode } from './lib/local-db.js';
+// Use PostgreSQL (Neon, Supabase, or local)
+import { searchProgramsByLocation, searchProgramsByName, getProgramById, searchProgramsByDeliveryMode, getAllPrograms } from './lib/local-db.js';
 import { semanticSearch, analyzeUserIntent, generateFollowUpQuestions } from './lib/vector-search.js';
 import { getProgramStats } from './lib/pgvector-db.js';
 
@@ -59,16 +60,24 @@ app.post('/api/programs/semantic-search', async (req, res) => {
     const pgvectorAvailable = await checkPgVectorStatus();
     
     if (!pgvectorAvailable) {
-      // Fallback to local database search
-      console.log('🔄 pgvector not available, using fallback search...');
-      const fallbackResults = await searchProgramsByLocation(null, null, null, limit * 2);
+      // Fallback to Airtable search
+      console.log('🔄 pgvector not available, using Airtable search...');
+      const fallbackResults = await getAllPrograms();
+      
+      // Simple text matching on organization name and description
+      const filteredResults = fallbackResults.filter(program => {
+        const searchLower = query.toLowerCase();
+        const orgMatch = program.organization_name?.toLowerCase().includes(searchLower);
+        const descMatch = program.description?.toLowerCase().includes(searchLower);
+        return orgMatch || descMatch;
+      }).slice(0, limit);
       
       return res.status(200).json({
         success: true,
         query,
         intent_analysis: { intent: 'search_programs', confidence: 0.5 },
-        results: fallbackResults.slice(0, limit),
-        count: Math.min(fallbackResults.length, limit),
+        results: filteredResults,
+        count: filteredResults.length,
         fallback: true
       });
     }
@@ -110,7 +119,7 @@ app.post('/api/programs/semantic-search', async (req, res) => {
 // Get all programs endpoint (for chatbot delivery mode filtering)
 app.get('/api/programs/all', async (req, res) => {
   try {
-    const programs = await searchProgramsByLocation(null, null, null, 999);
+    const programs = await getAllPrograms();
 
     return res.status(200).json({
       success: true,

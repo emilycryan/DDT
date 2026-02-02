@@ -23,9 +23,9 @@ A prototype for the new CDC: Path2Prevention platform
 
 3. Create environment file (optional):
    ```bash
-   cp .env.local.example .env.local
+   cp .env.example .env.local
    ```
-   Then edit `.env.local` with your actual environment variables.
+   Then edit `.env.local` with your actual environment variables. For **Neon** (or Supabase), set `DATABASE_URL` to your Postgres connection string (Neon requires `?sslmode=require`).
 
 ### Development
 
@@ -103,10 +103,15 @@ The backend server provides the following endpoints:
 - `npm run lint` - Run ESLint to check code quality
 - `npm run preview` - Preview the production build
 
-## Port Configuration
+## Database (Neon / Supabase / local Postgres)
 
-- Frontend: Port 3003
-- Backend API: Port 3004
+The app uses PostgreSQL via `DATABASE_URL` in `.env.local`. Supported backends:
+
+- **Neon**: Use the pooled connection string from Neon Console → Connect. Include `?sslmode=require`. The server and pgvector will use SSL automatically.
+- **Supabase**: Use the Postgres URI from Supabase → Settings → Database.
+- **Local**: If `DATABASE_URL` is unset, the app falls back to `localhost:5432` / `ddt_database`.
+
+See `.env.example` for a template.
 
 ## Contributing
 
