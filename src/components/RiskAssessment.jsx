@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const RiskAssessment = () => {
+const RiskAssessment = ({ onNavigate }) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
@@ -113,9 +113,13 @@ const RiskAssessment = () => {
             gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
             gap: '2rem'
           }}>
-            {/* For Myself - Concerned */}
+            {/* For Myself - Chronic condition(s) */}
             <div 
               className="card"
+              role="button"
+              tabIndex={0}
+              onClick={() => onNavigate && onNavigate('assessment-chronic')}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate && onNavigate('assessment-chronic'); } }}
               style={{
                 textAlign: 'center',
                 padding: '2rem',
@@ -160,6 +164,10 @@ const RiskAssessment = () => {
             {/* For Someone Else - Caregiver */}
             <div 
               className="card"
+              role="button"
+              tabIndex={0}
+              onClick={() => onNavigate && onNavigate('assessment-caregiver')}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate && onNavigate('assessment-caregiver'); } }}
               style={{
                 textAlign: 'center',
                 padding: '2rem',
@@ -204,6 +212,10 @@ const RiskAssessment = () => {
             {/* Just Curious - Denial Friendly */}
             <div 
               className="card"
+              role="button"
+              tabIndex={0}
+              onClick={() => onNavigate && onNavigate('assessment-just-curious')}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate && onNavigate('assessment-just-curious'); } }}
               style={{
                 textAlign: 'center',
                 padding: '2rem',
