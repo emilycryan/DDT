@@ -128,7 +128,7 @@ const Resources = ({ onNavigate }) => {
               lineHeight: '1.5',
               marginBottom: '1.5rem'
             }}>
-              Search for CDC-recognized diabetes prevention programs in your area. Choose from in-person, virtual, or on-demand options.
+              Search for CDC-recognized chronic disease prevention programs available to you. Choose from in-person, virtual, or on-demand options.
             </p>
             <div style={{
               display: 'flex',

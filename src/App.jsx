@@ -65,7 +65,7 @@ function App() {
               margin: '0 0 1.5rem 0',
               letterSpacing: '-0.025em'
             }}>
-              Start Your CDC: Path2Prevention
+              Start Your Path2Prevention
             </h1>
 
             {/* Description */}
