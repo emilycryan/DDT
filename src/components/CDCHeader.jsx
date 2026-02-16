@@ -217,6 +217,24 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
             }}>
               Support
             </a>
+            <a onClick={() => {
+              if (onNavigate) {
+                onNavigate('for-practitioners');
+                setTimeout(() => {
+                  window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 100);
+              }
+            }} style={{
+              color: 'var(--text-secondary)',
+              textDecoration: 'none',
+              fontSize: '16px',
+              fontFamily: 'var(--font-body)',
+              fontWeight: '500',
+              whiteSpace: 'nowrap',
+              cursor: 'pointer'
+            }}>
+              For Practitioners
+            </a>
             <button 
               onClick={() => onNavigate && onNavigate('risk-assessment')}
               style={{
@@ -331,6 +349,26 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
                 cursor: 'pointer'
               }}>
                 Support
+              </a>
+              <a onClick={() => {
+                if (onNavigate) {
+                  onNavigate('for-practitioners');
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }, 100);
+                }
+                setIsMenuOpen(false);
+              }} style={{
+                display: 'block',
+                color: '#64748b',
+                textDecoration: 'none',
+                fontSize: '16px',
+                fontWeight: '500',
+                padding: '12px 0',
+                borderBottom: '1px solid var(--neutral-off-white)',
+                cursor: 'pointer'
+              }}>
+                For Practitioners
               </a>
               <button 
                 onClick={() => {onNavigate && onNavigate('risk-assessment'); setIsMenuOpen(false);}}

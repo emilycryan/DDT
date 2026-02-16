@@ -10,6 +10,7 @@ import AssessmentJustCurious from './components/AssessmentJustCurious'
 import About from './components/About'
 import Resources from './components/Resources'
 import Support from './components/Support'
+import ForPractitioners from './components/ForPractitioners'
 import HowItWorks from './components/HowItWorks'
 import LifestylePrograms from './components/LifestylePrograms'
 
@@ -347,6 +348,8 @@ function App() {
         <Resources onNavigate={setCurrentPage} />
       ) : currentPage === 'support' ? (
         <Support />
+      ) : currentPage === 'for-practitioners' ? (
+        <ForPractitioners />
       ) : currentPage === 'how-it-works' ? (
         <HowItWorks />
       ) : currentPage === 'lifestyle-programs' ? (
