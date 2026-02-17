@@ -1,6 +1,19 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-const CDCHeader = ({ onNavigate, currentPage }) => {
+const navLinkStyle = {
+  color: 'var(--text-secondary)',
+  textDecoration: 'none',
+  fontSize: '16px',
+  fontFamily: 'var(--font-body)',
+  fontWeight: '500',
+  whiteSpace: 'nowrap',
+  background: 'none',
+  border: 'none',
+  cursor: 'pointer',
+};
+
+const CDCHeader = ({ goToHomeSection, currentPage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -121,15 +134,8 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
               }}
             />
             <div style={{ minWidth: 0 }}>
-              <div 
-                onClick={() => {
-                  if (onNavigate) {
-                    onNavigate('home');
-                    setTimeout(() => {
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }, 100);
-                  }
-                }}
+              <Link
+                to="/"
                 style={{
                   fontSize: isMobile ? '18px' : '24px',
                   fontFamily: 'var(--font-header)',
@@ -139,11 +145,11 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
                   whiteSpace: 'nowrap',
                   overflow: 'hidden',
                   textOverflow: 'ellipsis',
-                  cursor: 'pointer'
+                  textDecoration: 'none'
                 }}
               >
                 CDC: Path2Prevention
-              </div>
+              </Link>
               <div style={{
                 fontSize: isMobile ? '12px' : '14px',
                 fontFamily: 'var(--font-body)',
@@ -163,94 +169,24 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
             display: isMobile ? 'none' : 'flex', 
             gap: '30px' 
           }}>
-            <a onClick={() => {
-              if (onNavigate) {
-                onNavigate('about');
-                setTimeout(() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 100);
-              }
-            }} style={{
-              color: 'var(--text-secondary)',
-              textDecoration: 'none',
-              fontSize: '16px',
-              fontFamily: 'var(--font-body)',
-              fontWeight: '500',
-              whiteSpace: 'nowrap',
-              cursor: 'pointer'
-            }}>
-              About
-            </a>
-            <a onClick={() => {
-              if (onNavigate) {
-                onNavigate('resources');
-                setTimeout(() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 100);
-              }
-            }} style={{
-              color: 'var(--text-secondary)',
-              textDecoration: 'none',
-              fontSize: '16px',
-              fontFamily: 'var(--font-body)',
-              fontWeight: '500',
-              whiteSpace: 'nowrap',
-              cursor: 'pointer'
-            }}>
-              Resources
-            </a>
-            <a onClick={() => {
-              if (onNavigate) {
-                onNavigate('support');
-                setTimeout(() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 100);
-              }
-            }} style={{
-              color: 'var(--text-secondary)',
-              textDecoration: 'none',
-              fontSize: '16px',
-              fontFamily: 'var(--font-body)',
-              fontWeight: '500',
-              whiteSpace: 'nowrap',
-              cursor: 'pointer'
-            }}>
-              Support
-            </a>
-            <a onClick={() => {
-              if (onNavigate) {
-                onNavigate('for-practitioners');
-                setTimeout(() => {
-                  window.scrollTo({ top: 0, behavior: 'smooth' });
-                }, 100);
-              }
-            }} style={{
-              color: 'var(--text-secondary)',
-              textDecoration: 'none',
-              fontSize: '16px',
-              fontFamily: 'var(--font-body)',
-              fontWeight: '500',
-              whiteSpace: 'nowrap',
-              cursor: 'pointer'
-            }}>
-              For Practitioners
-            </a>
-            <button 
-              onClick={() => onNavigate && onNavigate('risk-assessment')}
+            <Link to="/about" style={navLinkStyle}>About</Link>
+            <Link to="/resources" style={navLinkStyle}>Resources</Link>
+            <Link to="/support" style={navLinkStyle}>Support</Link>
+            <Link to="/for-practitioners" style={navLinkStyle}>For Practitioners</Link>
+            <Link
+              to="/get-started"
               style={{
+                ...navLinkStyle,
                 backgroundColor: '#1e40af',
                 color: 'white',
                 padding: '0.5rem 1rem',
                 borderRadius: '0.375rem',
-                border: 'none',
                 fontSize: '14px',
-                fontWeight: '600',
-                cursor: 'pointer',
-                whiteSpace: 'nowrap'
+                fontWeight: '600'
               }}
             >
               Get Started
-            </button>
+            </Link>
           </nav>
 
           {/* Mobile Hamburger Menu */}
@@ -290,103 +226,11 @@ const CDCHeader = ({ onNavigate, currentPage }) => {
               margin: '0 auto',
               padding: '15px'
             }}>
-              <a onClick={() => {
-                if (onNavigate) {
-                  onNavigate('about');
-                  setTimeout(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }, 100);
-                }
-                setIsMenuOpen(false);
-              }} style={{
-                display: 'block',
-                color: '#64748b',
-                textDecoration: 'none',
-                fontSize: '16px',
-                fontWeight: '500',
-                padding: '12px 0',
-                borderBottom: '1px solid var(--neutral-off-white)',
-                cursor: 'pointer'
-              }}>
-                About
-              </a>
-              <a onClick={() => {
-                if (onNavigate) {
-                  onNavigate('resources');
-                  setTimeout(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }, 100);
-                }
-                setIsMenuOpen(false);
-              }} style={{
-                display: 'block',
-                color: '#64748b',
-                textDecoration: 'none',
-                fontSize: '16px',
-                fontWeight: '500',
-                padding: '12px 0',
-                borderBottom: '1px solid var(--neutral-off-white)',
-                cursor: 'pointer'
-              }}>
-                Resources
-              </a>
-              <a onClick={() => {
-                if (onNavigate) {
-                  onNavigate('support');
-                  setTimeout(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }, 100);
-                }
-                setIsMenuOpen(false);
-              }} style={{
-                display: 'block',
-                color: '#64748b',
-                textDecoration: 'none',
-                fontSize: '16px',
-                fontWeight: '500',
-                padding: '12px 0',
-                borderBottom: '1px solid var(--neutral-off-white)',
-                cursor: 'pointer'
-              }}>
-                Support
-              </a>
-              <a onClick={() => {
-                if (onNavigate) {
-                  onNavigate('for-practitioners');
-                  setTimeout(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }, 100);
-                }
-                setIsMenuOpen(false);
-              }} style={{
-                display: 'block',
-                color: '#64748b',
-                textDecoration: 'none',
-                fontSize: '16px',
-                fontWeight: '500',
-                padding: '12px 0',
-                borderBottom: '1px solid var(--neutral-off-white)',
-                cursor: 'pointer'
-              }}>
-                For Practitioners
-              </a>
-              <button 
-                onClick={() => {onNavigate && onNavigate('risk-assessment'); setIsMenuOpen(false);}}
-                style={{
-                  backgroundColor: '#1e40af',
-                  color: 'white',
-                  padding: '0.75rem 1.5rem',
-                  borderRadius: '0.375rem',
-                  border: 'none',
-                  fontSize: '16px',
-                  fontWeight: '600',
-                  cursor: 'pointer',
-                  width: '100%',
-                  marginTop: '12px'
-                }}
-              >
-                Get Started
-              </button>
+              <Link to="/about" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#64748b', textDecoration: 'none', fontSize: '16px', fontWeight: '500', padding: '12px 0', borderBottom: '1px solid var(--neutral-off-white)' }}>About</Link>
+              <Link to="/resources" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#64748b', textDecoration: 'none', fontSize: '16px', fontWeight: '500', padding: '12px 0', borderBottom: '1px solid var(--neutral-off-white)' }}>Resources</Link>
+              <Link to="/support" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#64748b', textDecoration: 'none', fontSize: '16px', fontWeight: '500', padding: '12px 0', borderBottom: '1px solid var(--neutral-off-white)' }}>Support</Link>
+              <Link to="/for-practitioners" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#64748b', textDecoration: 'none', fontSize: '16px', fontWeight: '500', padding: '12px 0', borderBottom: '1px solid var(--neutral-off-white)' }}>For Practitioners</Link>
+              <Link to="/get-started" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', backgroundColor: '#1e40af', color: 'white', padding: '0.75rem 1.5rem', borderRadius: '0.375rem', textDecoration: 'none', fontSize: '16px', fontWeight: '600', width: '100%', marginTop: '12px', textAlign: 'center' }}>Get Started</Link>
             </nav>
           </div>
         )}

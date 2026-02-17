@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import './App.css'
 import CDCHeader from './components/CDCHeader'
 import CDCFooter from './components/CDCFooter'
@@ -14,27 +15,82 @@ import ForPractitioners from './components/ForPractitioners'
 import HowItWorks from './components/HowItWorks'
 import LifestylePrograms from './components/LifestylePrograms'
 
+const PAGE_TO_PATH = {
+  'about': '/about',
+  'resources': '/resources',
+  'support': '/support',
+  'for-practitioners': '/for-practitioners',
+  'how-it-works': '/how-it-works',
+  'risk-assessment': '/get-started',
+  'lifestyle-programs': '/lifestyle-programs',
+  'assessment-chronic': '/get-started/for-myself',
+  'assessment-caregiver': '/get-started/for-someone',
+  'assessment-just-curious': '/get-started/just-curious',
+}
+
+const PATH_TO_PAGE = Object.fromEntries(Object.entries(PAGE_TO_PATH).map(([k, v]) => [v, k]))
+
+const scrollToSection = (sectionId) => {
+  requestAnimationFrame(() => {
+    const element = document.getElementById(sectionId)
+    if (element) {
+      const offset = 30
+      const elementTop = element.getBoundingClientRect().top + window.pageYOffset
+      window.scrollTo({ top: Math.max(0, elementTop - offset), behavior: 'smooth' })
+    }
+  })
+}
+
 function App() {
-  const [count, setCount] = useState(0)
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768)
-  const [currentPage, setCurrentPage] = useState('home') // home or risk-assessment
+  const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768)
-    }
-
+    const handleResize = () => setIsMobile(window.innerWidth <= 768)
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  const onNavigate = (page) => {
+    const path = PAGE_TO_PATH[page] || (page === 'home' ? '/' : `/${page}`)
+    navigate(path)
+    window.scrollTo(0, 0)
+  }
+
+  const goToHomeSection = (sectionId) => {
+    navigate('/')
+    setTimeout(() => scrollToSection(sectionId), 150)
+  }
+
+  const handleChatbotNavigate = (target) => {
+    if (['about', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs'].includes(target)) onNavigate(target)
+    else goToHomeSection(target)
+  }
+
+  const navigateTo = (target) => {
+    if (['about', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs'].includes(target)) onNavigate(target)
+    else goToHomeSection(target)
+  }
+
+  const currentPage = location.pathname === '/' ? 'home' : (PATH_TO_PAGE[location.pathname] || 'home')
+
   return (
     <div style={{ minHeight: '100vh', backgroundColor: 'white', margin: 0, padding: 0 }}>
-      {/* CDC Header */}
-      <CDCHeader onNavigate={setCurrentPage} currentPage={currentPage} />
+      <CDCHeader goToHomeSection={goToHomeSection} currentPage={currentPage} />
 
-      {/* Main Content */}
-      {currentPage === 'home' ? (
+      <Routes>
+      <Route path="/about" element={<main style={{ minHeight: '80vh' }}><About /></main>} />
+      <Route path="/resources" element={<main style={{ minHeight: '80vh' }}><Resources onNavigate={navigateTo} /></main>} />
+      <Route path="/support" element={<main style={{ minHeight: '80vh' }}><Support /></main>} />
+      <Route path="/for-practitioners" element={<main style={{ minHeight: '80vh' }}><ForPractitioners /></main>} />
+      <Route path="/how-it-works" element={<main style={{ minHeight: '80vh' }}><HowItWorks /></main>} />
+      <Route path="/get-started" element={<RiskAssessment onNavigate={onNavigate} />} />
+      <Route path="/get-started/for-myself" element={<AssessmentChronicConditions onBack={() => onNavigate('risk-assessment')} />} />
+      <Route path="/get-started/for-someone" element={<AssessmentCaregiver onBack={() => onNavigate('risk-assessment')} />} />
+      <Route path="/get-started/just-curious" element={<AssessmentJustCurious onBack={() => onNavigate('risk-assessment')} />} />
+      <Route path="/lifestyle-programs" element={<main style={{ minHeight: '80vh' }}><LifestylePrograms /></main>} />
+      <Route path="/" element={
         <main style={{ 
           backgroundColor: 'var(--bg-secondary)',
           minHeight: '80vh'
@@ -91,7 +147,7 @@ function App() {
               justifyContent: isMobile ? 'center' : 'flex-start'
             }}>
               <button 
-                onClick={() => setCurrentPage('risk-assessment')}
+                onClick={() => onNavigate('risk-assessment')}
                 className="btn btn-primary"
                 style={{
                   minWidth: isMobile ? '200px' : 'auto'
@@ -100,12 +156,7 @@ function App() {
                 Am I at Risk?
               </button>
               <button 
-                onClick={() => {
-                  setCurrentPage('how-it-works');
-                  setTimeout(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }, 100);
-                }}
+                onClick={() => onNavigate('how-it-works')}
                 className="btn btn-secondary"
                 style={{
                   minWidth: isMobile ? '200px' : 'auto'
@@ -215,12 +266,7 @@ function App() {
             }}>
               {/* What is The Path? */}
               <div 
-                onClick={() => {
-                  setCurrentPage('about');
-                  setTimeout(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }, 100);
-                }}
+                onClick={() => onNavigate('about')}
                 className="card"
                 style={{
                   textAlign: 'center',
@@ -256,12 +302,7 @@ function App() {
 
               {/* Get the Facts */}
               <div 
-                onClick={() => {
-                  setCurrentPage('resources');
-                  setTimeout(() => {
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                  }, 100);
-                }}
+                onClick={() => onNavigate('resources')}
                 className="card"
                 style={{
                   textAlign: 'center',
@@ -297,7 +338,7 @@ function App() {
 
               {/* Start Your Plan */}
               <div 
-                onClick={() => setCurrentPage('risk-assessment')}
+                onClick={() => onNavigate('risk-assessment')}
                 className="card"
                 style={{
                   textAlign: 'center',
@@ -334,35 +375,14 @@ function App() {
           </div>
         </section>
       </main>
-      ) : currentPage === 'risk-assessment' ? (
-        <RiskAssessment onNavigate={setCurrentPage} />
-      ) : currentPage === 'assessment-chronic' ? (
-        <AssessmentChronicConditions onBack={() => setCurrentPage('risk-assessment')} />
-      ) : currentPage === 'assessment-caregiver' ? (
-        <AssessmentCaregiver onBack={() => setCurrentPage('risk-assessment')} />
-      ) : currentPage === 'assessment-just-curious' ? (
-        <AssessmentJustCurious onBack={() => setCurrentPage('risk-assessment')} />
-      ) : currentPage === 'about' ? (
-        <About />
-      ) : currentPage === 'resources' ? (
-        <Resources onNavigate={setCurrentPage} />
-      ) : currentPage === 'support' ? (
-        <Support />
-      ) : currentPage === 'for-practitioners' ? (
-        <ForPractitioners />
-      ) : currentPage === 'how-it-works' ? (
-        <HowItWorks />
-      ) : currentPage === 'lifestyle-programs' ? (
-        <LifestylePrograms />
-      ) : (
-        <div>Page not found</div>
-      )}
+      } />
+      </Routes>
 
       {/* CDC Footer */}
       <CDCFooter />
       
       {/* Chatbot */}
-      <Chatbot onNavigate={setCurrentPage} />
+      <Chatbot onNavigate={handleChatbotNavigate} />
     </div>
   )
 }
