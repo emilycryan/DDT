@@ -12,6 +12,7 @@ import About from './components/About'
 import Resources from './components/Resources'
 import Support from './components/Support'
 import ForPractitioners from './components/ForPractitioners'
+import PractitionerFeedback from './components/PractitionerFeedback'
 import HowItWorks from './components/HowItWorks'
 import LifestylePrograms from './components/LifestylePrograms'
 
@@ -84,6 +85,7 @@ function App() {
       <Route path="/resources" element={<main style={{ minHeight: '80vh' }}><Resources onNavigate={navigateTo} /></main>} />
       <Route path="/support" element={<main style={{ minHeight: '80vh' }}><Support /></main>} />
       <Route path="/for-practitioners" element={<main style={{ minHeight: '80vh' }}><ForPractitioners /></main>} />
+      <Route path="/for-practitioners/feedback" element={<main style={{ minHeight: '80vh' }}><PractitionerFeedback /></main>} />
       <Route path="/how-it-works" element={<main style={{ minHeight: '80vh' }}><HowItWorks /></main>} />
       <Route path="/get-started" element={<RiskAssessment onNavigate={onNavigate} />} />
       <Route path="/get-started/for-myself" element={<AssessmentChronicConditions onBack={() => onNavigate('risk-assessment')} />} />
