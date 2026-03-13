@@ -461,7 +461,7 @@ const LifestylePrograms = () => {
           <h1 style={{
             fontSize: isMobile ? '2.5rem' : '3.5rem',
             fontWeight: 'bold',
-            color: '#1e293b',
+            color: '#1b1b1b',
             lineHeight: '1.1',
             marginBottom: '1rem',
             margin: '0 0 1rem 0'
@@ -481,7 +481,7 @@ const LifestylePrograms = () => {
 
           <p style={{
             fontSize: '1.125rem',
-            color: '#64748b',
+            color: '#333333',
             lineHeight: '1.6',
             maxWidth: '600px',
             margin: '0 auto'
@@ -504,7 +504,7 @@ const LifestylePrograms = () => {
           <h2 style={{
             fontSize: isMobile ? '2rem' : '2.5rem',
             fontWeight: 'bold',
-            color: '#1e293b',
+            color: '#1b1b1b',
             textAlign: 'center',
             marginBottom: '2rem'
           }}>
@@ -691,7 +691,7 @@ const LifestylePrograms = () => {
               <h3 style={{
                 fontSize: '1.5rem',
                 fontWeight: 'bold',
-                color: '#1e293b',
+                color: '#1b1b1b',
                 marginBottom: '1.5rem'
               }}>
                 Search Results
@@ -699,7 +699,7 @@ const LifestylePrograms = () => {
                   <span style={{
                     fontSize: '1rem',
                     fontWeight: 'normal',
-                    color: '#64748b',
+                    color: '#333333',
                     marginLeft: '0.5rem'
                   }}>
                     ({searchResults.length} program{searchResults.length !== 1 ? 's' : ''} found)
@@ -742,7 +742,7 @@ const LifestylePrograms = () => {
                           <h4 style={{
                             fontSize: '1.25rem',
                             fontWeight: '600',
-                            color: '#1e293b',
+                            color: '#1b1b1b',
                             marginBottom: '0.5rem'
                           }}>
                             {program.organization_name}
@@ -751,7 +751,7 @@ const LifestylePrograms = () => {
                           {program.description && (
                             <p style={{
                               fontSize: '0.95rem',
-                              color: '#64748b',
+                              color: '#333333',
                               lineHeight: '1.5',
                               marginBottom: '1rem'
                             }}>
@@ -884,14 +884,14 @@ const LifestylePrograms = () => {
               <h3 style={{
                 fontSize: '1.25rem',
                 fontWeight: 'bold',
-                color: '#1e293b',
+                color: '#1b1b1b',
                 marginBottom: '1rem'
               }}>
                 In-Person Programs
               </h3>
               <p style={{
                 fontSize: '0.95rem',
-                color: '#64748b',
+                color: '#333333',
                 lineHeight: '1.5'
               }}>
                 Meet with a lifestyle coach and other participants in a classroom setting for interactive group sessions.
@@ -927,14 +927,14 @@ const LifestylePrograms = () => {
               <h3 style={{
                 fontSize: '1.25rem',
                 fontWeight: 'bold',
-                color: '#1e293b',
+                color: '#1b1b1b',
                 marginBottom: '1rem'
               }}>
                 Live Virtual Programs
               </h3>
               <p style={{
                 fontSize: '0.95rem',
-                color: '#64748b',
+                color: '#333333',
                 lineHeight: '1.5'
               }}>
                 Join interactive group sessions from home using video conferencing platforms like Zoom.
@@ -969,14 +969,14 @@ const LifestylePrograms = () => {
               <h3 style={{
                 fontSize: '1.25rem',
                 fontWeight: 'bold',
-                color: '#1e293b',
+                color: '#1b1b1b',
                 marginBottom: '1rem'
               }}>
                 On-Demand Programs
               </h3>
               <p style={{
                 fontSize: '0.95rem',
-                color: '#64748b',
+                color: '#333333',
                 lineHeight: '1.5'
               }}>
                 Complete sessions at your own pace using a smartphone, tablet, or computer with flexible scheduling.
@@ -1008,14 +1008,14 @@ const LifestylePrograms = () => {
                 <h4 style={{
                   fontSize: '1.125rem',
                   fontWeight: '600',
-                  color: '#1e293b',
+                  color: '#1b1b1b',
                   marginBottom: '0.5rem'
                 }}>
                   Proven Results
                 </h4>
                 <p style={{
                   fontSize: '0.95rem',
-                  color: '#64748b',
+                  color: '#333333',
                   lineHeight: '1.5',
                   margin: 0
                 }}>
@@ -1026,14 +1026,14 @@ const LifestylePrograms = () => {
                 <h4 style={{
                   fontSize: '1.125rem',
                   fontWeight: '600',
-                  color: '#1e293b',
+                  color: '#1b1b1b',
                   marginBottom: '0.5rem'
                 }}>
                   Expert Support
                 </h4>
                 <p style={{
                   fontSize: '0.95rem',
-                  color: '#64748b',
+                  color: '#333333',
                   lineHeight: '1.5',
                   margin: 0
                 }}>

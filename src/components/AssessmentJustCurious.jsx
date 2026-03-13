@@ -186,22 +186,17 @@ function AssessmentJustCurious({ onBack }) {
     return (
       <main
         style={{
-          backgroundColor: 'var(--bg-secondary)',
+          backgroundColor: '#ffffff',
           minHeight: '80vh',
           padding: '2rem 1rem',
         }}
       >
-        <div
-          style={{
-            maxWidth: '560px',
-            margin: '0 auto',
-          }}
-        >
+        <div style={{ maxWidth: 560, margin: '0 auto' }}>
           <h1
             style={{
               fontFamily: 'var(--font-header)',
-              fontWeight: '700',
-              color: 'var(--text-primary)',
+              fontWeight: 700,
+              color: '#1b1b1b',
               marginBottom: '1rem',
               fontSize: '1.75rem',
             }}
@@ -211,7 +206,7 @@ function AssessmentJustCurious({ onBack }) {
           <p
             style={{
               fontFamily: 'var(--font-body)',
-              color: 'var(--text-secondary)',
+              color: '#323a45',
               marginBottom: '1.5rem',
               lineHeight: 1.6,
             }}
@@ -223,19 +218,20 @@ function AssessmentJustCurious({ onBack }) {
             {suggestions.map((s, i) => (
               <div
                 key={i}
-                className="card"
                 style={{
                   padding: '1.25rem',
-                  borderLeft: '4px solid var(--primary-dark)',
+                  borderLeft: '4px solid #005ea2',
+                  backgroundColor: '#f0f4f8',
+                  border: '1px solid #e0e0e0',
+                  borderRadius: '0.25rem',
                 }}
               >
                 <h3
                   style={{
                     fontSize: '1rem',
                     fontFamily: 'var(--font-header)',
-                    fontWeight: '600',
-                    color: 'var(--text-primary)',
-                    marginBottom: '0.5rem',
+                    fontWeight: 600,
+                    color: '#1b1b1b',
                     margin: '0 0 0.5rem 0',
                   }}
                 >
@@ -245,7 +241,7 @@ function AssessmentJustCurious({ onBack }) {
                   style={{
                     fontSize: '0.9375rem',
                     fontFamily: 'var(--font-body)',
-                    color: 'var(--text-secondary)',
+                    color: '#323a45',
                     lineHeight: 1.5,
                     margin: 0,
                   }}
@@ -259,7 +255,7 @@ function AssessmentJustCurious({ onBack }) {
           <p
             style={{
               fontFamily: 'var(--font-body)',
-              color: 'var(--text-muted)',
+              color: '#5c5c5c',
               fontSize: '0.875rem',
               lineHeight: 1.5,
               marginBottom: '1.5rem',
@@ -269,11 +265,39 @@ function AssessmentJustCurious({ onBack }) {
           </p>
 
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <button type="button" className="btn btn-secondary" onClick={() => { setCurrentIndex(0); setIsComplete(false); setAnswers({}); }}>
+            <button
+              type="button"
+              onClick={() => { setCurrentIndex(0); setIsComplete(false); setAnswers({}); }}
+              style={{
+                padding: '0.75rem 1.25rem',
+                backgroundColor: 'transparent',
+                color: '#005ea2',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 600,
+                fontSize: '1rem',
+                border: '2px solid #005ea2',
+                borderRadius: '0.25rem',
+                cursor: 'pointer',
+              }}
+            >
               Answer again
             </button>
             {onBack && (
-              <button type="button" className="btn btn-primary" onClick={onBack}>
+              <button
+                type="button"
+                onClick={onBack}
+                style={{
+                  padding: '0.75rem 1.25rem',
+                  backgroundColor: '#005ea2',
+                  color: 'white',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  border: 'none',
+                  borderRadius: '0.25rem',
+                  cursor: 'pointer',
+                }}
+              >
                 Back to assessments
               </button>
             )}
@@ -286,22 +310,17 @@ function AssessmentJustCurious({ onBack }) {
   return (
     <main
       style={{
-        backgroundColor: 'var(--bg-secondary)',
+        backgroundColor: '#ffffff',
         minHeight: '80vh',
         padding: '2rem 1rem',
       }}
     >
-      <div
-        style={{
-          maxWidth: '560px',
-          margin: '0 auto',
-        }}
-      >
+      <div style={{ maxWidth: 560, margin: '0 auto' }}>
         <div
           style={{
-            height: '4px',
-            backgroundColor: 'var(--neutral-light-grey)',
-            borderRadius: '2px',
+            height: 4,
+            backgroundColor: '#e0e0e0',
+            borderRadius: 2,
             marginBottom: '2rem',
             overflow: 'hidden',
           }}
@@ -310,7 +329,7 @@ function AssessmentJustCurious({ onBack }) {
             style={{
               height: '100%',
               width: `${progress}%`,
-              backgroundColor: 'var(--primary-dark)',
+              backgroundColor: '#005ea2',
               transition: 'width 0.3s ease',
             }}
           />
@@ -320,7 +339,7 @@ function AssessmentJustCurious({ onBack }) {
           style={{
             fontSize: '0.875rem',
             fontFamily: 'var(--font-body)',
-            color: 'var(--text-muted)',
+            color: '#5c5c5c',
             marginBottom: '0.5rem',
           }}
         >
@@ -330,8 +349,8 @@ function AssessmentJustCurious({ onBack }) {
         <h2
           style={{
             fontFamily: 'var(--font-header)',
-            fontWeight: '700',
-            color: 'var(--text-primary)',
+            fontWeight: 700,
+            color: '#1b1b1b',
             marginBottom: '1.5rem',
             fontSize: '1.5rem',
             lineHeight: 1.3,
@@ -345,7 +364,6 @@ function AssessmentJustCurious({ onBack }) {
             {currentQuestion.options.map((opt) => (
               <label
                 key={opt.value}
-                className="card"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -354,9 +372,10 @@ function AssessmentJustCurious({ onBack }) {
                   cursor: 'pointer',
                   border:
                     answers[currentQuestion.id] === opt.value
-                      ? '2px solid var(--primary-dark)'
-                      : '2px solid transparent',
-                  backgroundColor: 'var(--bg-primary)',
+                      ? '2px solid #005ea2'
+                      : '2px solid #e0e0e0',
+                  backgroundColor: '#ffffff',
+                  borderRadius: '0.25rem',
                 }}
               >
                 <input
@@ -365,9 +384,9 @@ function AssessmentJustCurious({ onBack }) {
                   value={opt.value}
                   checked={answers[currentQuestion.id] === opt.value}
                   onChange={() => handleChange(currentQuestion.id, opt.value)}
-                  style={{ marginRight: '0.75rem', accentColor: 'var(--primary-dark)' }}
+                  style={{ marginRight: '0.75rem', accentColor: '#005ea2' }}
                 />
-                <span style={{ fontFamily: 'var(--font-body)', color: 'var(--text-primary)' }}>{opt.label}</span>
+                <span style={{ fontFamily: 'var(--font-body)', color: '#1b1b1b' }}>{opt.label}</span>
               </label>
             ))}
           </fieldset>
@@ -376,17 +395,41 @@ function AssessmentJustCurious({ onBack }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             {currentIndex > 0 && (
-              <button type="button" className="btn btn-secondary" onClick={handlePrev}>
+              <button
+                type="button"
+                onClick={handlePrev}
+                style={{
+                  padding: '0.75rem 1.25rem',
+                  backgroundColor: 'transparent',
+                  color: '#005ea2',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  border: '2px solid #005ea2',
+                  borderRadius: '0.25rem',
+                  cursor: 'pointer',
+                }}
+              >
                 Back
               </button>
             )}
           </div>
           <button
             type="button"
-            className="btn btn-primary"
             onClick={handleNext}
             disabled={!canProceed()}
-            style={{ opacity: canProceed() ? 1 : 0.6 }}
+            style={{
+              padding: '0.75rem 1.25rem',
+              backgroundColor: '#005ea2',
+              color: 'white',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 600,
+              fontSize: '1rem',
+              border: 'none',
+              borderRadius: '0.25rem',
+              cursor: canProceed() ? 'pointer' : 'not-allowed',
+              opacity: canProceed() ? 1 : 0.6,
+            }}
           >
             {currentIndex < totalQuestions - 1 ? 'Next' : 'See what might be useful'}
           </button>
@@ -401,7 +444,7 @@ function AssessmentJustCurious({ onBack }) {
                 background: 'none',
                 border: 'none',
                 fontFamily: 'var(--font-body)',
-                color: 'var(--text-muted)',
+                color: '#5c5c5c',
                 textDecoration: 'underline',
                 cursor: 'pointer',
                 fontSize: '0.9375rem',

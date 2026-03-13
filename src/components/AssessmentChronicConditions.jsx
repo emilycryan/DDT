@@ -218,17 +218,17 @@ function AssessmentChronicConditions({ onBack }) {
     return (
       <main
         style={{
-          backgroundColor: 'var(--bg-secondary)',
+          backgroundColor: '#ffffff',
           minHeight: '80vh',
           padding: '2rem 1rem',
         }}
       >
-        <div style={{ maxWidth: '560px', margin: '0 auto' }}>
+        <div style={{ maxWidth: 560, margin: '0 auto' }}>
           <h1
             style={{
               fontFamily: 'var(--font-header)',
-              fontWeight: '700',
-              color: 'var(--text-primary)',
+              fontWeight: 700,
+              color: '#1b1b1b',
               marginBottom: '1rem',
               fontSize: '1.75rem',
             }}
@@ -238,7 +238,7 @@ function AssessmentChronicConditions({ onBack }) {
           <p
             style={{
               fontFamily: 'var(--font-body)',
-              color: 'var(--text-secondary)',
+              color: '#323a45',
               marginBottom: '1.5rem',
               lineHeight: 1.6,
             }}
@@ -246,17 +246,19 @@ function AssessmentChronicConditions({ onBack }) {
             Based on your answers, this is a snapshot of your prediabetes risk. This is not a diagnosis—it's a starting point for conversation with your care team. A score of 5 or higher suggests increased risk. Consider sharing these results with your doctor.
           </p>
           <div
-            className="card"
             style={{
               padding: '1.5rem',
               marginBottom: '1.5rem',
+              backgroundColor: '#f0f4f8',
+              border: '1px solid #e0e0e0',
+              borderRadius: '0.25rem',
             }}
           >
             <div
               style={{
                 fontSize: '0.875rem',
                 fontFamily: 'var(--font-body)',
-                color: 'var(--text-muted)',
+                color: '#5c5c5c',
                 marginBottom: '0.25rem',
               }}
             >
@@ -266,11 +268,11 @@ function AssessmentChronicConditions({ onBack }) {
               style={{
                 fontSize: '2rem',
                 fontFamily: 'var(--font-header)',
-                fontWeight: '700',
-                color: 'var(--primary-dark)',
+                fontWeight: 700,
+                color: '#005ea2',
               }}
             >
-              {totalScore} <span style={{ fontWeight: '400', color: 'var(--text-secondary)' }}>/ {maxPossibleScore}</span>
+              {totalScore} <span style={{ fontWeight: 400, color: '#323a45' }}>/ {maxPossibleScore}</span>
             </div>
             <div
               style={{
@@ -278,14 +280,14 @@ function AssessmentChronicConditions({ onBack }) {
                 padding: '0.5rem 0.75rem',
                 backgroundColor:
                   riskLevel === 'higher'
-                    ? 'rgba(239, 68, 68, 0.12)'
+                    ? 'rgba(216, 57, 51, 0.12)'
                     : riskLevel === 'moderate'
                     ? 'rgba(245, 158, 11, 0.12)'
-                    : 'rgba(34, 197, 94, 0.12)',
-                borderRadius: '6px',
+                    : 'rgba(0, 120, 51, 0.12)',
+                borderRadius: '0.25rem',
                 fontSize: '0.9375rem',
                 fontFamily: 'var(--font-body)',
-                color: 'var(--text-primary)',
+                color: '#1b1b1b',
               }}
             >
               Risk level: <strong>{riskLevel}</strong>
@@ -294,7 +296,7 @@ function AssessmentChronicConditions({ onBack }) {
           <p
             style={{
               fontFamily: 'var(--font-body)',
-              color: 'var(--text-secondary)',
+              color: '#323a45',
               fontSize: '0.9375rem',
               lineHeight: 1.6,
               marginBottom: '1.5rem',
@@ -305,17 +307,41 @@ function AssessmentChronicConditions({ onBack }) {
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
             <button
               type="button"
-              className="btn btn-secondary"
               onClick={() => {
                 setCurrentIndex(0);
                 setIsComplete(false);
                 setAnswers({});
               }}
+              style={{
+                padding: '0.75rem 1.25rem',
+                backgroundColor: 'transparent',
+                color: '#005ea2',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 600,
+                fontSize: '1rem',
+                border: '2px solid #005ea2',
+                borderRadius: '0.25rem',
+                cursor: 'pointer',
+              }}
             >
               Retake assessment
             </button>
             {onBack && (
-              <button type="button" className="btn btn-primary" onClick={onBack}>
+              <button
+                type="button"
+                onClick={onBack}
+                style={{
+                  padding: '0.75rem 1.25rem',
+                  backgroundColor: '#005ea2',
+                  color: 'white',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  border: 'none',
+                  borderRadius: '0.25rem',
+                  cursor: 'pointer',
+                }}
+              >
                 Back to assessments
               </button>
             )}
@@ -328,17 +354,17 @@ function AssessmentChronicConditions({ onBack }) {
   return (
     <main
       style={{
-        backgroundColor: 'var(--bg-secondary)',
+        backgroundColor: '#ffffff',
         minHeight: '80vh',
         padding: '2rem 1rem',
       }}
     >
-      <div style={{ maxWidth: '560px', margin: '0 auto' }}>
+      <div style={{ maxWidth: 560, margin: '0 auto' }}>
         <div
           style={{
-            height: '4px',
-            backgroundColor: 'var(--neutral-light-grey)',
-            borderRadius: '2px',
+            height: 4,
+            backgroundColor: '#e0e0e0',
+            borderRadius: 2,
             marginBottom: '2rem',
             overflow: 'hidden',
           }}
@@ -347,7 +373,7 @@ function AssessmentChronicConditions({ onBack }) {
             style={{
               height: '100%',
               width: `${progress}%`,
-              backgroundColor: 'var(--primary-dark)',
+              backgroundColor: '#005ea2',
               transition: 'width 0.3s ease',
             }}
           />
@@ -357,7 +383,7 @@ function AssessmentChronicConditions({ onBack }) {
           style={{
             fontSize: '0.875rem',
             fontFamily: 'var(--font-body)',
-            color: 'var(--text-muted)',
+            color: '#5c5c5c',
             marginBottom: '0.5rem',
           }}
         >
@@ -369,8 +395,8 @@ function AssessmentChronicConditions({ onBack }) {
             <h2
               style={{
                 fontFamily: 'var(--font-header)',
-                fontWeight: '700',
-                color: 'var(--text-primary)',
+                fontWeight: 700,
+                color: '#1b1b1b',
                 marginBottom: '0.5rem',
                 fontSize: '1.5rem',
                 lineHeight: 1.3,
@@ -382,7 +408,7 @@ function AssessmentChronicConditions({ onBack }) {
               style={{
                 fontSize: '0.9rem',
                 fontFamily: 'var(--font-body)',
-                color: 'var(--text-muted)',
+                color: '#5c5c5c',
                 marginBottom: '1rem',
               }}
             >
@@ -393,8 +419,8 @@ function AssessmentChronicConditions({ onBack }) {
                 style={{
                   display: 'block',
                   fontFamily: 'var(--font-body)',
-                  fontWeight: '600',
-                  color: 'var(--text-primary)',
+                  fontWeight: 600,
+                  color: '#1b1b1b',
                   marginBottom: '0.5rem',
                 }}
               >
@@ -408,10 +434,10 @@ function AssessmentChronicConditions({ onBack }) {
                   padding: '0.75rem 1rem',
                   fontFamily: 'var(--font-body)',
                   fontSize: '1rem',
-                  border: '1px solid var(--neutral-light-grey)',
-                  borderRadius: '8px',
-                  backgroundColor: 'var(--bg-primary)',
-                  color: 'var(--text-primary)',
+                  border: '1px solid #e0e0e0',
+                  borderRadius: '0.25rem',
+                  backgroundColor: '#ffffff',
+                  color: '#1b1b1b',
                   marginBottom: '1rem',
                 }}
               >
@@ -426,8 +452,8 @@ function AssessmentChronicConditions({ onBack }) {
                 style={{
                   display: 'block',
                   fontFamily: 'var(--font-body)',
-                  fontWeight: '600',
-                  color: 'var(--text-primary)',
+                  fontWeight: 600,
+                  color: '#1b1b1b',
                   marginBottom: '0.5rem',
                 }}
               >
@@ -441,10 +467,10 @@ function AssessmentChronicConditions({ onBack }) {
                   padding: '0.75rem 1rem',
                   fontFamily: 'var(--font-body)',
                   fontSize: '1rem',
-                  border: '1px solid var(--neutral-light-grey)',
-                  borderRadius: '8px',
-                  backgroundColor: 'var(--bg-primary)',
-                  color: 'var(--text-primary)',
+                  border: '1px solid #e0e0e0',
+                  borderRadius: '0.25rem',
+                  backgroundColor: '#ffffff',
+                  color: '#1b1b1b',
                 }}
               >
                 <option value="">Choose weight...</option>
@@ -461,8 +487,8 @@ function AssessmentChronicConditions({ onBack }) {
             <h2
               style={{
                 fontFamily: 'var(--font-header)',
-                fontWeight: '700',
-                color: 'var(--text-primary)',
+                fontWeight: 700,
+                color: '#1b1b1b',
                 marginBottom: currentStep.subtext ? '0.5rem' : '1.5rem',
                 fontSize: '1.5rem',
                 lineHeight: 1.3,
@@ -475,7 +501,7 @@ function AssessmentChronicConditions({ onBack }) {
                 style={{
                   fontSize: '0.9rem',
                   fontFamily: 'var(--font-body)',
-                  color: 'var(--text-muted)',
+                  color: '#5c5c5c',
                   marginBottom: '1rem',
                 }}
               >
@@ -488,7 +514,6 @@ function AssessmentChronicConditions({ onBack }) {
                 {currentStep.options.map((opt) => (
                   <label
                     key={opt.value}
-                    className="card"
                     style={{
                       display: 'flex',
                       alignItems: 'center',
@@ -497,9 +522,10 @@ function AssessmentChronicConditions({ onBack }) {
                       cursor: 'pointer',
                       border:
                         answers[currentStep.id] === opt.value
-                          ? '2px solid var(--primary-dark)'
-                          : '2px solid transparent',
-                      backgroundColor: 'var(--bg-primary)',
+                          ? '2px solid #005ea2'
+                          : '2px solid #e0e0e0',
+                      backgroundColor: '#ffffff',
+                      borderRadius: '0.25rem',
                     }}
                   >
                     <input
@@ -508,9 +534,9 @@ function AssessmentChronicConditions({ onBack }) {
                       value={opt.value}
                       checked={answers[currentStep.id] === opt.value}
                       onChange={() => handleChange(currentStep.id, opt.value)}
-                      style={{ marginRight: '0.75rem', accentColor: 'var(--primary-dark)' }}
+                      style={{ marginRight: '0.75rem', accentColor: '#005ea2' }}
                     />
-                    <span style={{ fontFamily: 'var(--font-body)', color: 'var(--text-primary)' }}>{opt.label}</span>
+                    <span style={{ fontFamily: 'var(--font-body)', color: '#1b1b1b' }}>{opt.label}</span>
                   </label>
                 ))}
               </fieldset>
@@ -521,17 +547,41 @@ function AssessmentChronicConditions({ onBack }) {
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
             {currentIndex > 0 && (
-              <button type="button" className="btn btn-secondary" onClick={handlePrev}>
+              <button
+                type="button"
+                onClick={handlePrev}
+                style={{
+                  padding: '0.75rem 1.25rem',
+                  backgroundColor: 'transparent',
+                  color: '#005ea2',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  border: '2px solid #005ea2',
+                  borderRadius: '0.25rem',
+                  cursor: 'pointer',
+                }}
+              >
                 Back
               </button>
             )}
           </div>
           <button
             type="button"
-            className="btn btn-primary"
             onClick={handleNext}
             disabled={!canProceed()}
-            style={{ opacity: canProceed() ? 1 : 0.6 }}
+            style={{
+              padding: '0.75rem 1.25rem',
+              backgroundColor: '#005ea2',
+              color: 'white',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 600,
+              fontSize: '1rem',
+              border: 'none',
+              borderRadius: '0.25rem',
+              cursor: canProceed() ? 'pointer' : 'not-allowed',
+              opacity: canProceed() ? 1 : 0.6,
+            }}
           >
             {currentIndex < totalSteps - 1 ? 'Next' : 'See results'}
           </button>
@@ -546,7 +596,7 @@ function AssessmentChronicConditions({ onBack }) {
                 background: 'none',
                 border: 'none',
                 fontFamily: 'var(--font-body)',
-                color: 'var(--text-muted)',
+                color: '#5c5c5c',
                 textDecoration: 'underline',
                 cursor: 'pointer',
                 fontSize: '0.9375rem',

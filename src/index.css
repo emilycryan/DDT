@@ -1,13 +1,13 @@
-/* Import fonts - New branding typography */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Source+Sans+Pro:wght@300;400;500;600;700&display=swap');
+/* USWDS-aligned typography - Public Sans throughout */
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
 
-/* CSS Custom Properties - New Brand Colors */
+/* CSS Custom Properties - USWDS-aligned colors */
 :root {
-  /* Primary Colors */
-  --primary-dark: #1a4480;
-  --primary-darker: #0f2749;
-  --primary-medium: #2563eb;
-  --primary-light: #3b82f6;
+  /* USWDS Primary */
+  --primary-dark: #005ea2;
+  --primary-darker: #1b4480;
+  --primary-medium: #0076d6;
+  --primary-light: #58b4ff;
   
   /* Secondary Accent */
   --accent-yellow: #face00;
@@ -35,10 +35,10 @@
   --mood-dark-grey: #374151;
   --mood-dark-grey-darker: #1f2937;
   
-  /* Text Colors */
-  --text-primary: #1e293b;
-  --text-secondary: #64748b;
-  --text-muted: #94a3b8;
+  /* Text Colors - deep gun metal (no blue-grey tint) */
+  --text-primary: #1b1b1b;
+  --text-secondary: #333333;
+  --text-muted: #5c5c5c;
   --text-white: #ffffff;
   
   /* Background Colors */
@@ -46,9 +46,9 @@
   --bg-secondary: #f1f3f6;
   --bg-accent: #1a4480;
   
-  /* Typography */
-  --font-header: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-body: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* Typography - Public Sans sitewide */
+  --font-header: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 /* Base styles */
@@ -248,6 +248,17 @@ p {
   margin: 0 auto 1.5rem auto;
 }
 
+.icon-circle-sm {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem auto;
+}
+
+.icon-circle-sm svg {
+  width: 24px;
+  height: 24px;
+}
+
 .icon-circle-primary {
   background-color: var(--primary-dark);
 }
@@ -381,14 +392,14 @@ p {
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Quote/Testimonial Styles */
+/* Quote/Testimonial Styles - straight edges, no rounded corners */
 .quote-card {
-  background-color: var(--bg-secondary);
-  padding: 1.5rem;
-  border-radius: 0.5rem;
-  border-left: 4px solid var(--accent-yellow);
+  background-color: #e8e8e8;
+  padding: 1rem 1.25rem;
+  border-radius: 0;
+  border-left: 4px solid var(--primary-dark);
   font-weight: 500;
-  color: var(--text-secondary);
+  color: var(--text-primary);
 }
 
 /* Leaflet Map Styles */

@@ -2,16 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const navLinkStyle = {
-  color: 'var(--text-secondary)',
+  color: '#323a45',
   textDecoration: 'none',
   fontSize: '16px',
   fontFamily: 'var(--font-body)',
-  fontWeight: '500',
+  fontWeight: 400,
   whiteSpace: 'nowrap',
   background: 'none',
   border: 'none',
   cursor: 'pointer',
 };
+
+/* Blue circular CDC logo fallback - USWDS primary blue */
+const cdcLogoFallback = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#005ea2"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="14" font-weight="700">CDC</text></svg>'
+);
 
 const CDCHeader = ({ goToHomeSection, currentPage }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -31,10 +36,9 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
 
   return (
     <>
-      {/* Official US Government Banner */}
+      {/* Official US Government Banner - USWDS style */}
       <div style={{
-        backgroundColor: 'var(--neutral-off-white)',
-        borderBottom: '1px solid var(--neutral-light-grey)',
+        backgroundColor: '#1b1b1b',
         fontSize: '13px',
         padding: '8px 0'
       }}>
@@ -44,9 +48,10 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
           padding: '0 15px',
           display: 'flex',
           alignItems: 'center',
-          gap: '8px'
+          justifyContent: 'space-between'
         }}>
-          <svg width="20" height="11" viewBox="0 0 20 11" style={{ marginRight: '8px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <svg width="20" height="11" viewBox="0 0 20 11" style={{ flexShrink: 0 }}>
             {/* Blue canton */}
             <rect x="0" y="0" width="8" height="6" fill="#012169"/>
             {/* Red stripes */}
@@ -89,18 +94,18 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
             <circle cx="7" cy="4" r="0.3" fill="white"/>
             <circle cx="7" cy="5" r="0.3" fill="white"/>
           </svg>
-          <span style={{ color: 'var(--text-secondary)', fontFamily: 'var(--font-body)' }}>
+          <span style={{ color: '#fff', fontFamily: 'var(--font-body)' }}>
             An official website of the United States government
           </span>
+          </div>
           <button style={{
             background: 'none',
             border: 'none',
-            color: 'var(--primary-dark)',
+            color: '#73b3e7',
             textDecoration: 'underline',
             cursor: 'pointer',
             fontSize: '13px',
             padding: '0',
-            marginLeft: '8px',
             fontFamily: 'var(--font-body)'
           }}>
             Here's how you know
@@ -108,88 +113,104 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
         </div>
       </div>
 
-      {/* CDC Header */}
+      {/* CDC Header - Two-tier USWDS style */}
       <header style={{
-        backgroundColor: 'var(--bg-primary)',
-        borderBottom: '1px solid var(--neutral-light-grey)',
-        padding: '15px 0',
+        backgroundColor: '#ffffff',
         position: 'relative'
       }}>
+        {/* Top tier: Branding */}
         <div style={{
           maxWidth: '1200px',
           margin: '0 auto',
-          padding: '0 15px',
+          padding: '20px 15px',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between'
+          gap: '15px'
         }}>
-          {/* CDC Logo and Title */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '15px', flex: '1' }}>
-            <img 
-              src="https://www.cdc.gov/homepage/images/cdc-logo.svg"
-              alt="CDC Logo"
-              style={{ height: '40px', minWidth: '40px' }}
-              onError={(e) => {
-                e.target.src = "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMjAiIGZpbGw9IiMwMDcxQkMiLz4KPHRleHQgeD0iMjAiIHk9IjI1IiB0ZXh0LWFuY2hvcj0ibWlkZGxlIiBmaWxsPSJ3aGl0ZSIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXNpemU9IjEyIj5DREMgPC90ZXh0Pgo8L3N2Zz4K";
-              }}
-            />
-            <div style={{ minWidth: 0 }}>
-              <Link
-                to="/"
-                style={{
-                  fontSize: isMobile ? '18px' : '24px',
-                  fontFamily: 'var(--font-header)',
-                  fontWeight: '700',
-                  color: 'var(--primary-dark)',
-                  lineHeight: '1.2',
-                  whiteSpace: 'nowrap',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  textDecoration: 'none'
-                }}
-              >
-                CDC: Path2Prevention
-              </Link>
-              <div style={{
-                fontSize: isMobile ? '12px' : '14px',
-                fontFamily: 'var(--font-body)',
-                color: 'var(--text-secondary)',
+          <img
+            src="https://www.cdc.gov/homepage/images/cdc-logo.svg"
+            alt="CDC Logo"
+            style={{ height: '40px', width: '40px', flexShrink: 0, objectFit: 'contain' }}
+            onError={(e) => { e.target.src = cdcLogoFallback; }}
+          />
+          <div style={{ minWidth: 0 }}>
+            <Link
+              to="/"
+              style={{
+                display: 'block',
+                fontSize: isMobile ? '18px' : '24px',
+                fontFamily: 'var(--font-header)',
+                fontWeight: 700,
+                color: '#005ea2',
                 lineHeight: '1.2',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
-                textOverflow: 'ellipsis'
-              }}>
-                Centers for Disease Control and Prevention
-              </div>
+                textOverflow: 'ellipsis',
+                textDecoration: 'none'
+              }}
+            >
+              CDC: Path2Prevention
+            </Link>
+            <div style={{
+              fontSize: isMobile ? '12px' : '14px',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 400,
+              color: '#323a45',
+              lineHeight: '1.2',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis'
+            }}>
+              Centers for Disease Control and Prevention
             </div>
           </div>
+        </div>
 
-          {/* Desktop Navigation Menu */}
-          <nav style={{ 
-            display: isMobile ? 'none' : 'flex', 
-            gap: '30px' 
+        {/* Separator */}
+        <div style={{ borderBottom: '1px solid #e0e0e0' }} />
+
+        {/* Bottom tier: Navigation */}
+        <div style={{
+          maxWidth: '1200px',
+          margin: '0 auto',
+          padding: '16px 15px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          gap: '24px'
+        }}>
+          {/* Desktop Nav Links (left) */}
+          <nav style={{
+            display: isMobile ? 'none' : 'flex',
+            gap: '30px',
+            flex: 1
           }}>
             <Link to="/about" style={navLinkStyle}>About</Link>
             <Link to="/resources" style={navLinkStyle}>Resources</Link>
             <Link to="/support" style={navLinkStyle}>Support</Link>
             <Link to="/for-practitioners" style={navLinkStyle}>For Practitioners</Link>
+          </nav>
+
+          {/* Get Started button (right) */}
+          <div style={{ display: isMobile ? 'none' : 'block' }}>
             <Link
               to="/get-started"
               style={{
                 ...navLinkStyle,
-                backgroundColor: '#1e40af',
+                display: 'inline-block',
+                backgroundColor: '#005ea2',
                 color: 'white',
                 padding: '0.5rem 1rem',
                 borderRadius: '0.375rem',
                 fontSize: '14px',
-                fontWeight: '600'
+                fontWeight: 600
               }}
             >
               Get Started
             </Link>
-          </nav>
+          </div>
 
-          {/* Mobile Hamburger Menu */}
+          {/* Mobile Hamburger */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             style={{
@@ -198,11 +219,11 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
               border: 'none',
               cursor: 'pointer',
               padding: '5px',
-              marginLeft: '15px'
+              marginLeft: 'auto'
             }}
             aria-label="Toggle navigation menu"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary-dark)">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="#005ea2">
               <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
             </svg>
           </button>
@@ -215,8 +236,8 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
             top: '100%',
             left: 0,
             right: 0,
-            backgroundColor: 'var(--bg-primary)',
-            borderBottom: '1px solid var(--neutral-light-grey)',
+            backgroundColor: '#ffffff',
+            borderBottom: '1px solid #e0e0e0',
             boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
             zIndex: 1000,
             display: isMobile ? 'block' : 'none'
@@ -226,11 +247,11 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
               margin: '0 auto',
               padding: '15px'
             }}>
-              <Link to="/about" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#64748b', textDecoration: 'none', fontSize: '16px', fontWeight: '500', padding: '12px 0', borderBottom: '1px solid var(--neutral-off-white)' }}>About</Link>
-              <Link to="/resources" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#64748b', textDecoration: 'none', fontSize: '16px', fontWeight: '500', padding: '12px 0', borderBottom: '1px solid var(--neutral-off-white)' }}>Resources</Link>
-              <Link to="/support" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#64748b', textDecoration: 'none', fontSize: '16px', fontWeight: '500', padding: '12px 0', borderBottom: '1px solid var(--neutral-off-white)' }}>Support</Link>
-              <Link to="/for-practitioners" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#64748b', textDecoration: 'none', fontSize: '16px', fontWeight: '500', padding: '12px 0', borderBottom: '1px solid var(--neutral-off-white)' }}>For Practitioners</Link>
-              <Link to="/get-started" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', backgroundColor: '#1e40af', color: 'white', padding: '0.75rem 1.5rem', borderRadius: '0.375rem', textDecoration: 'none', fontSize: '16px', fontWeight: '600', width: '100%', marginTop: '12px', textAlign: 'center' }}>Get Started</Link>
+              <Link to="/about" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>About</Link>
+              <Link to="/resources" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>Resources</Link>
+              <Link to="/support" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>Support</Link>
+              <Link to="/for-practitioners" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>For Practitioners</Link>
+              <Link to="/get-started" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', backgroundColor: '#005ea2', color: 'white', padding: '0.75rem 1.5rem', borderRadius: '0.375rem', textDecoration: 'none', fontSize: '16px', fontWeight: '600', width: '100%', marginTop: '12px', textAlign: 'center' }}>Get Started</Link>
             </nav>
           </div>
         )}

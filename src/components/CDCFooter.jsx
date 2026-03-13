@@ -14,11 +14,12 @@ const CDCFooter = () => {
 
   return (
     <>
-      {/* Main Footer - Dark Bar */}
+      {/* Main Footer - USWDS dark footer */}
       <footer style={{
-        backgroundColor: '#2c3e50',
+        backgroundColor: '#1b1b1b',
         color: '#fff',
-        padding: '40px 0 20px 0'
+        padding: '40px 0 20px 0',
+        fontFamily: 'var(--font-body)'
       }}>
         <div style={{
           maxWidth: '1200px',
@@ -44,22 +45,25 @@ const CDCFooter = () => {
                 fontSize: '18px',
                 fontWeight: 'bold',
                 marginBottom: '15px',
-                color: '#fff'
+                color: '#fff',
+                fontFamily: 'var(--font-body)'
               }}>
                 About CDC
               </h3>
               <p style={{
                 fontSize: '14px',
                 lineHeight: '1.6',
-                color: '#bdc3c7',
-                marginBottom: '15px'
+                color: 'rgba(255,255,255,0.9)',
+                marginBottom: '15px',
+                fontFamily: 'var(--font-body)'
               }}>
                 CDC works 24/7 to protect America from health, safety and security threats, both foreign and domestic. Whether diseases start at home or abroad, are chronic or acute, curable or preventable, human error or deliberate attack, CDC fights disease and supports communities and citizens to do the same.
               </p>
-              <a href="#" style={{
-                color: '#3498db',
+              <a href="https://www.cdc.gov/about/default.htm" target="_blank" rel="noopener noreferrer" style={{
+                color: '#73b3e7',
                 textDecoration: 'none',
-                fontSize: '14px'
+                fontSize: '14px',
+                fontFamily: 'var(--font-body)'
               }}>
                 Learn more about CDC →
               </a>
@@ -74,7 +78,8 @@ const CDCFooter = () => {
                 fontSize: '18px',
                 fontWeight: 'bold',
                 marginBottom: '15px',
-                color: '#fff'
+                color: '#fff',
+                fontFamily: 'var(--font-body)'
               }}>
                 Connect with CDC
               </h3>
@@ -157,7 +162,7 @@ const CDCFooter = () => {
               : 'repeat(auto-fit, minmax(200px, 1fr))',
             gap: isMobile ? '20px' : '30px',
             marginBottom: '30px',
-            borderTop: '1px solid #34495e',
+            borderTop: '1px solid rgba(255,255,255,0.2)',
             paddingTop: '30px'
           }}>
             {/* Column 1 */}
@@ -169,7 +174,7 @@ const CDCFooter = () => {
               }}>
                 <li style={{ marginBottom: '8px' }}>
                   <a href="#" style={{
-                    color: '#bdc3c7',
+                    color: 'rgba(255,255,255,0.85)',
                     textDecoration: 'none',
                     fontSize: '14px',
                     ':hover': { color: '#3498db' }
@@ -179,7 +184,7 @@ const CDCFooter = () => {
                 </li>
                 <li style={{ marginBottom: '8px' }}>
                   <a href="#" style={{
-                    color: '#bdc3c7',
+                    color: 'rgba(255,255,255,0.85)',
                     textDecoration: 'none',
                     fontSize: '14px'
                   }}>
@@ -188,7 +193,7 @@ const CDCFooter = () => {
                 </li>
                 <li style={{ marginBottom: '8px' }}>
                   <a href="#" style={{
-                    color: '#bdc3c7',
+                    color: 'rgba(255,255,255,0.85)',
                     textDecoration: 'none',
                     fontSize: '14px'
                   }}>
@@ -197,7 +202,7 @@ const CDCFooter = () => {
                 </li>
                 <li style={{ marginBottom: '8px' }}>
                   <a href="#" style={{
-                    color: '#bdc3c7',
+                    color: 'rgba(255,255,255,0.85)',
                     textDecoration: 'none',
                     fontSize: '14px'
                   }}>
@@ -216,7 +221,7 @@ const CDCFooter = () => {
               }}>
                 <li style={{ marginBottom: '8px' }}>
                   <a href="#" style={{
-                    color: '#bdc3c7',
+                    color: 'rgba(255,255,255,0.85)',
                     textDecoration: 'none',
                     fontSize: '14px'
                   }}>
@@ -225,7 +230,7 @@ const CDCFooter = () => {
                 </li>
                 <li style={{ marginBottom: '8px' }}>
                   <a href="#" style={{
-                    color: '#bdc3c7',
+                    color: 'rgba(255,255,255,0.85)',
                     textDecoration: 'none',
                     fontSize: '14px'
                   }}>
@@ -234,7 +239,7 @@ const CDCFooter = () => {
                 </li>
                 <li style={{ marginBottom: '8px' }}>
                   <a href="#" style={{
-                    color: '#bdc3c7',
+                    color: 'rgba(255,255,255,0.85)',
                     textDecoration: 'none',
                     fontSize: '14px'
                   }}>
@@ -243,7 +248,7 @@ const CDCFooter = () => {
                 </li>
                 <li style={{ marginBottom: '8px' }}>
                   <a href="#" style={{
-                    color: '#bdc3c7',
+                    color: 'rgba(255,255,255,0.85)',
                     textDecoration: 'none',
                     fontSize: '14px'
                   }}>
@@ -262,7 +267,7 @@ const CDCFooter = () => {
               }}>
                 <li style={{ marginBottom: '8px' }}>
                   <a href="#" style={{
-                    color: '#bdc3c7',
+                    color: 'rgba(255,255,255,0.85)',
                     textDecoration: 'none',
                     fontSize: '14px'
                   }}>
@@ -271,7 +276,7 @@ const CDCFooter = () => {
                 </li>
                 <li style={{ marginBottom: '8px' }}>
                   <a href="#" style={{
-                    color: '#bdc3c7',
+                    color: 'rgba(255,255,255,0.85)',
                     textDecoration: 'none',
                     fontSize: '14px'
                   }}>
@@ -280,7 +285,7 @@ const CDCFooter = () => {
                 </li>
                 <li style={{ marginBottom: '8px' }}>
                   <a href="#" style={{
-                    color: '#bdc3c7',
+                    color: 'rgba(255,255,255,0.85)',
                     textDecoration: 'none',
                     fontSize: '14px'
                   }}>
@@ -295,16 +300,12 @@ const CDCFooter = () => {
           <div style={{
             textAlign: 'center',
             paddingTop: '20px',
-            borderTop: '1px solid #34495e',
-            fontSize: '14px',
-            color: '#95a5a6'
+            borderTop: '1px solid rgba(255,255,255,0.2)',
+            fontSize: '13px',
+            color: 'rgba(255,255,255,0.6)',
+            fontFamily: 'var(--font-body)'
           }}>
-            <p style={{ margin: 0 }}>
-              U.S. Department of Health & Human Services | CDC
-            </p>
-            <p style={{ margin: '5px 0 0 0' }}>
-              Page last reviewed: {new Date().toLocaleDateString()}
-            </p>
+            <p style={{ margin: 0 }}>U.S. Department of Health & Human Services | CDC</p>
           </div>
         </div>
       </footer>

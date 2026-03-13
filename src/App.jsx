@@ -15,6 +15,24 @@ import ForPractitioners from './components/ForPractitioners'
 import PractitionerFeedback from './components/PractitionerFeedback'
 import HowItWorks from './components/HowItWorks'
 import LifestylePrograms from './components/LifestylePrograms'
+import UnderstandingPrediabetes from './components/UnderstandingPrediabetes'
+import NutritionBloodSugar from './components/NutritionBloodSugar'
+import ExerciseInsulinSensitivity from './components/ExerciseInsulinSensitivity'
+import DPPProgramOverview from './components/DPPProgramOverview'
+import KnowYourNumbers from './components/KnowYourNumbers'
+import BloodPressureCholesterol from './components/BloodPressureCholesterol'
+import HeartHealthyEating from './components/HeartHealthyEating'
+import StressCardiovascularRisk from './components/StressCardiovascularRisk'
+import BuildingHealthyHabits from './components/BuildingHealthyHabits'
+import SleepRecovery from './components/SleepRecovery'
+import MentalHealthResilience from './components/MentalHealthResilience'
+import SocialConnection from './components/SocialConnection'
+import HowToReadFoodLabels from './components/HowToReadFoodLabels'
+import MealPlanningOnBudget from './components/MealPlanningOnBudget'
+import MovingMoreWhenBusy from './components/MovingMoreWhenBusy'
+import RiskFactorChecklist from './components/RiskFactorChecklist'
+import WeeklyActivityTrackingSheet from './components/WeeklyActivityTrackingSheet'
+import GoalSettingWorksheet from './components/GoalSettingWorksheet'
 
 const PAGE_TO_PATH = {
   'about': '/about',
@@ -53,6 +71,11 @@ function App() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
+  // Scroll to top on route change (including Link clicks)
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [location.pathname])
+
   const onNavigate = (page) => {
     const path = PAGE_TO_PATH[page] || (page === 'home' ? '/' : `/${page}`)
     navigate(path)
@@ -81,17 +104,35 @@ function App() {
       <CDCHeader goToHomeSection={goToHomeSection} currentPage={currentPage} />
 
       <Routes>
-      <Route path="/about" element={<main style={{ minHeight: '80vh' }}><About /></main>} />
+      <Route path="/about" element={<main style={{ minHeight: '80vh' }}><About onNavigate={onNavigate} /></main>} />
       <Route path="/resources" element={<main style={{ minHeight: '80vh' }}><Resources onNavigate={navigateTo} /></main>} />
       <Route path="/support" element={<main style={{ minHeight: '80vh' }}><Support /></main>} />
+      <Route path="/support/tips/how-to-read-food-labels" element={<main style={{ minHeight: '80vh' }}><HowToReadFoodLabels /></main>} />
+      <Route path="/support/tips/meal-planning-on-budget" element={<main style={{ minHeight: '80vh' }}><MealPlanningOnBudget /></main>} />
+      <Route path="/support/tips/moving-more-when-busy" element={<main style={{ minHeight: '80vh' }}><MovingMoreWhenBusy /></main>} />
       <Route path="/for-practitioners" element={<main style={{ minHeight: '80vh' }}><ForPractitioners /></main>} />
       <Route path="/for-practitioners/feedback" element={<main style={{ minHeight: '80vh' }}><PractitionerFeedback /></main>} />
+      <Route path="/for-practitioners/risk-factor-checklist" element={<main style={{ minHeight: '80vh' }}><RiskFactorChecklist /></main>} />
+      <Route path="/for-practitioners/weekly-activity-tracking-sheet" element={<main style={{ minHeight: '80vh' }}><WeeklyActivityTrackingSheet /></main>} />
+      <Route path="/for-practitioners/goal-setting-worksheet" element={<main style={{ minHeight: '80vh' }}><GoalSettingWorksheet /></main>} />
       <Route path="/how-it-works" element={<main style={{ minHeight: '80vh' }}><HowItWorks /></main>} />
       <Route path="/get-started" element={<RiskAssessment onNavigate={onNavigate} />} />
       <Route path="/get-started/for-myself" element={<AssessmentChronicConditions onBack={() => onNavigate('risk-assessment')} />} />
       <Route path="/get-started/for-someone" element={<AssessmentCaregiver onBack={() => onNavigate('risk-assessment')} />} />
       <Route path="/get-started/just-curious" element={<AssessmentJustCurious onBack={() => onNavigate('risk-assessment')} />} />
       <Route path="/lifestyle-programs" element={<main style={{ minHeight: '80vh' }}><LifestylePrograms /></main>} />
+      <Route path="/resources/prediabetes/understanding-prediabetes" element={<UnderstandingPrediabetes />} />
+      <Route path="/resources/prediabetes/nutrition-blood-sugar" element={<NutritionBloodSugar />} />
+      <Route path="/resources/prediabetes/exercise-insulin-sensitivity" element={<ExerciseInsulinSensitivity />} />
+      <Route path="/resources/prediabetes/dpp-program-overview" element={<DPPProgramOverview />} />
+      <Route path="/resources/heart-health/know-your-numbers" element={<KnowYourNumbers />} />
+      <Route path="/resources/heart-health/blood-pressure-cholesterol" element={<BloodPressureCholesterol />} />
+      <Route path="/resources/heart-health/heart-healthy-eating" element={<HeartHealthyEating />} />
+      <Route path="/resources/heart-health/stress-cardiovascular-risk" element={<StressCardiovascularRisk />} />
+      <Route path="/resources/healthy-living/building-healthy-habits" element={<BuildingHealthyHabits />} />
+      <Route path="/resources/healthy-living/sleep-recovery" element={<SleepRecovery />} />
+      <Route path="/resources/healthy-living/mental-health-resilience" element={<MentalHealthResilience />} />
+      <Route path="/resources/healthy-living/social-connection" element={<SocialConnection />} />
       <Route path="/" element={
         <main style={{ 
           backgroundColor: 'var(--bg-secondary)',
@@ -173,12 +214,15 @@ function App() {
 
           {/* Right Content - Personalized Health Journey Card */}
           <div className="card" style={{
-            padding: '2rem'
+            padding: 0,
+            overflow: 'hidden'
           }}>
-            {/* Diverse Group Healthy Meal Image */}
-            <div className="image-overlay" style={{
+            {/* Full-flush image at top */}
+            <div style={{
+              width: '100%',
               height: '200px',
-              marginBottom: '1.5rem'
+              overflow: 'hidden',
+              flexShrink: 0
             }}>
               <img 
                 src="/diverse-group-eating.jpg" 
@@ -187,43 +231,46 @@ function App() {
                   width: '100%',
                   height: '100%',
                   objectFit: 'cover',
-                  objectPosition: 'center'
+                  objectPosition: 'center',
+                  display: 'block'
                 }}
               />
             </div>
 
-            <h3 style={{
-              fontSize: '1.25rem',
-              fontFamily: 'var(--font-header)',
-              fontWeight: '600',
-              color: 'var(--text-primary)',
-              marginBottom: '1rem',
-              margin: '0 0 1rem 0'
-            }}>
-              Why CDC: Path2Prevention?
-            </h3>
+            <div style={{ padding: '1.5rem 2rem 2rem' }}>
+              <h3 style={{
+                fontSize: '1.25rem',
+                fontFamily: 'var(--font-header)',
+                fontWeight: '600',
+                color: 'var(--text-primary)',
+                marginBottom: '1rem',
+                margin: '0 0 1rem 0'
+              }}>
+                Why CDC: Path2Prevention?
+              </h3>
 
-            <p style={{
-              fontSize: '0.95rem',
-              fontFamily: 'var(--font-body)',
-              color: 'var(--text-secondary)',
-              lineHeight: '1.5',
-              marginBottom: '1.5rem',
-              margin: '0 0 1.5rem 0'
-            }}>
-              CDC: Path2Prevention is an online resource for people who may be at risk for developing chronic diseases. Find videos, games, and other personalized information to help you learn more about prevention.
-            </p>
-
-            <div className="quote-card">
               <p style={{
-                fontSize: '0.875rem',
+                fontSize: '0.95rem',
                 fontFamily: 'var(--font-body)',
                 color: 'var(--text-secondary)',
-                margin: 0,
-                fontWeight: '500'
+                lineHeight: '1.5',
+                marginBottom: '1.5rem',
+                margin: '0 0 1.5rem 0'
               }}>
-                "Many chronic diseases are preventable through lifestyle changes and early intervention."
+                CDC: Path2Prevention is an online resource for people who may be at risk for developing chronic diseases. Find videos, games, and other personalized information to help you learn more about prevention.
               </p>
+
+              <div className="quote-card">
+                <p style={{
+                  fontSize: '0.875rem',
+                  fontFamily: 'var(--font-body)',
+                  color: 'var(--text-primary)',
+                  margin: 0,
+                  fontWeight: '500'
+                }}>
+                  &quot;Many chronic diseases are preventable through lifestyle changes and early intervention.&quot;
+                </p>
+              </div>
             </div>
           </div>
         </section>
@@ -276,8 +323,8 @@ function App() {
                   cursor: 'pointer'
                 }}
               >
-                <div className="icon-circle icon-circle-primary">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                <div className="icon-circle icon-circle-sm icon-circle-primary">
+                  <svg viewBox="0 0 24 24" fill="white">
                     <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
                   </svg>
                 </div>
@@ -312,8 +359,8 @@ function App() {
                   cursor: 'pointer'
                 }}
               >
-                <div className="icon-circle icon-circle-accent">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                <div className="icon-circle icon-circle-sm icon-circle-accent">
+                  <svg viewBox="0 0 24 24" fill="white">
                     <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                   </svg>
                 </div>
@@ -348,8 +395,8 @@ function App() {
                   cursor: 'pointer'
                 }}
               >
-                <div className="icon-circle icon-circle-grey">
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="white">
+                <div className="icon-circle icon-circle-sm icon-circle-grey">
+                  <svg viewBox="0 0 24 24" fill="white">
                     <path d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
                   </svg>
                 </div>

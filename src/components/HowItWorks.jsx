@@ -15,7 +15,7 @@ const HowItWorks = () => {
         <h1 style={{
           fontSize: '3rem',
           fontWeight: 'bold',
-          color: '#1e293b',
+          color: '#1b1b1b',
           lineHeight: '1.1',
           marginBottom: '1.5rem',
           margin: '0 0 1.5rem 0'
@@ -25,7 +25,7 @@ const HowItWorks = () => {
 
         <p style={{
           fontSize: '1.125rem',
-          color: '#64748b',
+          color: '#333333',
           lineHeight: '1.6',
           maxWidth: '600px',
           margin: '0 auto'

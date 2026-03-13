@@ -1779,7 +1779,7 @@ Available resources to mention:
               }}>
                 <p style={{
                   fontSize: '12px',
-                  color: '#64748b',
+                  color: '#333333',
                   margin: 0,
                   textAlign: 'center'
                 }}>
