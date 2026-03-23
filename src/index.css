@@ -160,7 +160,7 @@ p {
 .btn-secondary {
   background-color: transparent;
   color: var(--primary-dark);
-  border: 2px solid var(--primary-dark);
+  border: 1px solid var(--primary-dark);
 }
 
 .btn-secondary:hover {
@@ -168,6 +168,19 @@ p {
   color: var(--text-white);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(26, 68, 128, 0.25);
+}
+
+/* Header nav text links - blue hover + underline */
+.header-nav-text-link {
+  transition: color 0.15s ease, text-decoration 0.15s ease;
+}
+.header-nav-text-link:hover {
+  color: #005ea2 !important;
+  text-decoration: underline !important;
+}
+.header-nav-text-link:focus-visible {
+  outline: 2px solid #005ea2;
+  outline-offset: 2px;
 }
 
 .btn-accent {
@@ -416,4 +429,10 @@ p {
 .leaflet-popup-content {
   margin: 0.75rem;
   font-family: var(--font-body);
+}
+
+/* User location marker - transparent so custom HTML shows */
+.user-location-marker {
+  background: transparent !important;
+  border: none !important;
 }

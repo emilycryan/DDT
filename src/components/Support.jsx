@@ -156,7 +156,7 @@ const Support = () => {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
                   <p style={{ margin: 0, fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', flex: 1, minWidth: 200 }}>
-                    Find out your risk for chronic diseases like diabetes, heart disease, and stroke.
+                    Answer a few questions to learn about your risk for chronic diseases like diabetes, heart disease, and stroke.
                   </p>
                   <Link
                     to="/get-started"
@@ -172,7 +172,7 @@ const Support = () => {
                       textDecoration: 'none',
                     }}
                   >
-                    Take the test
+                    Get Started
                   </Link>
                 </div>
               </div>
@@ -386,7 +386,7 @@ const Support = () => {
                 lineHeight: 1.2,
               }}
             >
-              National Diabetes Prevention Program
+              Lifestyle Change Intervention (LCI) Programs
             </h3>
 
             <p
@@ -398,7 +398,7 @@ const Support = () => {
                 margin: '0 0 1.5rem 0',
               }}
             >
-              CDC-recognized evidence-based lifestyle change program proven to prevent or delay type 2 diabetes. Find a program that fits your schedule — in person or online.
+              CDC-recognized evidence-based lifestyle change programs proven to prevent or delay chronic conditions. Find a program that fits your schedule — in person or online.
             </p>
 
             <Link
@@ -613,7 +613,7 @@ const Support = () => {
               description: "Small amounts of activity add up. Find easy ways to move throughout your day without a gym or extra time.",
             },
             {
-              path: '/resources/healthy-living/building-healthy-habits',
+              path: '/support/tips/setting-realistic-goals',
               icon: (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
                   <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>

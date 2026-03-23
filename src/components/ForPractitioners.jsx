@@ -180,7 +180,7 @@ const ForPractitioners = () => {
               ),
               title: 'Before a Visit',
               description: 'Send educational links so patients arrive informed and ready to discuss risk factors, lifestyle goals, and program options — reducing time spent on basics.',
-              bullets: ['Share prediabetes risk education', 'Send DPP program overview', 'Prompt patients to take the risk test'],
+              bullets: ['Share prediabetes risk education', 'Send DPP program overview', 'Prompt patients to answer a few questions'],
             },
             {
               topBorderColor: '#e0e0e0',

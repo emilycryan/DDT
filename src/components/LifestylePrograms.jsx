@@ -508,7 +508,7 @@ const LifestylePrograms = () => {
             textAlign: 'center',
             marginBottom: '2rem'
           }}>
-            Find a Program Near You
+            Find Your Perfect Program
           </h2>
 
           {/* Search Form Placeholder */}
@@ -533,7 +533,7 @@ const LifestylePrograms = () => {
                   color: '#374151',
                   marginBottom: '0.5rem'
                 }}>
-                  Enter location or program type
+                  Enter location or program format
                 </label>
                 <input
                   type="text"
@@ -557,7 +557,7 @@ const LifestylePrograms = () => {
                 onClick={searchPrograms}
                 disabled={isLoading || !searchInput.trim()}
                 style={{
-                  backgroundColor: isLoading || !searchInput.trim() ? '#9ca3af' : '#1e40af',
+                  backgroundColor: isLoading || !searchInput.trim() ? '#9ca3af' : '#005ea2',
                   color: 'white',
                   padding: '0.75rem 2rem',
                   borderRadius: '0.375rem',
@@ -613,9 +613,17 @@ const LifestylePrograms = () => {
               />
               <MapViewUpdater center={mapCenter} zoom={mapZoom} bounds={mapBounds} />
               
-              {/* User location marker - only show for location-based searches */}
+              {/* User location marker - blue dot to distinguish from program markers */}
               {userLocation && showUserLocation && (
-                <Marker position={userLocation}>
+                <Marker
+                  position={userLocation}
+                  icon={L.divIcon({
+                    className: 'user-location-marker',
+                    html: '<div style="width:16px;height:16px;background:#005ea2;border:3px solid white;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,0.4)" />',
+                    iconSize: [16, 16],
+                    iconAnchor: [8, 8],
+                  })}
+                >
                   <Popup>Your Location</Popup>
                 </Marker>
               )}

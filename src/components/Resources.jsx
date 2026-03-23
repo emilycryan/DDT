@@ -260,7 +260,7 @@ const Resources = ({ onNavigate }) => {
             </span>
           </div>
 
-          {/* Right Card - Take Your Risk Assessment */}
+          {/* Right Card - Answer a Few Questions */}
           <div
             role="button"
             tabIndex={0}
@@ -316,7 +316,7 @@ const Resources = ({ onNavigate }) => {
                 lineHeight: 1.2,
               }}
             >
-              Take Your Risk Assessment
+              Answer a Few Questions
             </h2>
 
             <p
@@ -328,7 +328,7 @@ const Resources = ({ onNavigate }) => {
                 margin: '0 0 1.5rem 0',
               }}
             >
-              Not sure where to start? Our free, confidential risk assessment helps you understand your personal risk for conditions like type 2 diabetes, heart disease, and more — and points you toward the right resources.
+              Not sure where to start? Answer a few questions to get your personalized prevention plan and understand your risk for conditions like type 2 diabetes, heart disease, and more.
             </p>
 
             <span
@@ -345,13 +345,14 @@ const Resources = ({ onNavigate }) => {
                 borderRadius: '0.25rem',
               }}
             >
-              Begin Assessment
+              Get Started
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </span>
           </div>
         </section>
+
 
         {/* Educational Resources Section */}
         <section>
@@ -469,8 +470,8 @@ const Resources = ({ onNavigate }) => {
                       <Link
                         to={bullet.path}
                         style={{
-                          color: colors.accent,
-                          textDecoration: 'underline',
+                          color: '#6B7280',
+                          textDecoration: 'none',
                         }}
                       >
                         {bullet.text}

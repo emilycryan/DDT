@@ -166,7 +166,7 @@ const KnowYourNumbers = () => {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.5rem',
-                backgroundColor: '#d83933',
+                backgroundColor: '#005ea2',
                 color: 'white',
                 fontFamily: 'var(--font-body)',
                 fontWeight: 600,

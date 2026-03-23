@@ -30,6 +30,7 @@ import SocialConnection from './components/SocialConnection'
 import HowToReadFoodLabels from './components/HowToReadFoodLabels'
 import MealPlanningOnBudget from './components/MealPlanningOnBudget'
 import MovingMoreWhenBusy from './components/MovingMoreWhenBusy'
+import SettingRealisticGoals from './components/SettingRealisticGoals'
 import RiskFactorChecklist from './components/RiskFactorChecklist'
 import WeeklyActivityTrackingSheet from './components/WeeklyActivityTrackingSheet'
 import GoalSettingWorksheet from './components/GoalSettingWorksheet'
@@ -110,6 +111,7 @@ function App() {
       <Route path="/support/tips/how-to-read-food-labels" element={<main style={{ minHeight: '80vh' }}><HowToReadFoodLabels /></main>} />
       <Route path="/support/tips/meal-planning-on-budget" element={<main style={{ minHeight: '80vh' }}><MealPlanningOnBudget /></main>} />
       <Route path="/support/tips/moving-more-when-busy" element={<main style={{ minHeight: '80vh' }}><MovingMoreWhenBusy /></main>} />
+      <Route path="/support/tips/setting-realistic-goals" element={<main style={{ minHeight: '80vh' }}><SettingRealisticGoals /></main>} />
       <Route path="/for-practitioners" element={<main style={{ minHeight: '80vh' }}><ForPractitioners /></main>} />
       <Route path="/for-practitioners/feedback" element={<main style={{ minHeight: '80vh' }}><PractitionerFeedback /></main>} />
       <Route path="/for-practitioners/risk-factor-checklist" element={<main style={{ minHeight: '80vh' }}><RiskFactorChecklist /></main>} />
@@ -196,16 +198,16 @@ function App() {
                   minWidth: isMobile ? '200px' : 'auto'
                 }}
               >
-                Am I at Risk?
+                Get Started
               </button>
               <button 
-                onClick={() => onNavigate('how-it-works')}
+                onClick={() => onNavigate('lifestyle-programs')}
                 className="btn btn-secondary"
                 style={{
                   minWidth: isMobile ? '200px' : 'auto'
                 }}
               >
-                How It Works
+                Find a Program
               </button>
             </div>
 
@@ -257,7 +259,7 @@ function App() {
                 marginBottom: '1.5rem',
                 margin: '0 0 1.5rem 0'
               }}>
-                CDC: Path2Prevention is an online resource for people who may be at risk for developing chronic diseases. Find videos, games, and other personalized information to help you learn more about prevention.
+                CDC: Path2Prevention is an online resource for people who may be at risk for developing chronic diseases. Find videos, resources, and other personalized information to help you learn more about prevention.
               </p>
 
               <div className="quote-card">
@@ -417,7 +419,7 @@ function App() {
                   lineHeight: '1.5',
                   margin: 0
                 }}>
-                  Take a risk assessment and create a personalized action plan with interactive tools and resources tailored to your needs.
+                  Answer a few questions and create a personalized action plan with interactive tools and resources tailored to your needs.
                 </p>
               </div>
             </div>

@@ -182,17 +182,33 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
           {/* Desktop Nav Links (left) */}
           <nav style={{
             display: isMobile ? 'none' : 'flex',
-            gap: '30px',
+            gap: '18px',
             flex: 1
           }}>
-            <Link to="/about" style={navLinkStyle}>About</Link>
-            <Link to="/resources" style={navLinkStyle}>Resources</Link>
-            <Link to="/support" style={navLinkStyle}>Support</Link>
-            <Link to="/for-practitioners" style={navLinkStyle}>For Practitioners</Link>
+            <Link to="/about" className="header-nav-text-link" style={navLinkStyle}>About</Link>
+            <Link to="/resources" className="header-nav-text-link" style={navLinkStyle}>Resources</Link>
+            <Link to="/support" className="header-nav-text-link" style={navLinkStyle}>Support</Link>
+            <Link to="/for-practitioners" className="header-nav-text-link" style={navLinkStyle}>For Practitioners</Link>
           </nav>
 
-          {/* Get Started button (right) */}
-          <div style={{ display: isMobile ? 'none' : 'block' }}>
+          {/* Right-side buttons: Find a Program + Get Started */}
+          <div style={{ display: isMobile ? 'none' : 'flex', gap: '12px', alignItems: 'center' }}>
+            <Link
+              to="/lifestyle-programs"
+              style={{
+                ...navLinkStyle,
+                display: 'inline-block',
+                padding: '0.5rem 1rem',
+                borderRadius: '0.375rem',
+                fontSize: '14px',
+                fontWeight: 600,
+                color: '#005ea2',
+                border: '1px solid #005ea2',
+                backgroundColor: 'transparent',
+              }}
+            >
+              Find a Program
+            </Link>
             <Link
               to="/get-started"
               style={{
@@ -251,6 +267,7 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
               <Link to="/resources" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>Resources</Link>
               <Link to="/support" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>Support</Link>
               <Link to="/for-practitioners" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>For Practitioners</Link>
+              <Link to="/lifestyle-programs" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#005ea2', textDecoration: 'none', fontSize: '16px', fontWeight: 600, fontFamily: 'var(--font-body)', border: '1px solid #005ea2', padding: '0.75rem 1rem', borderRadius: '0.375rem', marginBottom: '12px' }}>Find a Program</Link>
               <Link to="/get-started" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', backgroundColor: '#005ea2', color: 'white', padding: '0.75rem 1.5rem', borderRadius: '0.375rem', textDecoration: 'none', fontSize: '16px', fontWeight: '600', width: '100%', marginTop: '12px', textAlign: 'center' }}>Get Started</Link>
             </nav>
           </div>

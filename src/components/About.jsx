@@ -9,7 +9,7 @@ const featureItems = [
       </svg>
     ),
     title: 'Trusted Information',
-    description: 'Clear, evidence-based guidance on the 12 major chronic conditions affecting Americans today.',
+    description: 'Clear, evidence-based guidance on many chronic conditions affecting Americans today.',
   },
   {
     icon: (
@@ -110,7 +110,7 @@ const About = ({ onNavigate }) => {
             margin: '0 0 1.25rem 0',
           }}
         >
-          Take the free risk assessment and get your personalized prevention plan.
+          Answer a few questions and get your personalized prevention plan.
         </p>
         <button
           type="button"
@@ -129,7 +129,7 @@ const About = ({ onNavigate }) => {
             marginBottom: '0.75rem',
           }}
         >
-          Begin Assessment
+          Get Started
         </button>
         <button
           type="button"
