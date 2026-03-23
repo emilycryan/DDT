@@ -200,15 +200,6 @@ function App() {
               >
                 Get Started
               </button>
-              <button 
-                onClick={() => onNavigate('lifestyle-programs')}
-                className="btn btn-secondary"
-                style={{
-                  minWidth: isMobile ? '200px' : 'auto'
-                }}
-              >
-                Find a Program
-              </button>
             </div>
 
 
