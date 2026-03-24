@@ -374,11 +374,11 @@ function App() {
                   lineHeight: '1.5',
                   margin: 0
                 }}>
-                  Access evidence-based information about preventing chronic diseases including obesity, COPD, and cardiovascular conditions.
+                  Access evidence-based information and lifestyle journey tools for preventing chronic diseases including obesity, COPD, and cardiovascular conditions.
                 </p>
               </div>
 
-              {/* Start Your Plan */}
+              {/* Start Your Journey */}
               <div 
                 onClick={() => onNavigate('risk-assessment')}
                 className="card"
@@ -401,7 +401,7 @@ function App() {
                   marginBottom: '1rem',
                   margin: '0 0 1rem 0'
                 }}>
-                  Start Your Plan
+                  Start Your Journey
                 </h3>
                 <p style={{
                   fontSize: '0.95rem',
@@ -410,7 +410,7 @@ function App() {
                   lineHeight: '1.5',
                   margin: 0
                 }}>
-                  Answer a few questions and create a personalized action plan with interactive tools and resources tailored to your needs.
+                  Answer a few questions and begin a personalized journey with interactive tools and resources tailored to your needs.
                 </p>
               </div>
             </div>

@@ -166,7 +166,7 @@ const Resources = ({ onNavigate }) => {
             marginBottom: '3rem',
           }}
         >
-          {/* Left Card - Find a Lifestyle Change Program */}
+          {/* Left Card - Lifestyle Change Programs */}
           <div
             role="button"
             tabIndex={0}
@@ -224,7 +224,7 @@ const Resources = ({ onNavigate }) => {
                 lineHeight: 1.2,
               }}
             >
-              Find a Lifestyle Change Program
+              Lifestyle Change Programs
             </h2>
 
             <p
@@ -328,7 +328,7 @@ const Resources = ({ onNavigate }) => {
                 margin: '0 0 1.5rem 0',
               }}
             >
-              Not sure where to start? Answer a few questions to get your personalized prevention plan and understand your risk for conditions like type 2 diabetes, heart disease, and more.
+              Not sure where to start? Answer a few questions to get your personalized prevention plan and understand your risk for chronic conditions like type 2 diabetes, heart disease, stroke, obesity and more.
             </p>
 
             <span

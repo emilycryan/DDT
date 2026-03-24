@@ -1483,7 +1483,7 @@ Available resources to mention:
       setTimeout(() => {
         const routingMessage2 = {
           id: Date.now() + 2,
-          text: `Navigating to the assessment now... This will help create a prevention plan tailored for ${userState.careRecipientName ? `${userState.careRecipientName}'s` : 'their'} specific needs.`,
+          text: `Navigating to the assessment now... This will help shape a prevention journey tailored for ${userState.careRecipientName ? `${userState.careRecipientName}'s` : 'their'} specific needs.`,
           sender: 'bot',
           timestamp: new Date()
         };
@@ -1567,8 +1567,8 @@ Available resources to mention:
         const routingMessage2 = {
           id: Date.now() + 2,
           text: isForOthers ? 
-            `Navigating to the assessment now... This will help create a prevention plan tailored for ${recipientName ? `${recipientName}'s` : 'their'} specific needs.` :
-            "Navigating to the assessment now... This will help us create a prevention plan tailored just for you!",
+            `Navigating to the assessment now... This will help shape a prevention journey tailored for ${recipientName ? `${recipientName}'s` : 'their'} specific needs.` :
+            "Navigating to the assessment now... This will help us shape a prevention journey tailored just for you!",
           sender: 'bot',
           timestamp: new Date()
         };

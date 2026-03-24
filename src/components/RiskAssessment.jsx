@@ -33,71 +33,146 @@ const RiskAssessment = ({ onNavigate }) => {
           <span style={{ color: '#323a45', fontWeight: 600 }}>Get Started</span>
         </nav>
 
-        <span
+        <div
           style={{
-            display: 'inline-block',
-            backgroundColor: '#e7f2f5',
-            color: '#005ea2',
-            fontSize: '0.75rem',
-            fontWeight: 600,
-            letterSpacing: '0.05em',
-            padding: '0.4rem 1rem',
-            borderRadius: '0.25rem',
-            marginBottom: '1.25rem',
-            fontFamily: 'var(--font-body)',
-            textTransform: 'uppercase',
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+            gap: isMobile ? '2rem' : '3rem',
+            alignItems: 'center',
           }}
         >
-          Risk Assessment
-        </span>
+          <div style={{ textAlign: isMobile ? 'center' : 'left' }}>
+            <span
+              style={{
+                display: 'inline-block',
+                backgroundColor: '#e7f2f5',
+                color: '#005ea2',
+                fontSize: '0.75rem',
+                fontWeight: 600,
+                letterSpacing: '0.05em',
+                padding: '0.4rem 1rem',
+                borderRadius: '0.25rem',
+                marginBottom: '1.25rem',
+                fontFamily: 'var(--font-body)',
+                textTransform: 'uppercase',
+              }}
+            >
+              Questions
+            </span>
 
-        <h1
-          style={{
-            fontSize: isMobile ? '2rem' : '2.5rem',
-            fontFamily: 'var(--font-header)',
-            fontWeight: 700,
-            color: '#1b1b1b',
-            lineHeight: 1.2,
-            margin: '0 0 0.5rem 0',
-          }}
-        >
-          Am I at Risk?
-        </h1>
+            <h1
+              style={{
+                fontSize: isMobile ? '2rem' : '2.5rem',
+                fontFamily: 'var(--font-header)',
+                fontWeight: 700,
+                color: '#1b1b1b',
+                lineHeight: 1.2,
+                margin: '0 0 0.5rem 0',
+              }}
+            >
+              Get Started
+            </h1>
 
-        <p
-          style={{
-            fontSize: isMobile ? '1rem' : '1.125rem',
-            fontFamily: 'var(--font-body)',
-            color: '#323a45',
-            lineHeight: 1.6,
-            margin: '0 0 2rem 0',
-            maxWidth: 600,
-          }}
-        >
-          Take our comprehensive risk assessments to learn about your personal risk factors for chronic diseases. These evidence-based screening tools help identify areas where lifestyle changes can make a difference.
-        </p>
+            <p
+              style={{
+                fontSize: isMobile ? '1rem' : '1.125rem',
+                fontFamily: 'var(--font-body)',
+                color: '#323a45',
+                lineHeight: 1.6,
+                margin: '0 0 2rem 0',
+                maxWidth: isMobile ? 'none' : 600,
+              }}
+            >
+              Answer a few questions to learn how everyday factors relate to chronic conditions like diabetes, heart disease, and stroke. These evidence-based tools help spot where small lifestyle changes can make the biggest difference.
+            </p>
 
-        <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
-          <button
-            type="button"
-            onClick={() => {
-              const el = document.getElementById('assessment-selection');
-              if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }}
+            <div style={{ display: 'flex', justifyContent: isMobile ? 'center' : 'flex-start' }}>
+              <button
+                type="button"
+                onClick={() => {
+                  const el = document.getElementById('assessment-selection');
+                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  backgroundColor: '#005ea2',
+                  color: 'white',
+                  fontFamily: 'var(--font-body)',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  border: 'none',
+                  borderRadius: '0.25rem',
+                  cursor: 'pointer',
+                }}
+              >
+            Let&apos;s Go
+          </button>
+            </div>
+          </div>
+
+          {/* Hero image + quote overlay (USWDS-aligned contrast) */}
+          <figure
             style={{
-              padding: '0.75rem 1.5rem',
-              backgroundColor: '#005ea2',
-              color: 'white',
-              fontFamily: 'var(--font-body)',
-              fontWeight: 600,
-              fontSize: '1rem',
-              border: 'none',
-              borderRadius: '0.25rem',
-              cursor: 'pointer',
+              position: 'relative',
+              margin: 0,
+              borderRadius: '0.75rem',
+              overflow: 'hidden',
+              minHeight: isMobile ? 280 : 360,
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+              border: '1px solid #e0e0e0',
             }}
           >
-            Start Assessment
-          </button>
+            <img
+              src="/workout-group.jpg"
+              alt="Three adults jogging together outdoors on a path, smiling"
+              style={{
+                width: '100%',
+                height: '100%',
+                minHeight: isMobile ? 280 : 360,
+                objectFit: 'cover',
+                objectPosition: 'center',
+                display: 'block',
+              }}
+            />
+            <div
+              aria-hidden
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'linear-gradient(to top, rgba(27, 27, 27, 0.88) 0%, rgba(27, 27, 27, 0.35) 45%, transparent 72%)',
+                pointerEvents: 'none',
+              }}
+            />
+            <figcaption
+              style={{
+                position: 'absolute',
+                left: 0,
+                right: 0,
+                bottom: 0,
+                padding: isMobile ? '1.5rem 1.25rem' : '2rem 1.75rem',
+                fontFamily: 'var(--font-header)',
+                fontWeight: 700,
+                fontSize: isMobile ? '1.35rem' : 'clamp(1.5rem, 2.4vw, 2.125rem)',
+                lineHeight: 1.25,
+                color: '#ffffff',
+                textShadow: '0 2px 12px rgba(0, 0, 0, 0.65), 0 1px 3px rgba(0, 0, 0, 0.9)',
+                borderLeft: '4px solid #005ea2',
+                margin: isMobile ? '0 1rem 1rem' : '0 1.25rem 1.25rem',
+                paddingLeft: '1rem',
+              }}
+            >
+              <blockquote
+                style={{
+                  margin: 0,
+                  padding: 0,
+                  border: 'none',
+                  fontStyle: 'italic',
+                }}
+              >
+                &ldquo;It&apos;s important to take care of myself for my family and my friends&rdquo;
+              </blockquote>
+            </figcaption>
+          </figure>
         </div>
       </section>
 
@@ -119,7 +194,7 @@ const RiskAssessment = ({ onNavigate }) => {
               margin: '0 0 0.75rem 0',
             }}
           >
-            Who Are You Taking This For?
+            What brought you here today?
           </h2>
 
           <p
@@ -129,10 +204,10 @@ const RiskAssessment = ({ onNavigate }) => {
               color: '#323a45',
               lineHeight: 1.6,
               margin: '0 0 2rem 0',
-              maxWidth: 600,
+              maxWidth: 720,
             }}
           >
-            Choose the option that best describes your situation. This helps us provide the most relevant assessment and recommendations.
+            Think about what led you to explore Path 2 Prevention. What best describes your role? Are you interested in learning more for yourself, for someone you care about or are you just curious to learn more?
           </p>
 
           <div
@@ -252,7 +327,7 @@ const RiskAssessment = ({ onNavigate }) => {
                 margin: '0 0 1rem 0',
               }}
             >
-              What Happens Next?
+              How Does this Work?
             </h3>
             <div
               style={{
@@ -262,9 +337,21 @@ const RiskAssessment = ({ onNavigate }) => {
               }}
             >
               {[
-                { num: '1', title: 'Complete Assessment', text: 'Answer questions about your health, lifestyle, and family history.' },
-                { num: '2', title: 'Get Your Results', text: 'Receive personalized risk assessment and prevention recommendations.' },
-                { num: '3', title: 'Take Action', text: 'Access resources, programs, and tools to support your prevention journey.' },
+                {
+                  num: '1',
+                  lead: 'Answer a few questions.',
+                  body: 'Answer questions about your health, lifestyle and family history to learn what influences long-term health and how lifestyle changes can help prevent conditions like heart disease, stroke, and diabetes.',
+                },
+                {
+                  num: '2',
+                  lead: 'Get the facts.',
+                  body: 'Access evidence-based information about preventing chronic diseases including obesity, COPD, and cardiovascular conditions.',
+                },
+                {
+                  num: '3',
+                  lead: 'Begin your journey.',
+                  body: 'Access our resources, community-led programs and tools to better support your prevention journey.',
+                },
               ].map((step) => (
                 <div key={step.num}>
                   <h4
@@ -276,7 +363,7 @@ const RiskAssessment = ({ onNavigate }) => {
                       margin: '0 0 0.5rem 0',
                     }}
                   >
-                    {step.num}. {step.title}
+                    {step.num}. {step.lead}
                   </h4>
                   <p
                     style={{
@@ -287,7 +374,7 @@ const RiskAssessment = ({ onNavigate }) => {
                       margin: 0,
                     }}
                   >
-                    {step.text}
+                    {step.body}
                   </p>
                 </div>
               ))}
