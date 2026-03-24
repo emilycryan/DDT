@@ -145,14 +145,14 @@ const Support = () => {
                   margin: 0,
                 }}
               >
-                Interactive Tools &amp; Self-Assessments
+                Interactive Tools &amp; Quick Questions
               </h3>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div style={{ backgroundColor: '#f0f4f8', borderRadius: '0.25rem', padding: '1rem 1.25rem', border: '1px solid #e0e0e0' }}>
                 <div style={{ marginBottom: '0.5rem' }}>
-                  <strong style={{ fontFamily: 'var(--font-body)', fontWeight: 600, color: '#1b1b1b', fontSize: '1rem' }}>Chronic Disease Risk Test</strong>
+                  <strong style={{ fontFamily: 'var(--font-body)', fontWeight: 600, color: '#1b1b1b', fontSize: '1rem' }}>Quick questions to get started</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
                   <p style={{ margin: 0, fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', flex: 1, minWidth: 200 }}>
