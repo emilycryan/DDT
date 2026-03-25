@@ -31,6 +31,13 @@ import HowToReadFoodLabels from './components/HowToReadFoodLabels'
 import MealPlanningOnBudget from './components/MealPlanningOnBudget'
 import MovingMoreWhenBusy from './components/MovingMoreWhenBusy'
 import SettingRealisticGoals from './components/SettingRealisticGoals'
+import PlanMyPath from './components/PlanMyPath'
+import PlanMyPathMotivators from './components/PlanMyPathMotivators'
+import PlanMyPathDppInfo from './components/PlanMyPathDppInfo'
+import PlanMyPathBarriers from './components/PlanMyPathBarriers'
+import PlanMyPathClassPreferences from './components/PlanMyPathClassPreferences'
+import PlanMyPathSelectDate from './components/PlanMyPathSelectDate'
+import PlanMyPathCompleted from './components/PlanMyPathCompleted'
 import RiskFactorChecklist from './components/RiskFactorChecklist'
 import WeeklyActivityTrackingSheet from './components/WeeklyActivityTrackingSheet'
 import GoalSettingWorksheet from './components/GoalSettingWorksheet'
@@ -43,6 +50,7 @@ const PAGE_TO_PATH = {
   'how-it-works': '/how-it-works',
   'risk-assessment': '/get-started',
   'lifestyle-programs': '/lifestyle-programs',
+  'plan-my-path': '/support/plan-my-path',
   'assessment-chronic': '/get-started/for-myself',
   'assessment-caregiver': '/get-started/for-someone',
   'assessment-just-curious': '/get-started/just-curious',
@@ -89,12 +97,12 @@ function App() {
   }
 
   const handleChatbotNavigate = (target) => {
-    if (['about', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs'].includes(target)) onNavigate(target)
+    if (['about', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs', 'plan-my-path'].includes(target)) onNavigate(target)
     else goToHomeSection(target)
   }
 
   const navigateTo = (target) => {
-    if (['about', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs'].includes(target)) onNavigate(target)
+    if (['about', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs', 'plan-my-path'].includes(target)) onNavigate(target)
     else goToHomeSection(target)
   }
 
@@ -112,6 +120,13 @@ function App() {
       <Route path="/support/tips/meal-planning-on-budget" element={<main style={{ minHeight: '80vh' }}><MealPlanningOnBudget /></main>} />
       <Route path="/support/tips/moving-more-when-busy" element={<main style={{ minHeight: '80vh' }}><MovingMoreWhenBusy /></main>} />
       <Route path="/support/tips/setting-realistic-goals" element={<main style={{ minHeight: '80vh' }}><SettingRealisticGoals /></main>} />
+      <Route path="/support/plan-my-path" element={<main style={{ minHeight: '80vh' }}><PlanMyPath /></main>} />
+      <Route path="/support/plan-my-path/motivators" element={<main style={{ minHeight: '80vh' }}><PlanMyPathMotivators /></main>} />
+      <Route path="/support/plan-my-path/dpp-info" element={<main style={{ minHeight: '80vh' }}><PlanMyPathDppInfo /></main>} />
+      <Route path="/support/plan-my-path/barriers" element={<main style={{ minHeight: '80vh' }}><PlanMyPathBarriers /></main>} />
+      <Route path="/support/plan-my-path/class-preferences" element={<main style={{ minHeight: '80vh' }}><PlanMyPathClassPreferences /></main>} />
+      <Route path="/support/plan-my-path/select-date" element={<main style={{ minHeight: '80vh' }}><PlanMyPathSelectDate /></main>} />
+      <Route path="/support/plan-my-path/completed" element={<main style={{ minHeight: '80vh' }}><PlanMyPathCompleted /></main>} />
       <Route path="/for-practitioners" element={<main style={{ minHeight: '80vh' }}><ForPractitioners /></main>} />
       <Route path="/for-practitioners/feedback" element={<main style={{ minHeight: '80vh' }}><PractitionerFeedback /></main>} />
       <Route path="/for-practitioners/risk-factor-checklist" element={<main style={{ minHeight: '80vh' }}><RiskFactorChecklist /></main>} />

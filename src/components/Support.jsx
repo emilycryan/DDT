@@ -156,51 +156,53 @@ const Support = () => {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
                   <p style={{ margin: 0, fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', flex: 1, minWidth: 200 }}>
-                    Answer a few questions to learn about your risk for chronic diseases like diabetes, heart disease, and stroke.
+                    See how your answers relate to conditions like diabetes, heart disease, and stroke.
                   </p>
                   <Link
                     to="/get-started"
                     style={{
                       display: 'inline-block',
-                      padding: '0.5rem 1rem',
+                      padding: '0.5rem 1.25rem',
                       backgroundColor: '#005ea2',
                       color: 'white',
                       fontFamily: 'var(--font-body)',
                       fontWeight: 600,
                       fontSize: '0.9375rem',
-                      borderRadius: '0.25rem',
+                      borderRadius: '0.375rem',
                       textDecoration: 'none',
+                      flexShrink: 0,
                     }}
                   >
-                    Get Started
+                    Get started
                   </Link>
                 </div>
               </div>
 
               <div style={{ backgroundColor: '#f0f4f8', borderRadius: '0.25rem', padding: '1rem 1.25rem', border: '1px solid #e0e0e0' }}>
                 <div style={{ marginBottom: '0.5rem' }}>
-                  <strong style={{ fontFamily: 'var(--font-body)', fontWeight: 600, color: '#1b1b1b', fontSize: '1rem' }}>Make a Plan: Healthy Living Tools</strong>
+                  <strong style={{ fontFamily: 'var(--font-body)', fontWeight: 600, color: '#1b1b1b', fontSize: '1rem' }}>Plan my Path</strong>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
                   <p style={{ margin: 0, fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', flex: 1, minWidth: 200 }}>
-                    Printable trackers, goal planners, and habit tips.
+                    Create a personalized Action Plan to support a healthy lifestyle
                   </p>
                   <Link
-                    to="/resources/healthy-living/building-healthy-habits"
+                    to="/support/plan-my-path"
                     style={{
                       display: 'inline-block',
-                      padding: '0.5rem 1rem',
+                      padding: '0.5rem 1.25rem',
                       backgroundColor: 'white',
-                      color: '#005ea2',
+                      color: '#1b1b1b',
                       fontFamily: 'var(--font-body)',
                       fontWeight: 600,
                       fontSize: '0.9375rem',
-                      borderRadius: '0.25rem',
-                      textDecoration: 'underline',
-                      border: '2px solid #005ea2',
+                      borderRadius: '0.375rem',
+                      textDecoration: 'none',
+                      border: '1px solid #1b1b1b',
+                      flexShrink: 0,
                     }}
                   >
-                    Get tools
+                    Create Plan
                   </Link>
                 </div>
               </div>

@@ -4,9 +4,11 @@ import { Link } from 'react-router-dom';
 /* USWDS theme colors for icons and top bars */
 const EDUCATIONAL_CARD_COLORS = [
   { accent: '#005ea2', iconBg: '#e7f2f5' },   /* Primary */
-  { accent: '#d83933', iconBg: '#f9dede' },   /* Secondary */
-  { accent: '#00bde3', iconBg: '#e5f6f9' },   /* Accent cool */
+  { accent: '#d83933', iconBg: '#f9dede' },   /* Secondary — Heart Health */
+  { accent: '#00bde3', iconBg: '#e5f6f9' },   /* Accent cool — Prevention card 3 */
 ];
+
+const ACCENT_COOL_BLUE = EDUCATIONAL_CARD_COLORS[2].accent;
 
 const educationalCards = [
   {
@@ -157,16 +159,16 @@ const Resources = ({ onNavigate }) => {
           </p>
         </section>
 
-        {/* Two Large Interactive Cards */}
+        {/* Prevention Resources — three interactive cards */}
         <section
           style={{
             display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
             gap: '1.5rem',
             marginBottom: '3rem',
           }}
         >
-          {/* Left Card - Lifestyle Change Programs */}
+          {/* Card 1 — Programs (primary blue) */}
           <div
             role="button"
             tabIndex={0}
@@ -179,6 +181,9 @@ const Resources = ({ onNavigate }) => {
               cursor: 'pointer',
               transition: 'transform 0.2s ease, box-shadow 0.2s ease',
               border: '1px solid #005ea2',
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: isMobile ? undefined : 420,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -206,7 +211,7 @@ const Resources = ({ onNavigate }) => {
                 textTransform: 'uppercase',
               }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                 <circle cx="9" cy="7" r="4"/>
                 <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
@@ -224,7 +229,7 @@ const Resources = ({ onNavigate }) => {
                 lineHeight: 1.2,
               }}
             >
-              Lifestyle Change Programs
+              Find a Lifestyle Change Program
             </h2>
 
             <p
@@ -234,9 +239,10 @@ const Resources = ({ onNavigate }) => {
                 color: 'rgba(255,255,255,0.95)',
                 lineHeight: 1.6,
                 margin: '0 0 1.5rem 0',
+                flex: 1,
               }}
             >
-              CDC-recognized Lifestyle Change Intervention (LCI) programs are proven to reduce your risk of type 2 diabetes and other chronic conditions. Find a program in your community or online that fits your schedule and lifestyle.
+              CDC-recognized Lifestyle Change Intervention (LCI) programs are proven to lower the chances of type 2 diabetes and other chronic conditions. Find a program in your community or online that fits your schedule and lifestyle.
             </p>
 
             <span
@@ -251,21 +257,22 @@ const Resources = ({ onNavigate }) => {
                 fontSize: '0.9375rem',
                 padding: '0.75rem 1.25rem',
                 borderRadius: '0.25rem',
+                marginTop: 'auto',
               }}
             >
               Search Programs
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </span>
           </div>
 
-          {/* Right Card - Answer a Few Questions */}
+          {/* Card 2 — Plan My Path (dark, same as original second card) */}
           <div
             role="button"
             tabIndex={0}
-            onClick={() => onNavigate?.('risk-assessment')}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate?.('risk-assessment'); } }}
+            onClick={() => onNavigate?.('plan-my-path')}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate?.('plan-my-path'); } }}
             style={{
               backgroundColor: '#1b1b1b',
               borderRadius: '0.25rem',
@@ -273,6 +280,9 @@ const Resources = ({ onNavigate }) => {
               cursor: 'pointer',
               transition: 'transform 0.2s ease, box-shadow 0.2s ease',
               border: '1px solid #1b1b1b',
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: isMobile ? undefined : 420,
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = 'translateY(-2px)';
@@ -300,8 +310,108 @@ const Resources = ({ onNavigate }) => {
                 textTransform: 'uppercase',
               }}
             >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="1.5">
-                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              Guided Plan
+            </span>
+
+            <h2
+              style={{
+                fontSize: isMobile ? '1.75rem' : '2rem',
+                fontFamily: 'var(--font-header)',
+                fontWeight: 700,
+                color: 'white',
+                margin: '0 0 1rem 0',
+                lineHeight: 1.2,
+              }}
+            >
+              Plan My Path
+            </h2>
+
+            <p
+              style={{
+                fontSize: '1rem',
+                fontFamily: 'var(--font-body)',
+                color: 'rgba(255,255,255,0.9)',
+                lineHeight: 1.6,
+                margin: '0 0 1.5rem 0',
+                flex: 1,
+              }}
+            >
+              Build a personalized, step-by-step Action Plan that captures your motivators, logistics, and class preferences — then take it with you when you connect with a program.
+            </p>
+
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                backgroundColor: 'white',
+                color: '#1b1b1b',
+                fontFamily: 'var(--font-body)',
+                fontWeight: 600,
+                fontSize: '0.9375rem',
+                padding: '0.75rem 1.25rem',
+                borderRadius: '0.25rem',
+                marginTop: 'auto',
+              }}
+            >
+              Create Plan
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </span>
+          </div>
+
+          {/* Card 3 — Quick questions (accent cool blue, matches Overall Healthy Living column) */}
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => onNavigate?.('risk-assessment')}
+            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate?.('risk-assessment'); } }}
+            style={{
+              backgroundColor: ACCENT_COOL_BLUE,
+              borderRadius: '0.25rem',
+              padding: '2rem',
+              cursor: 'pointer',
+              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+              border: `1px solid ${ACCENT_COOL_BLUE}`,
+              display: 'flex',
+              flexDirection: 'column',
+              minHeight: isMobile ? undefined : 420,
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 189, 227, 0.35)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = 'none';
+            }}
+          >
+            <span
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                backgroundColor: 'rgba(255,255,255,0.25)',
+                color: 'white',
+                fontSize: '0.7rem',
+                fontWeight: 600,
+                letterSpacing: '0.05em',
+                padding: '0.35rem 0.875rem',
+                borderRadius: '0.25rem',
+                marginBottom: '1.25rem',
+                fontFamily: 'var(--font-body)',
+                textTransform: 'uppercase',
+              }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <circle cx="12" cy="14" r="7" />
+                <path d="M12 11v3l2 1.5" />
+                <path d="M9 3h6" />
+                <path d="M12 3V1" />
               </svg>
               Free • 10 Minutes
             </span>
@@ -323,12 +433,13 @@ const Resources = ({ onNavigate }) => {
               style={{
                 fontSize: '1rem',
                 fontFamily: 'var(--font-body)',
-                color: 'rgba(255,255,255,0.9)',
+                color: 'rgba(255,255,255,0.95)',
                 lineHeight: 1.6,
                 margin: '0 0 1.5rem 0',
+                flex: 1,
               }}
             >
-              Not sure where to start? Answer a few questions to get your personalized prevention plan and understand your risk for chronic conditions like type 2 diabetes, heart disease, stroke, obesity and more.
+              Not sure where to start? Our free, confidential questions help you understand how your health picture relates to conditions like type 2 diabetes, heart disease, and more — and point you toward the right resources.
             </p>
 
             <span
@@ -337,16 +448,17 @@ const Resources = ({ onNavigate }) => {
                 alignItems: 'center',
                 gap: '0.5rem',
                 backgroundColor: 'white',
-                color: '#1b1b1b',
+                color: ACCENT_COOL_BLUE,
                 fontFamily: 'var(--font-body)',
                 fontWeight: 600,
                 fontSize: '0.9375rem',
                 padding: '0.75rem 1.25rem',
                 borderRadius: '0.25rem',
+                marginTop: 'auto',
               }}
             >
               Get Started
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
                 <path d="M5 12h14M12 5l7 7-7 7"/>
               </svg>
             </span>
