@@ -18,6 +18,48 @@ const RiskAssessment = ({ onNavigate }) => {
 
   return (
     <main style={{ backgroundColor: '#ffffff', minHeight: '80vh' }}>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+            @keyframes get-started-card-pulse {
+              0%, 100% { transform: translateY(0) scale(1); }
+              50% { transform: translateY(-6px) scale(1.02); }
+            }
+            .get-started-choice-card {
+              transition: box-shadow 0.2s ease;
+            }
+            .get-started-choice-card:hover {
+              animation: get-started-card-pulse 0.55s ease-in-out 1;
+              box-shadow: 0 12px 32px rgba(0, 94, 162, 0.22);
+            }
+            .get-started-choice-card:focus-visible {
+              outline: 3px solid #005ea2;
+              outline-offset: 3px;
+            }
+            .get-started-icon-circle {
+              width: 60px;
+              height: 60px;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 0 auto 1.25rem auto;
+              background-color: #005ea2;
+              transition: background-color 0.25s ease;
+            }
+            .get-started-choice-card:hover .get-started-icon-circle,
+            .get-started-choice-card:focus-visible .get-started-icon-circle {
+              background-color: #007833;
+            }
+            @media (prefers-reduced-motion: reduce) {
+              .get-started-choice-card:hover {
+                animation: none;
+                transform: translateY(-2px);
+              }
+            }
+          `,
+        }}
+      />
       <section style={sectionStyles}>
         <nav
           style={{
@@ -207,7 +249,9 @@ const RiskAssessment = ({ onNavigate }) => {
               maxWidth: 720,
             }}
           >
-            Think about what led you to explore Path 2 Prevention. What best describes your role? Are you interested in learning more for yourself, for someone you care about or are you just curious to learn more?
+            Perhaps you&apos;re wondering what lifestyle changes might look like as someone with a newly diagnosed
+            chronic condition. Or maybe you&apos;re a friend, family member or caregiver of someone with one or more
+            chronic conditions. Let us know so we can tailor next questions and recommendations.
           </p>
 
           <div
@@ -220,7 +264,6 @@ const RiskAssessment = ({ onNavigate }) => {
           >
             {[
               {
-                iconBg: '#005ea2',
                 title: 'For Myself',
                 description: "I'm concerned about my own health and want to understand my risk factors for chronic diseases like diabetes, heart disease, or stroke.",
                 icon: (
@@ -231,7 +274,6 @@ const RiskAssessment = ({ onNavigate }) => {
                 onSelect: () => onNavigate?.('assessment-chronic'),
               },
               {
-                iconBg: '#007833',
                 title: 'For Someone I Care About',
                 description: "I'm a caregiver, family member, or friend who is concerned about someone else's health and want to help them understand their risks.",
                 icon: (
@@ -242,7 +284,6 @@ const RiskAssessment = ({ onNavigate }) => {
                 onSelect: () => onNavigate?.('assessment-caregiver'),
               },
               {
-                iconBg: '#323a45',
                 title: 'Just Curious',
                 description: "I'm generally interested in learning about chronic disease prevention. I feel pretty healthy but want to see what this is all about.",
                 icon: (
@@ -255,6 +296,7 @@ const RiskAssessment = ({ onNavigate }) => {
             ].map((card, i) => (
               <div
                 key={i}
+                className="get-started-choice-card"
                 role="button"
                 tabIndex={0}
                 onClick={card.onSelect}
@@ -269,18 +311,7 @@ const RiskAssessment = ({ onNavigate }) => {
                   textAlign: 'center',
                 }}
               >
-                <div
-                  style={{
-                    width: 60,
-                    height: 60,
-                    backgroundColor: card.iconBg,
-                    borderRadius: '50%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    margin: '0 auto 1.25rem auto',
-                  }}
-                >
+                <div className="get-started-icon-circle">
                   {card.icon}
                 </div>
                 <h3
