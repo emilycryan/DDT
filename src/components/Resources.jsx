@@ -22,7 +22,7 @@ const educationalCards = [
     bullets: [
       { text: 'Understanding Prediabetes', path: '/resources/prediabetes/understanding-prediabetes' },
       { text: 'Nutrition & Blood Sugar', path: '/resources/prediabetes/nutrition-blood-sugar' },
-      { text: 'Exercise & Insulin Sensitivity', path: '/resources/prediabetes/exercise-insulin-sensitivity' },
+      { text: 'Physical Activity & Insulin Sensitivity', path: '/resources/prediabetes/exercise-insulin-sensitivity' },
       { text: 'DPP Program Overview', path: '/resources/prediabetes/dpp-program-overview' },
     ],
     linkText: 'Explore diabetes resources →',
@@ -35,7 +35,7 @@ const educationalCards = [
       </svg>
     ),
     title: 'Heart Health',
-    description: 'Heart disease is the leading cause of death in the United States. Discover how lifestyle choices around diet, activity, stress, and sleep can measurably reduce your risk — at any age.',
+    description: 'Heart disease is the leading cause of death in the United States. Discover how lifestyle choices around nutrition, activity, stress, and sleep can measurably reduce your risk — at any age.',
     bullets: [
       { text: 'Know Your Numbers', path: '/resources/heart-health/know-your-numbers' },
       { text: 'Blood Pressure & Cholesterol', path: '/resources/heart-health/blood-pressure-cholesterol' },

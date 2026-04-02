@@ -9,7 +9,7 @@ const PAGE_SEQUENCE = [
 ];
 
 const habitLoopSteps = [
-  { num: 1, title: 'Cue', desc: 'A trigger that initiates the behavior — time of day, location, emotional state, or another habit.' },
+  { num: 1, title: 'Cue', desc: 'A signal that initiates the behavior — time of day, location, emotional state, or another habit.' },
   { num: 2, title: 'Routine', desc: 'The behavior itself — physical, mental, or emotional. This is what most people focus on when trying to change habits.' },
   { num: 3, title: 'Reward', desc: 'The benefit your brain receives — dopamine release that teaches the brain to repeat the behavior next time.' },
 ];
@@ -140,7 +140,7 @@ const BuildingHealthyHabits = () => {
               margin: '0 0 1.25rem 0',
             }}
           >
-            A cue triggers your brain to initiate a behavior. A routine is the behavior itself. A reward teaches your brain whether to repeat the loop. Over time, the loop becomes wired — and increasingly automatic.
+            A cue prompts your brain to initiate a behavior. A routine is the behavior itself. A reward teaches your brain whether to repeat the loop. Over time, the loop becomes wired — and increasingly automatic.
           </p>
           <div
             style={{
@@ -154,7 +154,7 @@ const BuildingHealthyHabits = () => {
               Identity-Based Habits
             </div>
             <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', lineHeight: 1.5, margin: 0 }}>
-              The most durable habits are tied to identity, not outcomes. Instead of &quot;I want to exercise more,&quot; try &quot;I am someone who moves their body daily.&quot; Each small action becomes a vote for the person you&apos;re becoming.
+              The most durable habits are tied to identity, not outcomes. Instead of &quot;I want to lose 10 pounds,&quot; try &quot;I am someone who moves their body daily.&quot; Each small action becomes a vote for the person you&apos;re becoming.
             </p>
           </div>
         </div>

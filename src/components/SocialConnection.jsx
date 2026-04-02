@@ -9,7 +9,7 @@ const PAGE_SEQUENCE = [
 ];
 
 const biologyBoxes = [
-  { title: 'Oxytocin release', desc: 'Physical touch, eye-contact, and shared laughter all trigger oxytocin—lowering heart rate, blood pressure, and cortisol within minutes.' },
+  { title: 'Oxytocin release', desc: 'Physical touch, eye-contact, and shared laughter all promote oxytocin release—lowering heart rate, blood pressure, and cortisol within minutes.' },
   { title: 'Immune strengthening', desc: 'People with strong social networks have higher NK cell activity and antibody production—they fight off infections more effectively.' },
   { title: 'Cognitive protection', desc: 'Regular social engagement is one of the strongest modifiable protective factors against cognitive decline and Alzheimer\'s disease.' },
   { title: 'Longevity effect', desc: 'The Harvard Study of Adult Development—the longest study of happiness ever conducted—found strong relationships as the #1 predictor of health and longevity at 80.' },
@@ -144,7 +144,7 @@ const SocialConnection = () => {
               Social Prescribing
             </div>
             <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', lineHeight: 1.5, margin: 0 }}>
-              Healthcare providers in the UK, Canada, and increasingly the U.S. now &quot;prescribe&quot; community activities — group exercise classes, volunteer programs, arts groups — as formally as they prescribe medication for loneliness and mild depression.
+              Healthcare providers in the UK, Canada, and increasingly the U.S. now &quot;prescribe&quot; community activities — group physical activity classes, volunteer programs, arts groups — as formally as they prescribe medication for loneliness and mild depression.
             </p>
           </div>
         </div>

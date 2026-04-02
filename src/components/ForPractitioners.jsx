@@ -192,7 +192,7 @@ const ForPractitioners = () => {
               ),
               title: 'During Counseling',
               description: 'Reference specific modules to anchor goal-setting conversations in evidence. Use the tools as a shared decision-making resource during the appointment.',
-              bullets: ['Pull up nutrition or exercise modules', 'Reference Know Your Numbers data', 'Set SMART goals collaboratively'],
+              bullets: ['Pull up nutrition or physical activity modules', 'Reference Know Your Numbers data', 'Set SMART goals collaboratively'],
             },
             {
               topBorderColor: '#e0e0e0',

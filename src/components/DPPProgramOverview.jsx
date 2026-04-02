@@ -5,16 +5,15 @@ import ResourcePageLayout from './ResourcePageLayout';
 const PAGE_SEQUENCE = [
   { path: '/resources/prediabetes/understanding-prediabetes', title: 'Understanding Prediabetes' },
   { path: '/resources/prediabetes/nutrition-blood-sugar', title: 'Nutrition & Blood Sugar' },
-  { path: '/resources/prediabetes/exercise-insulin-sensitivity', title: 'Exercise & Insulin Sensitivity' },
+  { path: '/resources/prediabetes/exercise-insulin-sensitivity', title: 'Physical Activity & Insulin Sensitivity' },
   { path: '/resources/prediabetes/dpp-program-overview', title: 'Diabetes Prevention Program (DPP) Overview' },
 ];
 
-const eligibilityItems = [
-  'Are 18 years or older',
-  'Have a BMI of 25 or higher (23+ for Asian Americans)',
-  'Have a blood test showing prediabetes (A1C 5.7-6.4%), or had gestational diabetes, or score positive on the CDC risk test',
-  'Have not been previously diagnosed with type 1 or type 2 diabetes, and are not currently pregnant',
-];
+const linkStyle = {
+  color: '#005ea2',
+  textDecoration: 'underline',
+  textUnderlineOffset: '2px',
+};
 
 const DPPProgramOverview = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
@@ -222,20 +221,75 @@ const DPPProgramOverview = () => {
                 padding: '1.25rem',
               }}
             >
-              <div style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '0.9375rem', color: '#1b1b1b', marginBottom: '0.75rem' }}>
-                You may qualify if you:
-              </div>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                {eligibilityItems.map((item, i) => (
-                  <li key={i} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, marginTop: 2 }}>
-                      <circle cx="12" cy="12" r="10" fill="#007833"/>
-                      <path d="M8 12l3 3 5-6" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                    <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.875rem', color: '#323a45', lineHeight: 1.5 }}>{item}</span>
+              <div
+                style={{
+                  fontFamily: 'var(--font-body)',
+                  fontSize: '0.875rem',
+                  color: '#323a45',
+                  lineHeight: 1.6,
+                }}
+              >
+                <p style={{ margin: '0 0 0.75rem 0', fontWeight: 600, color: '#1b1b1b' }}>
+                  To participate, you must meet ALL 4 of these requirements:
+                </p>
+                <ol style={{ margin: '0 0 1.25rem 0', paddingLeft: '1.25rem' }}>
+                  <li style={{ marginBottom: '0.5rem' }}>Be 18 years or older.</li>
+                  <li style={{ marginBottom: '0.5rem' }}>
+                    Have a body mass index (BMI) of 25 or higher (23 or higher if you&apos;re an Asian American person).
                   </li>
-                ))}
-              </ul>
+                  <li style={{ marginBottom: '0.5rem' }}>Not be previously diagnosed with type 1 or type 2 diabetes.</li>
+                  <li style={{ marginBottom: '0.5rem' }}>Not be pregnant.</li>
+                </ol>
+                <p style={{ margin: '0 0 0.75rem 0', fontWeight: 600, color: '#1b1b1b' }}>
+                  You&apos;ll also need to meet 1 of these requirements:
+                </p>
+                <ol style={{ margin: '0 0 1.25rem 0', paddingLeft: '1.25rem' }}>
+                  <li style={{ marginBottom: '0.75rem' }}>
+                    Had a blood test result in the prediabetes range within the past year (includes any of these tests and results):
+                    <ul
+                      style={{
+                        listStyle: 'none',
+                        paddingLeft: 0,
+                        margin: '0.5rem 0 0 0',
+                      }}
+                    >
+                      <li style={{ marginBottom: '0.35rem', paddingLeft: '0.5rem' }}>
+                        · Hemoglobin A1C: 5.7%–6.4%
+                      </li>
+                      <li style={{ marginBottom: '0.35rem', paddingLeft: '0.5rem' }}>
+                        · Fasting plasma glucose: 100–125 mg/dL
+                      </li>
+                      <li style={{ marginBottom: 0, paddingLeft: '0.5rem' }}>
+                        · 2-hour plasma glucose (after a 75g glucose load): 140–199 mg/dL.
+                      </li>
+                    </ul>
+                  </li>
+                  <li style={{ marginBottom: '0.75rem' }}>Be previously diagnosed with gestational diabetes (diabetes during pregnancy).</li>
+                  <li style={{ marginBottom: 0 }}>
+                    Received a high-risk result (score of 5 or higher) on the{' '}
+                    <a
+                      href="https://www.cdc.gov/prediabetes/risktest/index.html"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={linkStyle}
+                    >
+                      Prediabetes Risk Test
+                    </a>
+                    .
+                  </li>
+                </ol>
+                <p style={{ margin: 0 }}>
+                  If you&apos;re enrolling in the Medicare Diabetes Prevention Program, different criteria apply.{' '}
+                  <a
+                    href="https://www.cdc.gov/diabetes-prevention/lifestyle-change-program/ndpp-medicare-program.html"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={linkStyle}
+                  >
+                    Find them here.
+                  </a>
+                </p>
+              </div>
             </div>
           </div>
 

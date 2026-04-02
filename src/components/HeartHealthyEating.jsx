@@ -8,11 +8,11 @@ const PAGE_SEQUENCE = [
   { path: '/resources/heart-health/stress-cardiovascular-risk', title: 'Stress & Cardiovascular Risk' },
 ];
 
-const dashTargets = [
+const dashGoals = [
   { item: 'Vegetables', value: '4-5 servings' },
   { item: 'Fruits', value: '4-5 servings' },
   { item: 'Whole Grains', value: '6-8 servings' },
-  { item: 'Lean Protein / Fish', value: '2 or fewer servings' },
+  { item: 'Protein / Fish', value: '2 or fewer servings' },
   { item: 'Low-Fat Dairy', value: '2-3 servings' },
   { item: 'Nuts, Seeds, Legumes', value: '4-5 / week' },
   { item: 'Sodium', value: 'Under 1,500-2,300 mg', highlight: true },
@@ -54,7 +54,7 @@ const HeartHealthyEating = () => {
           margin: '0 0 0.75rem 0',
         }}
       >
-        Food is medicine. The right diet can lower blood pressure, improve cholesterol, and reduce inflammation.
+        Food is medicine. The right nutrition can lower blood pressure, improve cholesterol, and reduce inflammation.
       </p>
       <p
         style={{
@@ -65,7 +65,7 @@ const HeartHealthyEating = () => {
           margin: '0 0 2.5rem 0',
         }}
       >
-        You don&apos;t need a restrictive diet. The evidence consistently points to a few core patterns — more plants, less sodium, less saturated fat, less added sugar — that together make a measurable difference in cardiac outcomes.
+        You don&apos;t need a restrictive meal plan. The evidence consistently points to a few core patterns — more plants, less sodium, less saturated fat, less added sugar — that together make a measurable difference in cardiac outcomes.
       </p>
 
       <div
@@ -87,7 +87,7 @@ const HeartHealthyEating = () => {
               margin: '0 0 0.75rem 0',
             }}
           >
-            The DASH Diet
+            The DASH Eating Plan
           </h2>
           <p
             style={{
@@ -98,7 +98,7 @@ const HeartHealthyEating = () => {
               margin: '0 0 1rem 0',
             }}
           >
-            Dietary Approaches to Stop Hypertension. The DASH diet is consistently ranked among the best evidence-based approaches for lowering blood pressure and improving cholesterol — without medication.
+            Dietary Approaches to Stop Hypertension. The DASH eating plan is consistently ranked among the best evidence-based approaches for lowering blood pressure and improving cholesterol — without medication.
           </p>
           <p
             style={{
@@ -109,7 +109,7 @@ const HeartHealthyEating = () => {
               margin: '0 0 1.25rem 0',
             }}
           >
-            It emphasizes vegetables, fruits, whole grains, lean proteins, and low-fat dairy, while limiting sodium, red meat, and added sugars. Most people see results within 2 weeks.
+            It emphasizes vegetables, fruits, whole grains, protein, and low-fat dairy, while limiting sodium, red meat, and added sugars. Most people see results within 2 weeks.
           </p>
           <div
             style={{
@@ -120,7 +120,7 @@ const HeartHealthyEating = () => {
             }}
           >
             <div style={{ fontFamily: 'var(--font-body)', fontWeight: 600, fontSize: '0.9375rem', color: '#1b1b1b', marginBottom: '0.25rem' }}>
-              Key DASH Target
+              Key DASH Goal
             </div>
             <p style={{ fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', lineHeight: 1.5, margin: 0 }}>
               Limit sodium to 1,500-2,300 mg per day. The average American consumes over 3,400 mg daily — more than double the recommended amount.
@@ -148,10 +148,10 @@ const HeartHealthyEating = () => {
               textTransform: 'uppercase',
             }}
           >
-            DASH Daily Targets
+            DASH Daily Goals
           </h3>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-            {dashTargets.map((row, i) => (
+            {dashGoals.map((row, i) => (
               <div
                 key={i}
                 style={{

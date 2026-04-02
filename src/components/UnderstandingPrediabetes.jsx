@@ -5,14 +5,14 @@ import ResourcePageLayout from './ResourcePageLayout';
 const PAGE_SEQUENCE = [
   { path: '/resources/prediabetes/understanding-prediabetes', title: 'Understanding Prediabetes' },
   { path: '/resources/prediabetes/nutrition-blood-sugar', title: 'Nutrition & Blood Sugar' },
-  { path: '/resources/prediabetes/exercise-insulin-sensitivity', title: 'Exercise & Insulin Sensitivity' },
+  { path: '/resources/prediabetes/exercise-insulin-sensitivity', title: 'Physical Activity & Insulin Sensitivity' },
   { path: '/resources/prediabetes/dpp-program-overview', title: 'Diabetes Prevention Program (DPP) Overview' },
 ];
 
 const riskFactors = [
   { title: 'Age', description: '45 years or older. Risk increases significantly with age.' },
   { title: 'Weight', description: 'Overweight or obese (BMI ≥ 25, or ≥ 23 for Asian Americans).' },
-  { title: 'Physical Activity', description: 'Less than 3 times per week of moderate exercise.' },
+  { title: 'Physical Activity', description: 'Less than 3 times per week of moderate physical activity.' },
   { title: 'Family History', description: 'Parent or sibling diagnosed with type 2 diabetes.' },
   { title: 'Race / Ethnicity', description: 'African American, Hispanic/Latino, American Indian, Alaska Native, Pacific Islander, or Asian American.' },
 ];

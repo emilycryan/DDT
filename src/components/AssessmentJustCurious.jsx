@@ -48,7 +48,7 @@ const JUST_CURIOUS_QUESTIONS = [
       { label: "It's a regular part of my routine", value: 'regular', score: 0 },
       { label: 'I fit it in when I can', value: 'when_can', score: 1 },
       { label: "I know I could do more", value: 'could_do_more', score: 2 },
-      { label: "I've never been one to exercise much", value: 'rarely', score: 3 },
+      { label: "I've never been one to move much day to day", value: 'rarely', score: 3 },
     ],
   },
   {
@@ -156,7 +156,7 @@ function AssessmentJustCurious({ onBack }) {
     },
     eating: {
       title: 'Eating in a typical week',
-      text: 'Understanding how food fits into your life—without dieting or labels—can be a useful first step. There\'s no single "right" way.',
+      text: 'Understanding how food fits into your life—without restrictive rules or labels—can be a useful first step. There\'s no single "right" way.',
     },
     movement: {
       title: 'Movement that fits your life',

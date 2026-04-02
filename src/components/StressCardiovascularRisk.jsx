@@ -16,7 +16,7 @@ const stressCycleSteps = [
 ];
 
 const stressReducers = [
-  { title: 'Physical Activity', desc: 'Exercise is the most effective stress-buffer available. Even a 20-minute walk lowers cortisol and improves mood for hours afterward.' },
+  { title: 'Physical Activity', desc: 'Moving your body is the most effective stress-buffer available. Even a 20-minute walk lowers cortisol and improves mood for hours afterward.' },
   { title: 'Mindfulness & Breathing', desc: 'Mindfulness-based stress reduction (MBSR) and slow diaphragmatic breathing directly activate the parasympathetic nervous system, lowering BP within minutes.' },
   { title: 'Sleep Hygiene', desc: 'Consistent bedtimes, dark cool rooms, and limiting screens before bed improve sleep depth. Each extra hour of quality sleep measurably reduces blood pressure.' },
   { title: 'Social Connection', desc: 'Strong social ties lower cardiovascular mortality by up to 29%. Group-based lifestyle programs like DPP leverage community as a therapeutic tool.' },
@@ -53,7 +53,7 @@ const StressCardiovascularRisk = () => {
           margin: '0 0 2rem 0',
         }}
       >
-        Ongoing stress raises blood pressure, increases inflammation, disrupts sleep, and triggers behaviors like overeating and inactivity that compound cardiovascular risk. Managing stress isn&apos;t a luxury — it&apos;s part of heart health.
+        Ongoing stress raises blood pressure, increases inflammation, disrupts sleep, and can lead to behaviors like overeating and inactivity that compound cardiovascular risk. Managing stress isn&apos;t a luxury — it&apos;s part of heart health.
       </p>
 
       <div
@@ -129,7 +129,7 @@ const StressCardiovascularRisk = () => {
               margin: '0 0 1.25rem 0',
             }}
           >
-            Stress also triggers behaviors that compound cardiac risk: poor sleep, emotional eating, physical inactivity, and increased alcohol use. Managing stress directly addresses all of these upstream.
+            Stress also contributes to behaviors that compound cardiac risk: poor sleep, emotional eating, physical inactivity, and increased alcohol use. Managing stress directly addresses all of these upstream.
           </p>
           <div
             style={{

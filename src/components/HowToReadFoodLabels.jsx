@@ -7,7 +7,7 @@ const labelClaims = [
   { claim: 'Multi-grain', example: 'e.g. Multi-Grain Cheerios, multi-grain bread', meaning: 'Multiple grain types, but doesn\'t guarantee whole grain. Check the ingredient list.', bulletColor: '#d83933' },
   { claim: 'Natural', example: 'e.g. "All Natural," "Made with Natural Ingredients"', meaning: 'Completely unregulated by the FDA. Ignore it entirely.', bulletColor: '#d83933' },
   { claim: 'Reduced Fat / Low Fat', example: 'e.g. reduced-fat peanut butter, low-fat yogurt', meaning: '25% less fat — but fat is often replaced with sugar or starch. Check the full label.', bulletColor: '#d83933' },
-  { claim: 'Sugar Free', example: 'e.g. sugar-free gummies, sugar-free syrup', meaning: 'Less than 0.5g sugar per serving — but can contain artificial sweeteners that spike blood sugar.', bulletColor: '#d83933' },
+  { claim: 'Sugar Free', example: 'e.g. sugar-free gummies, sugar-free syrup', meaning: 'Less than 0.5g sugar per serving — may still list non-sugar sweeteners; check the full ingredient list and how the product fits your overall meal plan.', bulletColor: '#d83933' },
   { claim: 'Made with Whole Grains', example: 'e.g. cereals, crackers, bread', meaning: 'May contain very little whole grain. Check where whole grain appears in the ingredient list.', bulletColor: '#d83933' },
   { claim: 'Good Source of Fiber / High in Protein', example: 'FDA-regulated nutrient content claims', meaning: 'Actually regulated and meaningful. "Good source" = 10-19% DV. "High" = 20%+ DV.', bulletColor: '#007833' },
 ];
@@ -167,7 +167,7 @@ const HowToReadFoodLabels = () => {
         What the Label Says vs. What It Means
       </h2>
       <p style={{ fontSize: '1rem', fontFamily: 'var(--font-body)', color: '#323a45', lineHeight: 1.6, margin: '0 0 1.5rem 0' }}>
-        Food marketing language is designed to trigger purchase, not inform. The FDA regulates some terms strictly — others not at all. Here&apos;s the translation guide.
+        Food marketing language is designed to drive purchases, not inform. The FDA regulates some terms strictly — others not at all. Here&apos;s the translation guide.
       </p>
       <div style={{ border: '1px solid #e0e0e0', overflow: 'hidden' }}>
         {/* Header */}

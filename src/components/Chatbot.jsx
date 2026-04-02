@@ -1371,7 +1371,7 @@ Key guidelines:
 - Keep responses concise and helpful (2-3 sentences max)
 - Utilize plain language and avoid using jargon
 - Always suggest taking risk assessment when appropriate
-- Mention lifestyle changes like diet, exercise, and avoiding tobacco
+- Mention lifestyle changes like healthy nutrition, physical activity, and avoiding tobacco
 - Be encouraging and supportive
 - If asked about medical advice, remind users to consult healthcare providers
 - Focus on prevention strategies and CDC resources
@@ -1417,10 +1417,10 @@ Available resources to mention:
       const input = userInput.toLowerCase();
       
       if (input.includes('diabetes')) {
-        return "I can help you learn about diabetes prevention. Key steps include maintaining a healthy weight, eating a balanced diet, and staying physically active. Would you like to take our risk assessment to get personalized recommendations?";
+        return "I can help you learn about diabetes prevention. Key steps include maintaining a healthy weight, building healthy eating habits, and staying physically active. Would you like to take our risk assessment to get personalized recommendations?";
       }
       if (input.includes('heart')) {
-        return "Heart disease is preventable through lifestyle changes like regular exercise, healthy eating, not smoking, and managing stress. Are you interested in learning about specific prevention strategies or finding a program to help?";
+        return "Heart disease is preventable through lifestyle changes like regular physical activity, healthy eating, not smoking, and managing stress. Are you interested in learning about specific prevention strategies or finding a program to help?";
       }
       if (input.includes('risk') || input.includes('assessment')) {
         return "Our risk assessment can help identify your personal risk factors for chronic diseases. It takes just a few minutes and provides personalized recommendations. Would you like to get started with the assessment?";

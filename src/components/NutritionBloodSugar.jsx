@@ -5,14 +5,14 @@ import ResourcePageLayout from './ResourcePageLayout';
 const PAGE_SEQUENCE = [
   { path: '/resources/prediabetes/understanding-prediabetes', title: 'Understanding Prediabetes' },
   { path: '/resources/prediabetes/nutrition-blood-sugar', title: 'Nutrition & Blood Sugar' },
-  { path: '/resources/prediabetes/exercise-insulin-sensitivity', title: 'Exercise & Insulin Sensitivity' },
+  { path: '/resources/prediabetes/exercise-insulin-sensitivity', title: 'Physical Activity & Insulin Sensitivity' },
   { path: '/resources/prediabetes/dpp-program-overview', title: 'Diabetes Prevention Program (DPP) Overview' },
 ];
 
 const eatMoreItems = [
   { title: 'Non-starchy vegetables', desc: 'Broccoli, leafy greens, peppers, cucumbers — fill half your plate' },
   { title: 'Whole grains', desc: 'Brown rice, oats, quinoa, whole wheat bread — digest slowly, stabilize blood sugar' },
-  { title: 'Lean protein', desc: 'Chicken, fish, eggs, legumes — keeps you full and reduces spikes' },
+  { title: 'Protein', desc: 'Chicken, fish, eggs, legumes — keeps you full and reduces spikes' },
   { title: 'Healthy fats', desc: 'Avocado, olive oil, nuts — improve insulin sensitivity over time' },
   { title: 'Water & unsweetened drinks', desc: 'Replace sugary drinks with water, sparkling water, or herbal tea' },
 ];
@@ -34,7 +34,7 @@ const strategyCards = [
       </svg>
     ),
     title: 'Use the Plate Method',
-    description: 'Fill half your plate with vegetables, a quarter with lean protein, and a quarter with whole grains.',
+    description: 'Fill half your plate with vegetables, a quarter with protein, and a quarter with whole grains.',
   },
   {
     icon: (
@@ -98,7 +98,7 @@ const NutritionBloodSugar = () => {
           margin: '0 0 2.5rem 0',
         }}
       >
-        You don&apos;t need a perfect diet. Small, sustainable shifts in what and how you eat can meaningfully lower blood sugar, support a healthy weight, and reduce your risk of type 2 diabetes.
+        You don&apos;t need perfect nutrition overnight. Small, sustainable shifts in what and how you eat can meaningfully lower blood sugar, support a healthy weight, and reduce your risk of type 2 diabetes.
       </p>
 
       <div
@@ -226,7 +226,7 @@ const NutritionBloodSugar = () => {
             margin: '0 0 1.5rem 0',
           }}
         >
-          These evidence-based habits don&apos;t require a special diet. Start with one and build from there.
+          These evidence-based habits don&apos;t require a restrictive meal plan. Start with one and build from there.
         </p>
         <div
           style={{
