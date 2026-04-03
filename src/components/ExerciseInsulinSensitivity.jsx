@@ -122,7 +122,7 @@ const ExerciseInsulinSensitivity = () => {
           >
             <div style={{ fontSize: '2rem', fontWeight: 700, fontFamily: 'var(--font-body)', marginBottom: '0.5rem' }}>58%</div>
             <div style={{ fontSize: '0.875rem', lineHeight: 1.4, opacity: 0.95 }}>
-              reduction in diabetes risk with combined nutrition and physical activity changes
+              58% lower chances of developing type 2 diabetes for patients enrolled in a CDC-recognized National DPP lifestyle change program
             </div>
           </div>
           <div

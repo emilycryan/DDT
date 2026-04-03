@@ -64,7 +64,7 @@ const DPPProgramOverview = () => {
         <div>
           <div style={{ fontSize: '2.5rem', fontWeight: 700, fontFamily: 'var(--font-body)', color: '#007833', marginBottom: '0.5rem' }}>58%</div>
           <div style={{ fontSize: '0.9375rem', opacity: 0.95, lineHeight: 1.4 }}>
-            lower risk of developing type 2 diabetes for program participants
+            58% lower chances of developing type 2 diabetes for patients enrolled in a CDC-recognized National DPP lifestyle change program
           </div>
         </div>
         <div>
@@ -84,7 +84,7 @@ const DPPProgramOverview = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: isMobile ? '1fr' : '1fr 340px',
+          gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 0.88fr) minmax(400px, 1fr)',
           gap: '2.5rem',
           alignItems: 'start',
         }}

@@ -123,7 +123,7 @@ const ForPractitioners = () => {
           <div>
             <div style={{ fontSize: isMobile ? '2.5rem' : '3rem', fontFamily: 'var(--font-header)', fontWeight: 700, color: '#007833', lineHeight: 1.1, marginBottom: '0.5rem' }}>58%</div>
             <p style={{ margin: 0, fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: 'rgba(255,255,255,0.9)', lineHeight: 1.5 }}>
-              lower risk of developing type 2 diabetes for patients enrolled in a CDC-recognized DPP
+              58% lower chances of developing type 2 diabetes for patients enrolled in a CDC-recognized National DPP lifestyle change program
             </p>
           </div>
           <div>

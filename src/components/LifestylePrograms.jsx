@@ -486,7 +486,7 @@ const LifestylePrograms = () => {
             maxWidth: '600px',
             margin: '0 auto'
           }}>
-            Connect with CDC-recognized lifestyle change programs in your area. These evidence-based programs are proven to reduce the risk of type 2 diabetes by 58%.
+            Connect with CDC-recognized lifestyle change programs in your area or online. Programs such as these can help reduce the risk of chronic diseases when integrated into a healthy lifestyle.
           </p>
         </div>
       </section>
