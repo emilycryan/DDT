@@ -28,9 +28,148 @@ function MapViewUpdater({ center, zoom, bounds }) {
   return null;
 }
 
+const PROGRAM_FORMAT_ANY = 'any';
+
+const DEFAULT_FEATURE_FILTERS = {
+  freeLowCost: false,
+  wholeHealth: false,
+  spanishLanguages: false,
+  faithBased: false,
+  insurance: false,
+  caregivers: false,
+  accessibility: false,
+  glp1: false,
+};
+
+function programTextBlob(program) {
+  return [program.organization_name, program.description, program.class_schedule]
+    .filter(Boolean)
+    .join(' ')
+    .toLowerCase();
+}
+
+function matchesProgramFormat(program, format) {
+  if (!format || format === PROGRAM_FORMAT_ANY) return true;
+  const mode = (program.delivery_mode || '').toLowerCase();
+  if (format === 'virtual') {
+    return mode.includes('virtual') || mode === 'remote' || mode === 'online';
+  }
+  if (format === 'in-person') {
+    return mode.includes('in-person') || mode.includes('in person');
+  }
+  if (format === 'hybrid') {
+    return mode.includes('hybrid');
+  }
+  return true;
+}
+
+function matchesFeatureFilters(program, filters) {
+  const hasAny = Object.values(filters).some(Boolean);
+  if (!hasAny) return true;
+
+  const desc = programTextBlob(program);
+  const lang = (program.language || '').toLowerCase();
+  const cost = program.cost != null && program.cost !== '' ? Number(program.cost) : null;
+
+  if (filters.freeLowCost) {
+    const ok =
+      cost === 0 ||
+      cost === null ||
+      Number.isNaN(cost) ||
+      desc.includes('free') ||
+      desc.includes('low cost') ||
+      desc.includes('low-cost') ||
+      desc.includes('no cost') ||
+      desc.includes('no-cost');
+    if (!ok) return false;
+  }
+  if (filters.wholeHealth) {
+    const ok =
+      desc.includes('whole health') ||
+      desc.includes('wellness') ||
+      desc.includes('chronic disease') ||
+      desc.includes('lifestyle medicine') ||
+      desc.includes('preventive care');
+    if (!ok) return false;
+  }
+  if (filters.spanishLanguages) {
+    const ok =
+      (lang && lang !== 'english' && lang !== 'en') ||
+      desc.includes('spanish') ||
+      desc.includes('bilingual') ||
+      desc.includes('español') ||
+      desc.includes('espanol');
+    if (!ok) return false;
+  }
+  if (filters.faithBased) {
+    const ok =
+      desc.includes('faith') ||
+      desc.includes('church') ||
+      desc.includes('congregation') ||
+      desc.includes('spiritual') ||
+      desc.includes('mosque') ||
+      desc.includes('synagogue');
+    if (!ok) return false;
+  }
+  if (filters.insurance) {
+    const ins = program.insurance_accepted;
+    const hasInsArray =
+      Array.isArray(ins) && ins.some((x) => x != null && String(x).trim().length > 0);
+    const ok =
+      hasInsArray ||
+      desc.includes('insurance') ||
+      desc.includes('covered by') ||
+      desc.includes('medicare') ||
+      desc.includes('medicaid');
+    if (!ok) return false;
+  }
+  if (filters.caregivers) {
+    const ok =
+      desc.includes('caregiver') ||
+      desc.includes('family welcome') ||
+      desc.includes('support person') ||
+      desc.includes('partner welcome');
+    if (!ok) return false;
+  }
+  if (filters.accessibility) {
+    const ok =
+      desc.includes('sign language') ||
+      desc.includes(' asl') ||
+      desc.includes('asl ') ||
+      desc.includes('accessibility') ||
+      desc.includes(' ada ') ||
+      desc.includes('interpreter') ||
+      desc.includes('accommodation') ||
+      desc.includes('disability');
+    if (!ok) return false;
+  }
+  if (filters.glp1) {
+    const ok =
+      desc.includes('glp-1') ||
+      desc.includes('glp1') ||
+      desc.includes('wegovy') ||
+      desc.includes('ozempic') ||
+      desc.includes('mounjaro') ||
+      desc.includes('semaglutide') ||
+      desc.includes('weight-loss medication') ||
+      desc.includes('weight loss medication');
+    if (!ok) return false;
+  }
+  return true;
+}
+
+function applyClientFilters(programs, programFormat, featureFilters) {
+  return programs.filter(
+    (p) => matchesProgramFormat(p, programFormat) && matchesFeatureFilters(p, featureFilters)
+  );
+}
+
 const LifestylePrograms = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const [searchInput, setSearchInput] = useState('');
+  const [locationInput, setLocationInput] = useState('');
+  const [programFormat, setProgramFormat] = useState(PROGRAM_FORMAT_ANY);
+  const [featureFilters, setFeatureFilters] = useState(() => ({ ...DEFAULT_FEATURE_FILTERS }));
+  const [filtersExpanded, setFiltersExpanded] = useState(true);
   const [searchResults, setSearchResults] = useState([]); // Programs to show in search results list
   const [allPrograms, setAllPrograms] = useState([]); // All programs from database for map display
   const [isLoading, setIsLoading] = useState(false);
@@ -142,59 +281,50 @@ const LifestylePrograms = () => {
     }
   };
 
-  // Function to detect if input is a delivery mode keyword
-  const detectDeliveryMode = (input) => {
-    if (!input || typeof input !== 'string') {
+  /** Reverse geocode for hybrid/in-person search when only GPS is available */
+  const reverseGeocodeToLocationParams = async (lat, lon) => {
+    try {
+      const response = await fetch(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}`,
+        {
+          headers: {
+            'User-Agent': 'CDC-Path2Prevention-App',
+          },
+        }
+      );
+      if (!response.ok) return null;
+      const data = await response.json();
+      const a = data.address || {};
+      const postcode = String(a.postcode || '');
+      const zipMatch = postcode.match(/\d{5}/);
+      const zipCode = zipMatch ? zipMatch[0] : null;
+      let state = null;
+      const iso = a['ISO3166-2-lvl4'];
+      if (iso && /^US-[A-Z]{2}$/i.test(iso)) {
+        state = iso.slice(3).toUpperCase();
+      }
+      const city =
+        a.city || a.town || a.village || a.hamlet || a.suburb || a.municipality || null;
+      if (!zipCode && !state && !city) return null;
+      return { zipCode, state, city };
+    } catch (e) {
+      console.error('Reverse geocoding error:', e);
       return null;
     }
-    
-    const trimmed = input.trim().toLowerCase();
-    
-    // Exact matches first (highest priority)
-    if (trimmed === 'virtual' || trimmed === 'remote' || trimmed === 'online' ||
-        trimmed === 'virtual-live' || trimmed === 'virtual-self-paced') {
-      console.log('✅ Exact match detected for virtual/remote/online:', trimmed);
-      return 'virtual';
-    }
-    
-    if (trimmed === 'in-person' || trimmed === 'in person') {
-      console.log('✅ Exact match detected for in-person:', trimmed);
-      return 'in-person';
-    }
-    
-    if (trimmed === 'hybrid') {
-      console.log('✅ Exact match detected for hybrid:', trimmed);
-      return 'hybrid';
-    }
-    
-    // Partial matches (but be careful not to match city names or addresses)
-    // Only match if the input is a single word or clearly about program type
-    const words = trimmed.split(/\s+/);
-    
-    // Check if input contains delivery mode keywords as standalone words
-    const virtualKeywords = ['virtual', 'remote', 'online'];
-    const inPersonKeywords = ['in-person', 'in person'];
-    const hybridKeywords = ['hybrid'];
-    
-    // If input is short (1-2 words) and contains delivery mode keywords, treat as delivery mode search
-    if (words.length <= 2) {
-      if (virtualKeywords.some(keyword => trimmed.includes(keyword))) {
-        console.log('✅ Partial match detected for virtual keywords:', trimmed);
-        return 'virtual';
-      }
-      if (inPersonKeywords.some(keyword => trimmed.includes(keyword))) {
-        console.log('✅ Partial match detected for in-person keywords:', trimmed);
-        return 'in-person';
-      }
-      if (hybridKeywords.some(keyword => trimmed.includes(keyword))) {
-        console.log('✅ Partial match detected for hybrid keywords:', trimmed);
-        return 'hybrid';
-      }
-    }
-    
-    console.log('❌ No delivery mode detected for:', trimmed);
-    return null;
   };
+
+  const requestUserCoords = () =>
+    new Promise((resolve) => {
+      if (!navigator.geolocation) {
+        resolve(null);
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        (pos) => resolve([pos.coords.latitude, pos.coords.longitude]),
+        () => resolve(null),
+        { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 }
+      );
+    });
 
   // Function to parse location input (city, state, zip)
   const parseLocationInput = (input) => {
@@ -225,208 +355,180 @@ const LifestylePrograms = () => {
     return { city: trimmed };
   };
 
-  // Function to search programs by location
   const searchPrograms = async () => {
-    console.log('🚀 searchPrograms called with input:', searchInput);
-    
-    if (!searchInput.trim()) {
-      setError('Please enter a location or program type to search');
-      return;
-    }
+    const loc = locationInput.trim();
+    const formatIsAny = programFormat === PROGRAM_FORMAT_ANY;
+    const isVirtual = programFormat === 'virtual';
+    const isHybridOrInPerson =
+      programFormat === 'hybrid' || programFormat === 'in-person';
 
     setIsLoading(true);
     setError(null);
     setHasSearched(true);
+    setShowUserLocation(true);
 
     try {
-      // First check if it's a delivery mode search
-      console.log('🔍 About to call detectDeliveryMode with:', searchInput);
-      console.log('🔍 searchInput type:', typeof searchInput);
-      console.log('🔍 searchInput value:', JSON.stringify(searchInput));
-      
-      // Test direct match for debugging
-      const testTrimmed = String(searchInput).trim().toLowerCase();
-      console.log('🔍 Test trimmed:', testTrimmed);
-      console.log('🔍 Is "online"?', testTrimmed === 'online');
-      console.log('🔍 Is "remote"?', testTrimmed === 'remote');
-      console.log('🔍 Is "virtual"?', testTrimmed === 'virtual');
-      
-      const deliveryMode = detectDeliveryMode(searchInput);
-      console.log('🔍 Search input:', searchInput);
-      console.log('🔍 Detected delivery mode:', deliveryMode);
-      console.log('🔍 Delivery mode type:', typeof deliveryMode);
-      console.log('🔍 Delivery mode truthy?', !!deliveryMode);
-      console.log('🔍 Will enter if block?', !!deliveryMode);
-      
-      // Force check - if input is exactly "online", "remote", or "virtual", use delivery mode
-      const forcedDeliveryMode = testTrimmed === 'online' || testTrimmed === 'remote' || testTrimmed === 'virtual' 
-        ? 'virtual' 
-        : (testTrimmed === 'hybrid' ? 'hybrid' : (testTrimmed === 'in-person' || testTrimmed === 'in person' ? 'in-person' : null));
-      
-      console.log('🔍 Forced delivery mode:', forcedDeliveryMode);
-      const finalDeliveryMode = deliveryMode || forcedDeliveryMode;
-      console.log('🔍 Final delivery mode to use:', finalDeliveryMode);
-      
-      if (finalDeliveryMode) {
-        console.log('✅ Using delivery mode search path');
-        // Search by delivery mode (no location required)
-        // Show user location and center map on it if available
-        setShowUserLocation(true);
-        
+      let rawPrograms = [];
+      let geocodeCoords = null;
+      let usedDeviceLocation = false;
+
+      if (isVirtual) {
         const queryParams = new URLSearchParams();
-        queryParams.append('deliveryMode', finalDeliveryMode);
-        
-        const url = `http://localhost:3004/api/programs/search?${queryParams}`;
-        console.log('✅ Fetching URL:', url);
-        console.log('✅ Query params:', queryParams.toString());
-        console.log('✅ Delivery mode being sent:', deliveryMode);
-        
-        const response = await fetch(url, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
-        
+        queryParams.append('deliveryMode', 'virtual');
+        const response = await fetch(`http://localhost:3004/api/programs/search?${queryParams}`);
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
-          console.error('API Error:', errorData);
           throw new Error(errorData.message || 'Failed to search programs');
         }
-
         const data = await response.json();
-        const programs = data.programs || [];
-        setSearchResults(programs);
-        
-        // Show appropriate message for 0 results
-        if (programs.length === 0) {
-          // Use more user-friendly labels
-          const modeLabel = finalDeliveryMode === 'virtual' ? 'virtual/remote/online' : finalDeliveryMode;
-          setError(`No ${modeLabel} programs found.`);
-        } else {
-          setError(null);
-        }
-        
-        // Set map bounds to show all programs (if they have coordinates)
-        // If user location is available, center on it and include it in bounds
-        if (programs.length > 0) {
-          const programsWithCoords = programs.filter(p => p.latitude && p.longitude);
-          if (programsWithCoords.length > 0) {
-            const bounds = programsWithCoords.map(p => [
-              parseFloat(p.latitude),
-              parseFloat(p.longitude)
-            ]);
-            // Include user location in bounds if available
-            if (userLocation) {
-              bounds.push(userLocation);
-              // Center map on user location
-              setMapCenter(userLocation);
+        rawPrograms = data.programs || [];
+      } else if (isHybridOrInPerson) {
+        let locationParams = null;
+
+        if (loc) {
+          try {
+            geocodeCoords = await geocodeAddress(loc);
+            if (geocodeCoords) {
+              setMapCenter(geocodeCoords);
               setMapZoom(10);
             }
-            setMapBounds(bounds);
-          } else {
-            // No program coordinates, but center on user location if available
-            if (userLocation) {
-              setMapCenter(userLocation);
-              setMapZoom(10);
-              setMapBounds(null);
-            } else {
-              // No coordinates at all, show default US view
-              setMapBounds(null);
-            }
+          } catch {
+            /* optional */
           }
+          locationParams = parseLocationInput(loc);
         } else {
-          // No results, but center on user location if available
-          if (userLocation) {
-            setMapCenter(userLocation);
-            setMapZoom(10);
-            setMapBounds(null);
-          } else {
-            setMapBounds(null);
+          let coords = userLocation;
+          if (!coords) {
+            coords = await requestUserCoords();
           }
-        }
-        
-        // Return early - don't continue to location-based search
-        return;
-      } else {
-        // Location-based search - show user location if available
-        setShowUserLocation(true);
-        
-        // Try to geocode the search input to center map on the location
-        // This is optional - search will work even if geocoding fails
-        let coordinates = null;
-        try {
-          coordinates = await geocodeAddress(searchInput);
-          if (coordinates) {
-            setMapCenter(coordinates);
-            setMapZoom(10);
+          if (!coords) {
+            setError(
+              'Enter a city, state, or ZIP for in-person or hybrid programs, or allow your browser to use your current location.'
+            );
+            return;
           }
-        } catch (geocodeError) {
-          console.log('Geocoding failed, continuing with search:', geocodeError);
-          // Continue with search even if geocoding fails
+          usedDeviceLocation = true;
+          geocodeCoords = coords;
+          setUserLocation(coords);
+          setMapCenter(coords);
+          setMapZoom(10);
+
+          locationParams = await reverseGeocodeToLocationParams(coords[0], coords[1]);
+          if (!locationParams || (!locationParams.zipCode && !locationParams.state && !locationParams.city)) {
+            setError(
+              'We could not determine your area from your location. Try typing a city, state, or ZIP code.'
+            );
+            return;
+          }
         }
 
-        const locationParams = parseLocationInput(searchInput);
         const queryParams = new URLSearchParams();
-        
         if (locationParams.zipCode) queryParams.append('zipCode', locationParams.zipCode);
         if (locationParams.state) queryParams.append('state', locationParams.state);
         if (locationParams.city) queryParams.append('city', locationParams.city);
 
         const response = await fetch(`http://localhost:3004/api/programs/search?${queryParams}`);
-        
         if (!response.ok) {
           const errorData = await response.json().catch(() => ({}));
           throw new Error(errorData.message || 'Failed to search programs');
         }
-
         const data = await response.json();
-        const programs = data.programs || [];
-        setSearchResults(programs);
-        
-        // Show appropriate message for 0 results
-        if (programs.length === 0) {
-          setError(`No programs found in ${searchInput}.`);
-        } else {
-          setError(null);
+        rawPrograms = data.programs || [];
+      } else if (formatIsAny && !loc) {
+        const response = await fetch('http://localhost:3004/api/programs/all');
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || 'Failed to load programs');
         }
-        
-        // If we have results with coordinates, adjust map bounds to show all programs
-        if (programs.length > 0) {
-          const programsWithCoords = programs.filter(p => p.latitude && p.longitude);
-          if (programsWithCoords.length > 0) {
-            // Create bounds from all program coordinates
-            const bounds = programsWithCoords.map(p => [
-              parseFloat(p.latitude),
-              parseFloat(p.longitude)
-            ]);
-            // Include user location or search location if available
-            if (coordinates) {
-              bounds.push(coordinates);
-            } else if (userLocation && showUserLocation) {
-              bounds.push(userLocation);
-            }
-            setMapBounds(bounds);
-          } else if (coordinates) {
-            // No program coordinates, but we have search location - center on it
-            setMapCenter(coordinates);
+        const data = await response.json();
+        rawPrograms = data.programs || [];
+      } else {
+        try {
+          geocodeCoords = await geocodeAddress(loc);
+          if (geocodeCoords) {
+            setMapCenter(geocodeCoords);
             setMapZoom(10);
-            setMapBounds(null);
           }
-        } else if (coordinates) {
-          // No results but we have coordinates - center on search location
-          setMapCenter(coordinates);
+        } catch {
+          /* optional */
+        }
+
+        const locationParams = parseLocationInput(loc);
+        const queryParams = new URLSearchParams();
+        if (locationParams.zipCode) queryParams.append('zipCode', locationParams.zipCode);
+        if (locationParams.state) queryParams.append('state', locationParams.state);
+        if (locationParams.city) queryParams.append('city', locationParams.city);
+
+        const response = await fetch(`http://localhost:3004/api/programs/search?${queryParams}`);
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({}));
+          throw new Error(errorData.message || 'Failed to search programs');
+        }
+        const data = await response.json();
+        rawPrograms = data.programs || [];
+      }
+
+      const clientFormatForFilter =
+        isVirtual || formatIsAny ? PROGRAM_FORMAT_ANY : programFormat;
+
+      const programs = applyClientFilters(rawPrograms, clientFormatForFilter, featureFilters);
+
+      setSearchResults(programs);
+
+      if (programs.length === 0) {
+        if (isVirtual) {
+          setError('No virtual or online programs found with the selected filters.');
+        } else if (isHybridOrInPerson && loc) {
+          setError(`No ${programFormat} programs found near "${loc}" with the selected options.`);
+        } else if (isHybridOrInPerson && usedDeviceLocation) {
+          setError(`No ${programFormat} programs found near your location with the selected options.`);
+        } else if (loc) {
+          setError(`No programs found for "${loc}" with the selected options.`);
+        } else if (formatIsAny && !loc) {
+          setError('No programs match your filters. Try clearing some feature filters.');
+        } else {
+          setError('No programs match your search.');
+        }
+      } else {
+        setError(null);
+      }
+
+      if (programs.length > 0) {
+        const programsWithCoords = programs.filter((p) => p.latitude && p.longitude);
+        if (programsWithCoords.length > 0) {
+          const bounds = programsWithCoords.map((p) => [
+            parseFloat(p.latitude),
+            parseFloat(p.longitude),
+          ]);
+          if (geocodeCoords) {
+            bounds.push(geocodeCoords);
+          } else if (userLocation) {
+            bounds.push(userLocation);
+            setMapCenter(userLocation);
+            setMapZoom(10);
+          }
+          setMapBounds(bounds);
+        } else if (geocodeCoords) {
+          setMapCenter(geocodeCoords);
           setMapZoom(10);
           setMapBounds(null);
-        } else {
+        } else if (userLocation) {
+          setMapCenter(userLocation);
+          setMapZoom(10);
           setMapBounds(null);
         }
+      } else {
+        if (geocodeCoords) {
+          setMapCenter(geocodeCoords);
+          setMapZoom(10);
+        } else if (userLocation) {
+          setMapCenter(userLocation);
+          setMapZoom(10);
+        }
+        setMapBounds(null);
       }
-      
     } catch (error) {
       console.error('Error searching programs:', error);
-      // Only show generic error if it's an actual error (not 0 results)
-      // 0 results are handled above with specific messages
       setError(error.message || 'Unable to search programs. Please try again.');
       setSearchResults([]);
       setMapBounds(null);
@@ -435,12 +537,34 @@ const LifestylePrograms = () => {
     }
   };
 
-  // Handle Enter key press in search input
   const handleKeyPress = (e) => {
     if (e.key === 'Enter') {
       searchPrograms();
     }
   };
+
+  const toggleFeatureFilter = (key) => {
+    setFeatureFilters((prev) => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const featureFilterRows = [
+    [
+      { key: 'freeLowCost', label: 'Free or low-cost' },
+      { key: 'insurance', label: 'Covered by insurance' },
+    ],
+    [
+      { key: 'wholeHealth', label: 'Whole health focus (not just diabetes)' },
+      { key: 'caregivers', label: 'Caregivers / family welcome' },
+    ],
+    [
+      { key: 'spanishLanguages', label: 'Spanish or other languages' },
+      { key: 'accessibility', label: 'Sign language / accessibility options' },
+    ],
+    [
+      { key: 'faithBased', label: 'Faith-based' },
+      { key: 'glp1', label: 'GLP-1 / weight-loss medication support' },
+    ],
+  ];
 
   return (
     <main style={{ 
@@ -511,80 +635,205 @@ const LifestylePrograms = () => {
             Find Your Perfect Program
           </h2>
 
-          {/* Search Form Placeholder */}
-          <div style={{
-            backgroundColor: '#f8fafc',
-            padding: '2rem',
-            borderRadius: '0.75rem',
-            border: '1px solid #e2e8f0',
-            marginBottom: '3rem'
-          }}>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : '1fr auto',
-              gap: '1rem',
-              alignItems: 'end'
-            }}>
+          <div
+            style={{
+              backgroundColor: '#ffffff',
+              padding: isMobile ? '1.25rem' : '1.75rem',
+              borderRadius: '0.75rem',
+              border: '1px solid #e0e0e0',
+              boxShadow: '0 4px 14px rgba(0, 0, 0, 0.06)',
+              marginBottom: '3rem',
+            }}
+          >
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: isMobile ? '1fr' : 'minmax(0, 1fr) minmax(160px, 220px) auto',
+                gap: isMobile ? '1rem' : '1rem 1.25rem',
+                alignItems: 'end',
+              }}
+            >
               <div>
-                <label style={{
-                  display: 'block',
-                  fontSize: '1rem',
-                  fontWeight: '600',
-                  color: '#374151',
-                  marginBottom: '0.5rem'
-                }}>
-                  Enter location or program format
+                <label
+                  htmlFor="program-finder-location"
+                  style={{
+                    display: 'block',
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    color: '#323a45',
+                    marginBottom: '0.375rem',
+                  }}
+                >
+                  Location
                 </label>
                 <input
+                  id="program-finder-location"
                   type="text"
-                  placeholder="e.g., Atlanta, GA or 30309 or 'virtual' or 'remote'"
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  onKeyPress={handleKeyPress}
+                  placeholder="e.g., Atlanta, GA or 30309"
+                  value={locationInput}
+                  onChange={(e) => setLocationInput(e.target.value)}
+                  onKeyDown={handleKeyPress}
                   disabled={isLoading}
                   style={{
                     width: '100%',
-                    padding: '0.75rem 1rem',
-                    border: '1px solid #d1d5db',
+                    padding: '0.65rem 0.85rem',
+                    border: '1px solid #e0e0e0',
                     borderRadius: '0.375rem',
                     fontSize: '1rem',
                     boxSizing: 'border-box',
-                    opacity: isLoading ? 0.6 : 1
+                    color: '#1b1b1b',
+                    opacity: isLoading ? 0.6 : 1,
                   }}
                 />
               </div>
-              <button 
+              <div>
+                <label
+                  htmlFor="program-finder-format"
+                  style={{
+                    display: 'block',
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    color: '#323a45',
+                    marginBottom: '0.375rem',
+                  }}
+                >
+                  Program format
+                </label>
+                <select
+                  id="program-finder-format"
+                  value={programFormat}
+                  onChange={(e) => setProgramFormat(e.target.value)}
+                  disabled={isLoading}
+                  style={{
+                    width: '100%',
+                    padding: '0.65rem 0.85rem',
+                    border: '1px solid #e0e0e0',
+                    borderRadius: '0.375rem',
+                    fontSize: '1rem',
+                    boxSizing: 'border-box',
+                    color: '#1b1b1b',
+                    backgroundColor: '#fff',
+                    cursor: isLoading ? 'not-allowed' : 'pointer',
+                    opacity: isLoading ? 0.6 : 1,
+                  }}
+                >
+                  <option value={PROGRAM_FORMAT_ANY}>Any</option>
+                  <option value="virtual">Virtual / online</option>
+                  <option value="in-person">In-person</option>
+                  <option value="hybrid">Hybrid</option>
+                </select>
+              </div>
+              <button
+                type="button"
                 onClick={searchPrograms}
-                disabled={isLoading || !searchInput.trim()}
+                disabled={isLoading}
                 style={{
-                  backgroundColor: isLoading || !searchInput.trim() ? '#9ca3af' : '#005ea2',
+                  backgroundColor: isLoading ? '#9ca3af' : '#005ea2',
                   color: 'white',
-                  padding: '0.75rem 2rem',
+                  padding: isMobile ? '0.75rem 1.25rem' : '0.65rem 1.75rem',
                   borderRadius: '0.375rem',
                   border: 'none',
                   fontSize: '1rem',
-                  fontWeight: '600',
-                  cursor: isLoading || !searchInput.trim() ? 'not-allowed' : 'pointer',
-                  whiteSpace: 'nowrap'
-                }}>
+                  fontWeight: 700,
+                  cursor: isLoading ? 'not-allowed' : 'pointer',
+                  whiteSpace: 'nowrap',
+                  justifySelf: isMobile ? 'stretch' : 'end',
+                  width: isMobile ? '100%' : 'auto',
+                }}
+              >
                 {isLoading ? 'Searching...' : 'Find Programs'}
               </button>
             </div>
-            
-            {/* Error Message */}
+
+            <div
+              style={{
+                borderTop: '1px solid #e0e0e0',
+                marginTop: '1.25rem',
+                paddingTop: '1rem',
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => setFiltersExpanded((v) => !v)}
+                aria-expanded={filtersExpanded}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  padding: 0,
+                  cursor: 'pointer',
+                  fontSize: '0.9375rem',
+                  fontWeight: 700,
+                  color: '#005ea2',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.35rem',
+                }}
+              >
+                <span aria-hidden style={{ fontSize: '0.65rem' }}>
+                  {filtersExpanded ? '▼' : '▶'}
+                </span>
+                Filter by program features
+              </button>
+
+              {filtersExpanded && (
+                <div
+                  style={{
+                    display: 'grid',
+                    gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+                    gap: '0.65rem 2rem',
+                    marginTop: '1rem',
+                  }}
+                >
+                  {featureFilterRows.flatMap((row) =>
+                    row.map(({ key, label }) => (
+                      <label
+                        key={key}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'flex-start',
+                          gap: '0.5rem',
+                          fontSize: '0.9375rem',
+                          color: '#323a45',
+                          cursor: 'pointer',
+                          lineHeight: 1.35,
+                        }}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={featureFilters[key]}
+                          onChange={() => toggleFeatureFilter(key)}
+                          style={{
+                            marginTop: '0.2rem',
+                            width: '1rem',
+                            height: '1rem',
+                            flexShrink: 0,
+                          }}
+                        />
+                        <span>{label}</span>
+                      </label>
+                    ))
+                  )}
+                </div>
+              )}
+            </div>
+
             {error && (
-              <div style={{
-                backgroundColor: '#fef2f2',
-                border: '1px solid #fecaca',
-                borderRadius: '0.375rem',
-                padding: '1rem',
-                marginTop: '1rem'
-              }}>
-                <p style={{
-                  color: '#dc2626',
-                  fontSize: '0.95rem',
-                  margin: 0
-                }}>
+              <div
+                style={{
+                  backgroundColor: '#f8dfe2',
+                  border: '1px solid #d83933',
+                  borderRadius: '0.375rem',
+                  padding: '1rem',
+                  marginTop: '1rem',
+                }}
+              >
+                <p
+                  style={{
+                    color: '#b50909',
+                    fontSize: '0.95rem',
+                    margin: 0,
+                  }}
+                >
                   {error}
                 </p>
               </div>
@@ -722,10 +971,10 @@ const LifestylePrograms = () => {
                   color: '#64748b'
                 }}>
                   <p style={{ fontSize: '1.125rem', marginBottom: '0.5rem' }}>
-                    No programs found in this area
+                    No programs match your search
                   </p>
                   <p style={{ fontSize: '0.95rem' }}>
-                    Try searching with a different city, state, or zip code
+                    Try another location, choose a different program format, or adjust filters under “Filter by program features.”
                   </p>
                 </div>
               ) : (
@@ -753,7 +1002,22 @@ const LifestylePrograms = () => {
                             color: '#1b1b1b',
                             marginBottom: '0.5rem'
                           }}>
-                            {program.organization_name}
+                            {program.website_url ? (
+                              <a
+                                href={program.website_url}
+                                target="_blank"
+                                rel="noreferrer"
+                                style={{
+                                  color: '#1b1b1b',
+                                  textDecoration: 'underline',
+                                  textUnderlineOffset: '2px'
+                                }}
+                              >
+                                {program.organization_name}
+                              </a>
+                            ) : (
+                              program.organization_name
+                            )}
                           </h4>
                           
                           {program.description && (
@@ -776,7 +1040,20 @@ const LifestylePrograms = () => {
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                               <span style={{ color: '#6b7280' }}>📍</span>
                               <span style={{ color: '#374151' }}>
-                                {program.city}, {program.state} {program.zip_code}
+                                {program.address_line1 ? (
+                                  <>
+                                    <span style={{ display: 'block' }}>
+                                      {program.address_line1}{program.address_line2 ? `, ${program.address_line2}` : ''}
+                                    </span>
+                                    <span style={{ display: 'block' }}>
+                                      {program.city}, {program.state} {program.zip_code}
+                                    </span>
+                                  </>
+                                ) : (
+                                  <span style={{ display: 'block' }}>
+                                    {program.city}, {program.state} {program.zip_code}
+                                  </span>
+                                )}
                               </span>
                             </div>
                             
@@ -789,11 +1066,27 @@ const LifestylePrograms = () => {
                               </div>
                             )}
                             
-                            {program.cost && (
+                            {(program.cost !== null && program.cost !== undefined) && (
                               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                                 <span style={{ color: '#6b7280' }}>💰</span>
-                                <span style={{ color: '#374151' }}>
-                                  ${program.cost}
+                                <span style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexWrap: 'wrap' }}>
+                                  <span style={{ color: '#374151' }}>
+                                    {Number(program.cost) === 0 ? 'Free' : `$${program.cost}`}
+                                  </span>
+                                  {Number(program.cost) > 0 && Array.isArray(program.insurance_accepted) && program.insurance_accepted.length > 0 && (
+                                    <span style={{
+                                      fontSize: '0.75rem',
+                                      fontWeight: '600',
+                                      color: '#1e40af',
+                                      backgroundColor: '#eff6ff',
+                                      border: '1px solid #bfdbfe',
+                                      padding: '0.15rem 0.5rem',
+                                      borderRadius: '999px',
+                                      whiteSpace: 'nowrap'
+                                    }}>
+                                      Insurance accepted
+                                    </span>
+                                  )}
                                 </span>
                               </div>
                             )}
@@ -804,6 +1097,42 @@ const LifestylePrograms = () => {
                                 <span style={{ color: '#374151' }}>
                                   {program.duration_weeks} weeks
                                 </span>
+                              </div>
+                            )}
+
+                            {program.contact_phone && (
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <span style={{ color: '#6b7280' }}>📞</span>
+                                <a
+                                  href={`tel:${String(program.contact_phone).replace(/[^\d+]/g, '')}`}
+                                  style={{
+                                    color: '#374151',
+                                    textDecoration: 'underline',
+                                    textUnderlineOffset: '2px'
+                                  }}
+                                >
+                                  {program.contact_phone}
+                                </a>
+                              </div>
+                            )}
+
+                            {program.website_url && (
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                <span style={{ color: '#6b7280' }}>🔗</span>
+                                <a
+                                  href={program.website_url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  style={{
+                                    color: '#005ea2',
+                                    textDecoration: 'underline',
+                                    fontWeight: '600',
+                                    wordBreak: 'break-word',
+                                    overflowWrap: 'anywhere'
+                                  }}
+                                >
+                                  {program.website_url}
+                                </a>
                               </div>
                             )}
                           </div>
@@ -838,12 +1167,32 @@ const LifestylePrograms = () => {
                             }}>
                               {program.contact_phone && (
                                 <div style={{ marginBottom: '0.25rem' }}>
-                                  📞 {program.contact_phone}
+                                  📞{' '}
+                                  <a
+                                    href={`tel:${String(program.contact_phone).replace(/[^\d+]/g, '')}`}
+                                    style={{
+                                      color: '#64748b',
+                                      textDecoration: 'underline',
+                                      textUnderlineOffset: '2px'
+                                    }}
+                                  >
+                                    {program.contact_phone}
+                                  </a>
                                 </div>
                               )}
                               {program.contact_email && (
                                 <div>
-                                  📧 {program.contact_email}
+                                  📧{' '}
+                                  <a
+                                    href={`mailto:${program.contact_email}`}
+                                    style={{
+                                      color: '#64748b',
+                                      textDecoration: 'underline',
+                                      textUnderlineOffset: '2px'
+                                    }}
+                                  >
+                                    {program.contact_email}
+                                  </a>
                                 </div>
                               )}
                             </div>
