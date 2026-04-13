@@ -180,7 +180,7 @@ const ForPractitioners = () => {
               ),
               title: 'Before a Visit',
               description: 'Send educational links so patients arrive informed and ready to discuss risk factors, lifestyle goals, and program options — reducing time spent on basics.',
-              bullets: ['Share prediabetes risk education', 'Send DPP program overview', 'Prompt patients to answer a few questions'],
+              bullets: ['Share prediabetes risk education', 'Send National DPP program overview', 'Prompt patients to answer a few questions'],
             },
             {
               topBorderColor: '#e0e0e0',
@@ -205,7 +205,7 @@ const ForPractitioners = () => {
               ),
               title: 'After a Visit',
               description: 'Share personalized resource packets and follow-up links that extend the conversation — keeping patients engaged between appointments and supporting adherence.',
-              bullets: ['Send handouts and tracking sheets', 'Share local DPP program links', 'Provide follow-up reading by topic'],
+              bullets: ['Send handouts and tracking sheets', 'Share local National DPP program links', 'Provide follow-up reading by topic'],
             },
           ].map((col, i) => (
             <div
@@ -250,7 +250,7 @@ const ForPractitioners = () => {
               },
               {
                 label: 'CDC & FEDERAL RESOURCES',
-                title: 'National Diabetes Prevention Program (DPP)',
+                title: 'National Diabetes Prevention Program (National DPP)',
                 description: 'CDC\'s framework for lifestyle change programs recognized to reduce type 2 diabetes risk.',
                 bullets: ['Program standards and implementation guidance', 'Medicare coverage criteria for eligible patients', 'Referral pathways and documentation support'],
                 href: 'https://www.cdc.gov/diabetes-prevention/programs/what-is-the-national-dpp.html',
@@ -301,7 +301,7 @@ const ForPractitioners = () => {
                 </svg>
               ),
               title: 'Weekly Activity Tracking Sheet',
-              description: 'A simple weekly log for patients to track physical activity minutes — built around the DPP goal of 150 minutes of moderate activity per week.',
+              description: 'A simple weekly log for patients to track physical activity minutes — built around the National DPP goal of 150 minutes of moderate activity per week.',
               to: '/for-practitioners/weekly-activity-tracking-sheet',
             },
             {

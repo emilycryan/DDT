@@ -4,8 +4,8 @@ import ResourcePageLayout from './ResourcePageLayout';
 const PAGE_SEQUENCE = [
   { path: '/resources/prediabetes/understanding-prediabetes', title: 'Understanding Prediabetes' },
   { path: '/resources/prediabetes/nutrition-blood-sugar', title: 'Nutrition & Blood Sugar' },
-  { path: '/resources/prediabetes/exercise-insulin-sensitivity', title: 'Physical Activity & Insulin Sensitivity' },
-  { path: '/resources/prediabetes/dpp-program-overview', title: 'Diabetes Prevention Program (DPP) Overview' },
+  { path: '/resources/prediabetes/physical-activity-insulin-sensitivity', title: 'Physical Activity & Insulin Sensitivity' },
+  { path: '/resources/prediabetes/dpp-program-overview', title: 'National DPP Lifestyle Change Program Overview' },
 ];
 
 const aerobicItems = ['Brisk walking', 'Swimming or water aerobics', 'Cycling (indoor or outdoor)', 'Dancing or aerobics classes', 'Jogging or running'];
@@ -313,7 +313,7 @@ const ExerciseInsulinSensitivity = () => {
                 color: '#1b1b1b',
               }}
             >
-              Goal: Join a DPP
+              Goal: Join a National DPP lifestyle change program
             </div>
           </div>
         </div>

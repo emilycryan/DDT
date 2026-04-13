@@ -5,8 +5,8 @@ import ResourcePageLayout from './ResourcePageLayout';
 const PAGE_SEQUENCE = [
   { path: '/resources/prediabetes/understanding-prediabetes', title: 'Understanding Prediabetes' },
   { path: '/resources/prediabetes/nutrition-blood-sugar', title: 'Nutrition & Blood Sugar' },
-  { path: '/resources/prediabetes/exercise-insulin-sensitivity', title: 'Physical Activity & Insulin Sensitivity' },
-  { path: '/resources/prediabetes/dpp-program-overview', title: 'Diabetes Prevention Program (DPP) Overview' },
+  { path: '/resources/prediabetes/physical-activity-insulin-sensitivity', title: 'Physical Activity & Insulin Sensitivity' },
+  { path: '/resources/prediabetes/dpp-program-overview', title: 'National DPP Lifestyle Change Program Overview' },
 ];
 
 const linkStyle = {
@@ -25,7 +25,7 @@ const DPPProgramOverview = () => {
   }, []);
 
   return (
-    <ResourcePageLayout categoryLabel="Prediabetes" categoryPath="/resources/prediabetes/understanding-prediabetes" pageSequence={PAGE_SEQUENCE} title="Diabetes Prevention Program (DPP) Overview">
+    <ResourcePageLayout categoryLabel="Prediabetes" categoryPath="/resources/prediabetes/understanding-prediabetes" pageSequence={PAGE_SEQUENCE} title="National DPP Lifestyle Change Program Overview">
       <h2
         style={{
           fontSize: isMobile ? '1.25rem' : '1.375rem',
@@ -46,7 +46,7 @@ const DPPProgramOverview = () => {
           margin: '0 0 2rem 0',
         }}
       >
-        The CDC-recognized National Diabetes Prevention Program (DPP) is an evidence-based lifestyle change program that helps people with prediabetes make the small shifts that add up to lasting change – guided by a trained coach, with peer support along the way.
+        The CDC-recognized National Diabetes Prevention Program (National DPP) is an evidence-based lifestyle change program that helps people with prediabetes make the small shifts that add up to lasting change – guided by a trained coach, with peer support along the way.
       </p>
 
       <div

@@ -19,7 +19,7 @@ const stressReducers = [
   { title: 'Physical Activity', desc: 'Moving your body is the most effective stress-buffer available. Even a 20-minute walk lowers cortisol and improves mood for hours afterward.' },
   { title: 'Mindfulness & Breathing', desc: 'Mindfulness-based stress reduction (MBSR) and slow diaphragmatic breathing directly activate the parasympathetic nervous system, lowering BP within minutes.' },
   { title: 'Sleep Hygiene', desc: 'Consistent bedtimes, dark cool rooms, and limiting screens before bed improve sleep depth. Each extra hour of quality sleep measurably reduces blood pressure.' },
-  { title: 'Social Connection', desc: 'Strong social ties lower cardiovascular mortality by up to 29%. Group-based lifestyle programs like DPP leverage community as a therapeutic tool.' },
+  { title: 'Social Connection', desc: 'Strong social ties lower cardiovascular mortality by up to 29%. Group-based lifestyle programs like the National DPP lifestyle change program leverage community as a therapeutic tool.' },
 ];
 
 const StressCardiovascularRisk = () => {

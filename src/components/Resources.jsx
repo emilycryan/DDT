@@ -22,8 +22,8 @@ const educationalCards = [
     bullets: [
       { text: 'Understanding Prediabetes', path: '/resources/prediabetes/understanding-prediabetes' },
       { text: 'Nutrition & Blood Sugar', path: '/resources/prediabetes/nutrition-blood-sugar' },
-      { text: 'Physical Activity & Insulin Sensitivity', path: '/resources/prediabetes/exercise-insulin-sensitivity' },
-      { text: 'DPP Program Overview', path: '/resources/prediabetes/dpp-program-overview' },
+      { text: 'Physical Activity & Insulin Sensitivity', path: '/resources/prediabetes/physical-activity-insulin-sensitivity' },
+      { text: 'National DPP Lifestyle Change Program Overview', path: '/resources/prediabetes/dpp-program-overview' },
     ],
     linkText: 'Explore diabetes resources →',
     linkHref: '/resources/prediabetes/understanding-prediabetes',

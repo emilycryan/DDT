@@ -96,14 +96,14 @@ function App() {
     setTimeout(() => scrollToSection(sectionId), 150)
   }
 
-  const handleChatbotNavigate = (target) => {
-    if (['about', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs', 'plan-my-path'].includes(target)) onNavigate(target)
-    else goToHomeSection(target)
+  const handleChatbotNavigate = (destination) => {
+    if (['about', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs', 'plan-my-path'].includes(destination)) onNavigate(destination)
+    else goToHomeSection(destination)
   }
 
-  const navigateTo = (target) => {
-    if (['about', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs', 'plan-my-path'].includes(target)) onNavigate(target)
-    else goToHomeSection(target)
+  const navigateTo = (destination) => {
+    if (['about', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs', 'plan-my-path'].includes(destination)) onNavigate(destination)
+    else goToHomeSection(destination)
   }
 
   const currentPage = location.pathname === '/' ? 'home' : (PATH_TO_PAGE[location.pathname] || 'home')
@@ -140,7 +140,7 @@ function App() {
       <Route path="/lifestyle-programs" element={<main style={{ minHeight: '80vh' }}><LifestylePrograms /></main>} />
       <Route path="/resources/prediabetes/understanding-prediabetes" element={<UnderstandingPrediabetes />} />
       <Route path="/resources/prediabetes/nutrition-blood-sugar" element={<NutritionBloodSugar />} />
-      <Route path="/resources/prediabetes/exercise-insulin-sensitivity" element={<ExerciseInsulinSensitivity />} />
+      <Route path="/resources/prediabetes/physical-activity-insulin-sensitivity" element={<ExerciseInsulinSensitivity />} />
       <Route path="/resources/prediabetes/dpp-program-overview" element={<DPPProgramOverview />} />
       <Route path="/resources/heart-health/know-your-numbers" element={<KnowYourNumbers />} />
       <Route path="/resources/heart-health/blood-pressure-cholesterol" element={<BloodPressureCholesterol />} />
