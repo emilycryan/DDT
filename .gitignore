@@ -15,6 +15,9 @@ build/
 .env.test.local
 .env.production.local
 
+# Claude Code worktrees
+.claude/worktrees/
+
 # IDE and editor files
 .vscode/
 .idea/

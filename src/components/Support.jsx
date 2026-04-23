@@ -223,14 +223,16 @@ const Support = () => {
                   width: 36,
                   height: 36,
                   borderRadius: '0.25rem',
-                  backgroundColor: '#005ea2',
+                  backgroundColor: '#1b1b1b',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-                  <polygon points="5 3 19 12 5 21 5 3"/>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
                 </svg>
               </div>
               <h3
@@ -242,7 +244,7 @@ const Support = () => {
                   margin: 0,
                 }}
               >
-                Learn With Video
+                Find a Lifestyle Change Program
               </h3>
             </div>
             <p
@@ -254,51 +256,64 @@ const Support = () => {
                 lineHeight: 1.5,
               }}
             >
-              CDC educational videos to help you understand prevention.
+              CDC-recognized programs are proven to prevent or delay type 2 diabetes and other chronic conditions. Find one that fits your schedule — in person or online.
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {[
-                { title: 'Meet Lisa: Preventing Prediabetes', href: 'https://www.youtube.com/watch?v=azKL5xutMJE' },
-                { title: 'Imagine: You + National Diabetes Prevention Program', href: 'https://www.youtube.com/watch?v=k_XoHSIG20U&t=2s' },
-                { title: 'Sneak Peek into the Lifestyle Change Program', href: 'https://www.youtube.com/watch?v=w0NDVI4M_Bs' },
-              ].map((video, i) => (
-                <a
-                  key={i}
-                  href={video.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.75rem',
-                    padding: '1rem 1.25rem',
-                    backgroundColor: '#f0f4f8',
-                    borderRadius: '0.25rem',
-                    textDecoration: 'none',
-                    border: '1px solid #e0e0e0',
-                  }}
-                >
-                  <div
+              <div style={{ backgroundColor: '#f0f4f8', borderRadius: '0.25rem', padding: '1rem 1.25rem', border: '1px solid #e0e0e0' }}>
+                <div style={{ marginBottom: '0.5rem' }}>
+                  <strong style={{ fontFamily: 'var(--font-body)', fontWeight: 600, color: '#1b1b1b', fontSize: '1rem' }}>Search for a program near you</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+                  <p style={{ margin: 0, fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', flex: 1, minWidth: 200 }}>
+                    Browse local and virtual programs in your area.
+                  </p>
+                  <Link
+                    to="/lifestyle-programs"
                     style={{
-                      width: 32,
-                      height: 32,
-                      borderRadius: '50%',
+                      display: 'inline-block',
+                      padding: '0.5rem 1.25rem',
                       backgroundColor: '#005ea2',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
+                      color: 'white',
+                      fontFamily: 'var(--font-body)',
+                      fontWeight: 600,
+                      fontSize: '0.9375rem',
+                      borderRadius: '0.375rem',
+                      textDecoration: 'none',
                       flexShrink: 0,
                     }}
                   >
-                    <svg width="12" height="12" viewBox="0 0 24 24" fill="white" style={{ marginLeft: 2 }}>
-                      <polygon points="5 3 19 12 5 21 5 3"/>
-                    </svg>
-                  </div>
-                  <span style={{ fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#005ea2', fontWeight: 600 }}>
-                    {video.title}
-                  </span>
-                </a>
-              ))}
+                    Search Programs
+                  </Link>
+                </div>
+              </div>
+              <div style={{ backgroundColor: '#f0f4f8', borderRadius: '0.25rem', padding: '1rem 1.25rem', border: '1px solid #e0e0e0' }}>
+                <div style={{ marginBottom: '0.5rem' }}>
+                  <strong style={{ fontFamily: 'var(--font-body)', fontWeight: 600, color: '#1b1b1b', fontSize: '1rem' }}>Support groups &amp; coaching</strong>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+                  <p style={{ margin: 0, fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', flex: 1, minWidth: 200 }}>
+                    Connect with a coach or community group for ongoing support.
+                  </p>
+                  <a
+                    href="#"
+                    style={{
+                      display: 'inline-block',
+                      padding: '0.5rem 1.25rem',
+                      backgroundColor: 'white',
+                      color: '#1b1b1b',
+                      fontFamily: 'var(--font-body)',
+                      fontWeight: 600,
+                      fontSize: '0.9375rem',
+                      borderRadius: '0.375rem',
+                      textDecoration: 'none',
+                      border: '1px solid #1b1b1b',
+                      flexShrink: 0,
+                    }}
+                  >
+                    Learn More
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

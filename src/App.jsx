@@ -38,6 +38,7 @@ import PlanMyPathBarriers from './components/PlanMyPathBarriers'
 import PlanMyPathClassPreferences from './components/PlanMyPathClassPreferences'
 import PlanMyPathSelectDate from './components/PlanMyPathSelectDate'
 import PlanMyPathCompleted from './components/PlanMyPathCompleted'
+import FAQs from './components/FAQs'
 import RiskFactorChecklist from './components/RiskFactorChecklist'
 import WeeklyActivityTrackingSheet from './components/WeeklyActivityTrackingSheet'
 import GoalSettingWorksheet from './components/GoalSettingWorksheet'
@@ -129,7 +130,14 @@ function App() {
       <Route path="/support/*" element={<PrefixRedirect fromPrefix="/support" toPrefix="/action" />} />
 
       <Route path="/about" element={<main style={{ minHeight: '80vh' }}><About onNavigate={onNavigate} /></main>} />
-      <Route path="/learn" element={<main style={{ minHeight: '80vh' }}><Learn onNavigate={navigateTo} /></main>} />
+      <Route path="/learn" element={
+        <main style={{ minHeight: '80vh' }}>
+          <Learn onNavigate={navigateTo} />
+          <section style={{ backgroundColor: '#f0f4f8', padding: isMobile ? '3rem 1rem' : '4rem 2rem' }}>
+            <FAQs />
+          </section>
+        </main>
+      } />
       <Route path="/action" element={<main style={{ minHeight: '80vh' }}><Action /></main>} />
       <Route path="/action/tips/how-to-read-food-labels" element={<main style={{ minHeight: '80vh' }}><HowToReadFoodLabels /></main>} />
       <Route path="/action/tips/meal-planning-on-budget" element={<main style={{ minHeight: '80vh' }}><MealPlanningOnBudget /></main>} />

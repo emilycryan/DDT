@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+
 /* USWDS theme colors for icons and top bars */
 const EDUCATIONAL_CARD_COLORS = [
   { accent: '#005ea2', iconBg: '#e7f2f5' },   /* Primary */
   { accent: '#d83933', iconBg: '#f9dede' },   /* Secondary — Heart Health */
   { accent: '#00bde3', iconBg: '#e5f6f9' },   /* Accent cool — Prevention card 3 */
 ];
-
-const ACCENT_COOL_BLUE = EDUCATIONAL_CARD_COLORS[2].accent;
 
 const educationalCards = [
   {
@@ -117,7 +116,7 @@ const Resources = ({ onNavigate }) => {
               textTransform: 'uppercase',
             }}
           >
-            Prevention Resources
+            Learn More
           </span>
 
           <h1
@@ -130,7 +129,7 @@ const Resources = ({ onNavigate }) => {
               margin: '0 0 0.5rem 0',
             }}
           >
-            Prevention Resources
+            Learn More
           </h1>
 
           <p
@@ -143,7 +142,7 @@ const Resources = ({ onNavigate }) => {
               margin: '0 0 0.75rem 0',
             }}
           >
-            Tools and information to support your health journey
+            Evidence-based information to support your health journey
           </p>
 
           <p
@@ -155,319 +154,12 @@ const Resources = ({ onNavigate }) => {
               margin: 0,
             }}
           >
-            Access evidence-based resources, programs, and tools to help prevent chronic diseases and maintain a healthy lifestyle.
+            Explore guides, videos, and expert resources to understand and prevent chronic diseases.
           </p>
         </section>
 
-        {/* Prevention Resources — three interactive cards */}
-        <section
-          style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
-            gap: '1.5rem',
-            marginBottom: '3rem',
-          }}
-        >
-          {/* Card 1 — Programs (primary blue) */}
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={() => onNavigate?.('lifestyle-programs')}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate?.('lifestyle-programs'); } }}
-            style={{
-              backgroundColor: '#005ea2',
-              borderRadius: '0.25rem',
-              padding: '2rem',
-              cursor: 'pointer',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              border: '1px solid #005ea2',
-              display: 'flex',
-              flexDirection: 'column',
-              minHeight: isMobile ? undefined : 420,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 94, 162, 0.25)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-          >
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                backgroundColor: 'rgba(255,255,255,0.2)',
-                color: 'white',
-                fontSize: '0.7rem',
-                fontWeight: 600,
-                letterSpacing: '0.05em',
-                padding: '0.35rem 0.875rem',
-                borderRadius: '0.25rem',
-                marginBottom: '1.25rem',
-                fontFamily: 'var(--font-body)',
-                textTransform: 'uppercase',
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-              Programs Near You
-            </span>
-
-            <h2
-              style={{
-                fontSize: isMobile ? '1.75rem' : '2rem',
-                fontFamily: 'var(--font-header)',
-                fontWeight: 700,
-                color: 'white',
-                margin: '0 0 1rem 0',
-                lineHeight: 1.2,
-              }}
-            >
-              Find a Lifestyle Change Program
-            </h2>
-
-            <p
-              style={{
-                fontSize: '1rem',
-                fontFamily: 'var(--font-body)',
-                color: 'rgba(255,255,255,0.95)',
-                lineHeight: 1.6,
-                margin: '0 0 1.5rem 0',
-                flex: 1,
-              }}
-            >
-              CDC-recognized Lifestyle Change Intervention (LCI) programs are proven to lower the chances of type 2 diabetes and other chronic conditions. Find a program in your community or online that fits your schedule and lifestyle.
-            </p>
-
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                backgroundColor: 'white',
-                color: '#005ea2',
-                fontFamily: 'var(--font-body)',
-                fontWeight: 600,
-                fontSize: '0.9375rem',
-                padding: '0.75rem 1.25rem',
-                borderRadius: '0.25rem',
-                marginTop: 'auto',
-              }}
-            >
-              Search Programs
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </div>
-
-          {/* Card 2 — Plan My Path (dark, same as original second card) */}
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={() => onNavigate?.('plan-my-path')}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate?.('plan-my-path'); } }}
-            style={{
-              backgroundColor: '#1b1b1b',
-              borderRadius: '0.25rem',
-              padding: '2rem',
-              cursor: 'pointer',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              border: '1px solid #1b1b1b',
-              display: 'flex',
-              flexDirection: 'column',
-              minHeight: isMobile ? undefined : 420,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-          >
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                backgroundColor: 'rgba(255,255,255,0.15)',
-                color: 'white',
-                fontSize: '0.7rem',
-                fontWeight: 600,
-                letterSpacing: '0.05em',
-                padding: '0.35rem 0.875rem',
-                borderRadius: '0.25rem',
-                marginBottom: '1.25rem',
-                fontFamily: 'var(--font-body)',
-                textTransform: 'uppercase',
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-              </svg>
-              Guided Plan
-            </span>
-
-            <h2
-              style={{
-                fontSize: isMobile ? '1.75rem' : '2rem',
-                fontFamily: 'var(--font-header)',
-                fontWeight: 700,
-                color: 'white',
-                margin: '0 0 1rem 0',
-                lineHeight: 1.2,
-              }}
-            >
-              Plan My Path
-            </h2>
-
-            <p
-              style={{
-                fontSize: '1rem',
-                fontFamily: 'var(--font-body)',
-                color: 'rgba(255,255,255,0.9)',
-                lineHeight: 1.6,
-                margin: '0 0 1.5rem 0',
-                flex: 1,
-              }}
-            >
-              Build a personalized, step-by-step Action Plan that captures your motivators, logistics, and class preferences — then take it with you when you connect with a program.
-            </p>
-
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                backgroundColor: 'white',
-                color: '#1b1b1b',
-                fontFamily: 'var(--font-body)',
-                fontWeight: 600,
-                fontSize: '0.9375rem',
-                padding: '0.75rem 1.25rem',
-                borderRadius: '0.25rem',
-                marginTop: 'auto',
-              }}
-            >
-              Create Plan
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </div>
-
-          {/* Card 3 — Quick questions (accent cool blue, matches Overall Healthy Living column) */}
-          <div
-            role="button"
-            tabIndex={0}
-            onClick={() => onNavigate?.('risk-assessment')}
-            onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onNavigate?.('risk-assessment'); } }}
-            style={{
-              backgroundColor: ACCENT_COOL_BLUE,
-              borderRadius: '0.25rem',
-              padding: '2rem',
-              cursor: 'pointer',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              border: `1px solid ${ACCENT_COOL_BLUE}`,
-              display: 'flex',
-              flexDirection: 'column',
-              minHeight: isMobile ? undefined : 420,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 189, 227, 0.35)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-          >
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                backgroundColor: 'rgba(255,255,255,0.25)',
-                color: 'white',
-                fontSize: '0.7rem',
-                fontWeight: 600,
-                letterSpacing: '0.05em',
-                padding: '0.35rem 0.875rem',
-                borderRadius: '0.25rem',
-                marginBottom: '1.25rem',
-                fontFamily: 'var(--font-body)',
-                textTransform: 'uppercase',
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <circle cx="12" cy="14" r="7" />
-                <path d="M12 11v3l2 1.5" />
-                <path d="M9 3h6" />
-                <path d="M12 3V1" />
-              </svg>
-              Free • 10 Minutes
-            </span>
-
-            <h2
-              style={{
-                fontSize: isMobile ? '1.75rem' : '2rem',
-                fontFamily: 'var(--font-header)',
-                fontWeight: 700,
-                color: 'white',
-                margin: '0 0 1rem 0',
-                lineHeight: 1.2,
-              }}
-            >
-              Answer a Few Questions
-            </h2>
-
-            <p
-              style={{
-                fontSize: '1rem',
-                fontFamily: 'var(--font-body)',
-                color: 'rgba(255,255,255,0.95)',
-                lineHeight: 1.6,
-                margin: '0 0 1.5rem 0',
-                flex: 1,
-              }}
-            >
-              Not sure where to start? Our free, confidential questions help you understand how your health picture relates to conditions like type 2 diabetes, heart disease, and more — and point you toward the right resources.
-            </p>
-
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                backgroundColor: 'white',
-                color: ACCENT_COOL_BLUE,
-                fontFamily: 'var(--font-body)',
-                fontWeight: 600,
-                fontSize: '0.9375rem',
-                padding: '0.75rem 1.25rem',
-                borderRadius: '0.25rem',
-                marginTop: 'auto',
-              }}
-            >
-              Get Started
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </span>
-          </div>
-        </section>
-
-
         {/* Educational Resources Section */}
-        <section>
+        <section style={{ marginBottom: '3rem' }}>
           <h2
             style={{
               fontSize: isMobile ? '1.5rem' : '1.75rem',
@@ -608,6 +300,90 @@ const Resources = ({ onNavigate }) => {
               </div>
             );
             })}
+          </div>
+        </section>
+
+        {/* Learn With Video Section */}
+        <section>
+          <h2
+            style={{
+              fontSize: isMobile ? '1.5rem' : '1.75rem',
+              fontFamily: 'var(--font-header)',
+              fontWeight: 700,
+              color: '#1b1b1b',
+              margin: '0 0 0.5rem 0',
+            }}
+          >
+            Learn With Video
+          </h2>
+          <p
+            style={{
+              fontSize: '1rem',
+              fontFamily: 'var(--font-body)',
+              color: '#323a45',
+              lineHeight: 1.5,
+              margin: '0 0 1.5rem 0',
+            }}
+          >
+            CDC educational videos to help you understand how to manage prediabetes as part of a chronic disease prevention approach.
+          </p>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+              gap: '1rem',
+            }}
+          >
+            {[
+              { title: 'Meet Lisa: Preventing Prediabetes', href: 'https://www.youtube.com/watch?v=azKL5xutMJE' },
+              { title: 'Imagine: You + National Diabetes Prevention Program', href: 'https://www.youtube.com/watch?v=k_XoHSIG20U&t=2s' },
+              { title: 'Sneak Peek into the Lifestyle Change Program', href: 'https://www.youtube.com/watch?v=w0NDVI4M_Bs' },
+            ].map((video, i) => (
+              <a
+                key={i}
+                href={video.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.75rem',
+                  padding: '1rem 1.25rem',
+                  backgroundColor: '#f0f4f8',
+                  borderRadius: '0.25rem',
+                  textDecoration: 'none',
+                  border: '1px solid #e0e0e0',
+                }}
+              >
+                <div
+                  style={{
+                    width: 36,
+                    height: 36,
+                    borderRadius: '50%',
+                    backgroundColor: '#005ea2',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="white" style={{ marginLeft: 2 }}>
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
+                </div>
+                <span
+                  style={{
+                    fontFamily: 'var(--font-body)',
+                    fontSize: '0.9375rem',
+                    color: '#005ea2',
+                    fontWeight: 600,
+                    lineHeight: 1.4,
+                  }}
+                >
+                  {video.title}
+                </span>
+              </a>
+            ))}
           </div>
         </section>
       </div>
