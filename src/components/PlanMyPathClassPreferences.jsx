@@ -189,7 +189,7 @@ const PlanMyPathClassPreferences = () => {
     } catch {
       /* ignore */
     }
-    navigate('/support/plan-my-path/select-date');
+    navigate('/action/plan-my-path/select-date');
   };
 
   const pad = isMobile ? '1.75rem 1.25rem 3rem' : '3rem 2rem 4rem';
@@ -213,7 +213,7 @@ const PlanMyPathClassPreferences = () => {
           fontFamily: 'var(--font-body)',
         }}
       >
-        <PlanPathBackLink to="/support/plan-my-path/barriers" isMobile={isMobile}>
+        <PlanPathBackLink to="/action/plan-my-path/barriers" isMobile={isMobile}>
           ← Back to previous step
         </PlanPathBackLink>
 

@@ -313,7 +313,7 @@ const ForPractitioners = () => {
               ),
               title: 'Healthy Eating Guide',
               description: 'A practical, plain-language overview of blood sugar-friendly eating patterns for patients newly diagnosed with prediabetes or elevated risk.',
-              to: '/resources/heart-health/heart-healthy-eating',
+              to: '/learn/heart-health/heart-healthy-eating',
             },
             {
               icon: (

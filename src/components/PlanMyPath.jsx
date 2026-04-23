@@ -70,7 +70,7 @@ const PlanMyPath = () => {
     } catch {
       /* ignore */
     }
-    navigate('/support/plan-my-path/motivators');
+    navigate('/action/plan-my-path/motivators');
   };
 
   const pad = isMobile ? '1.75rem 1.25rem 3rem' : '3rem 2rem 4rem';
@@ -85,8 +85,8 @@ const PlanMyPath = () => {
           fontFamily: 'var(--font-body)',
         }}
       >
-        <PlanPathBackLink to="/support" isMobile={isMobile}>
-          ← Back to Support
+        <PlanPathBackLink to="/action" isMobile={isMobile}>
+          ← Back to Take Action
         </PlanPathBackLink>
 
         <PlanPathStepProgress currentStep={CURRENT_STEP} totalSteps={TOTAL_STEPS} />

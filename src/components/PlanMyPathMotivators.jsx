@@ -138,7 +138,7 @@ const PlanMyPathMotivators = () => {
     } catch {
       /* ignore */
     }
-    navigate('/support/plan-my-path/dpp-info');
+    navigate('/action/plan-my-path/dpp-info');
   };
 
   const pad = isMobile ? '1.75rem 1.25rem 3rem' : '3rem 2rem 4rem';
@@ -153,7 +153,7 @@ const PlanMyPathMotivators = () => {
           fontFamily: 'var(--font-body)',
         }}
       >
-        <PlanPathBackLink to="/support/plan-my-path" isMobile={isMobile}>
+        <PlanPathBackLink to="/action/plan-my-path" isMobile={isMobile}>
           ← Back to previous step
         </PlanPathBackLink>
 

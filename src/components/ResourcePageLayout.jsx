@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 /**
  * Reusable USWDS-styled layout for resource sub-pages.
  * @param {string} categoryLabel - e.g. "Prediabetes", "Heart Health", "Overall Healthy Living"
- * @param {string} categoryPath - e.g. "/resources/prediabetes/understanding-prediabetes"
+ * @param {string} categoryPath - e.g. "/learn/prediabetes/understanding-prediabetes"
  * @param {Array<{path:string,title:string}>} pageSequence - ordered pages for "Next" link
  * @param {string} title - page title
  */
@@ -41,7 +41,7 @@ const ResourcePageLayout = ({ categoryLabel, categoryPath, pageSequence, title, 
         >
           <Link to="/" style={{ color: '#005ea2', textDecoration: 'underline' }}>Home</Link>
           <span style={{ margin: '0 0.5rem', color: '#5c5c5c' }}>/</span>
-          <Link to="/resources" style={{ color: '#005ea2', textDecoration: 'underline' }}>Resources</Link>
+          <Link to="/learn" style={{ color: '#005ea2', textDecoration: 'underline' }}>Learn More</Link>
           <span style={{ margin: '0 0.5rem', color: '#5c5c5c' }}>/</span>
           <Link to={categoryPath} style={{ color: '#005ea2', textDecoration: 'underline' }}>{categoryLabel}</Link>
           <span style={{ margin: '0 0.5rem', color: '#5c5c5c' }}>/</span>

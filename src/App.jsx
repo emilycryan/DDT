@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-dom'
 import './App.css'
 import CDCHeader from './components/CDCHeader'
 import CDCFooter from './components/CDCFooter'
@@ -9,8 +9,8 @@ import AssessmentChronicConditions from './components/AssessmentChronicCondition
 import AssessmentCaregiver from './components/AssessmentCaregiver'
 import AssessmentJustCurious from './components/AssessmentJustCurious'
 import About from './components/About'
-import Resources from './components/Resources'
-import Support from './components/Support'
+import Learn from './components/Learn'
+import Action from './components/Action'
 import ForPractitioners from './components/ForPractitioners'
 import PractitionerFeedback from './components/PractitionerFeedback'
 import HowItWorks from './components/HowItWorks'
@@ -44,13 +44,13 @@ import GoalSettingWorksheet from './components/GoalSettingWorksheet'
 
 const PAGE_TO_PATH = {
   'about': '/about',
-  'resources': '/resources',
-  'support': '/support',
+  'learn': '/learn',
+  'action': '/action',
   'for-practitioners': '/for-practitioners',
   'how-it-works': '/how-it-works',
   'risk-assessment': '/get-started',
   'lifestyle-programs': '/lifestyle-programs',
-  'plan-my-path': '/support/plan-my-path',
+  'plan-my-path': '/action/plan-my-path',
   'assessment-chronic': '/get-started/for-myself',
   'assessment-caregiver': '/get-started/for-someone',
   'assessment-just-curious': '/get-started/just-curious',
@@ -67,6 +67,16 @@ const scrollToSection = (sectionId) => {
       window.scrollTo({ top: Math.max(0, elementTop - offset), behavior: 'smooth' })
     }
   })
+}
+
+function PrefixRedirect({ fromPrefix, toPrefix }) {
+  const location = useLocation()
+  const pathname = location.pathname || '/'
+  if (!pathname.startsWith(fromPrefix)) return <Navigate to="/" replace />
+
+  const nextPathname = pathname.replace(fromPrefix, toPrefix)
+  const to = `${nextPathname}${location.search || ''}${location.hash || ''}`
+  return <Navigate to={to} replace />
 }
 
 function App() {
@@ -86,7 +96,8 @@ function App() {
   }, [location.pathname])
 
   const onNavigate = (page) => {
-    const path = PAGE_TO_PATH[page] || (page === 'home' ? '/' : `/${page}`)
+    const normalizedPage = page === 'resources' ? 'learn' : (page === 'support' ? 'action' : page)
+    const path = PAGE_TO_PATH[normalizedPage] || (normalizedPage === 'home' ? '/' : `/${normalizedPage}`)
     navigate(path)
     window.scrollTo(0, 0)
   }
@@ -97,12 +108,12 @@ function App() {
   }
 
   const handleChatbotNavigate = (destination) => {
-    if (['about', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs', 'plan-my-path'].includes(destination)) onNavigate(destination)
+    if (['about', 'learn', 'action', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs', 'plan-my-path'].includes(destination)) onNavigate(destination)
     else goToHomeSection(destination)
   }
 
   const navigateTo = (destination) => {
-    if (['about', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs', 'plan-my-path'].includes(destination)) onNavigate(destination)
+    if (['about', 'learn', 'action', 'resources', 'support', 'for-practitioners', 'how-it-works', 'risk-assessment', 'lifestyle-programs', 'plan-my-path'].includes(destination)) onNavigate(destination)
     else goToHomeSection(destination)
   }
 
@@ -113,20 +124,24 @@ function App() {
       <CDCHeader goToHomeSection={goToHomeSection} currentPage={currentPage} />
 
       <Routes>
+      {/* Backward-compatible URL prefixes */}
+      <Route path="/resources/*" element={<PrefixRedirect fromPrefix="/resources" toPrefix="/learn" />} />
+      <Route path="/support/*" element={<PrefixRedirect fromPrefix="/support" toPrefix="/action" />} />
+
       <Route path="/about" element={<main style={{ minHeight: '80vh' }}><About onNavigate={onNavigate} /></main>} />
-      <Route path="/resources" element={<main style={{ minHeight: '80vh' }}><Resources onNavigate={navigateTo} /></main>} />
-      <Route path="/support" element={<main style={{ minHeight: '80vh' }}><Support /></main>} />
-      <Route path="/support/tips/how-to-read-food-labels" element={<main style={{ minHeight: '80vh' }}><HowToReadFoodLabels /></main>} />
-      <Route path="/support/tips/meal-planning-on-budget" element={<main style={{ minHeight: '80vh' }}><MealPlanningOnBudget /></main>} />
-      <Route path="/support/tips/moving-more-when-busy" element={<main style={{ minHeight: '80vh' }}><MovingMoreWhenBusy /></main>} />
-      <Route path="/support/tips/setting-realistic-goals" element={<main style={{ minHeight: '80vh' }}><SettingRealisticGoals /></main>} />
-      <Route path="/support/plan-my-path" element={<main style={{ minHeight: '80vh' }}><PlanMyPath /></main>} />
-      <Route path="/support/plan-my-path/motivators" element={<main style={{ minHeight: '80vh' }}><PlanMyPathMotivators /></main>} />
-      <Route path="/support/plan-my-path/dpp-info" element={<main style={{ minHeight: '80vh' }}><PlanMyPathDppInfo /></main>} />
-      <Route path="/support/plan-my-path/barriers" element={<main style={{ minHeight: '80vh' }}><PlanMyPathBarriers /></main>} />
-      <Route path="/support/plan-my-path/class-preferences" element={<main style={{ minHeight: '80vh' }}><PlanMyPathClassPreferences /></main>} />
-      <Route path="/support/plan-my-path/select-date" element={<main style={{ minHeight: '80vh' }}><PlanMyPathSelectDate /></main>} />
-      <Route path="/support/plan-my-path/completed" element={<main style={{ minHeight: '80vh' }}><PlanMyPathCompleted /></main>} />
+      <Route path="/learn" element={<main style={{ minHeight: '80vh' }}><Learn onNavigate={navigateTo} /></main>} />
+      <Route path="/action" element={<main style={{ minHeight: '80vh' }}><Action /></main>} />
+      <Route path="/action/tips/how-to-read-food-labels" element={<main style={{ minHeight: '80vh' }}><HowToReadFoodLabels /></main>} />
+      <Route path="/action/tips/meal-planning-on-budget" element={<main style={{ minHeight: '80vh' }}><MealPlanningOnBudget /></main>} />
+      <Route path="/action/tips/moving-more-when-busy" element={<main style={{ minHeight: '80vh' }}><MovingMoreWhenBusy /></main>} />
+      <Route path="/action/tips/setting-realistic-goals" element={<main style={{ minHeight: '80vh' }}><SettingRealisticGoals /></main>} />
+      <Route path="/action/plan-my-path" element={<main style={{ minHeight: '80vh' }}><PlanMyPath /></main>} />
+      <Route path="/action/plan-my-path/motivators" element={<main style={{ minHeight: '80vh' }}><PlanMyPathMotivators /></main>} />
+      <Route path="/action/plan-my-path/dpp-info" element={<main style={{ minHeight: '80vh' }}><PlanMyPathDppInfo /></main>} />
+      <Route path="/action/plan-my-path/barriers" element={<main style={{ minHeight: '80vh' }}><PlanMyPathBarriers /></main>} />
+      <Route path="/action/plan-my-path/class-preferences" element={<main style={{ minHeight: '80vh' }}><PlanMyPathClassPreferences /></main>} />
+      <Route path="/action/plan-my-path/select-date" element={<main style={{ minHeight: '80vh' }}><PlanMyPathSelectDate /></main>} />
+      <Route path="/action/plan-my-path/completed" element={<main style={{ minHeight: '80vh' }}><PlanMyPathCompleted /></main>} />
       <Route path="/for-practitioners" element={<main style={{ minHeight: '80vh' }}><ForPractitioners /></main>} />
       <Route path="/for-practitioners/feedback" element={<main style={{ minHeight: '80vh' }}><PractitionerFeedback /></main>} />
       <Route path="/for-practitioners/risk-factor-checklist" element={<main style={{ minHeight: '80vh' }}><RiskFactorChecklist /></main>} />
@@ -138,18 +153,18 @@ function App() {
       <Route path="/get-started/for-someone" element={<AssessmentCaregiver onBack={() => onNavigate('risk-assessment')} />} />
       <Route path="/get-started/just-curious" element={<AssessmentJustCurious onBack={() => onNavigate('risk-assessment')} />} />
       <Route path="/lifestyle-programs" element={<main style={{ minHeight: '80vh' }}><LifestylePrograms /></main>} />
-      <Route path="/resources/prediabetes/understanding-prediabetes" element={<UnderstandingPrediabetes />} />
-      <Route path="/resources/prediabetes/nutrition-blood-sugar" element={<NutritionBloodSugar />} />
-      <Route path="/resources/prediabetes/physical-activity-insulin-sensitivity" element={<ExerciseInsulinSensitivity />} />
-      <Route path="/resources/prediabetes/dpp-program-overview" element={<DPPProgramOverview />} />
-      <Route path="/resources/heart-health/know-your-numbers" element={<KnowYourNumbers />} />
-      <Route path="/resources/heart-health/blood-pressure-cholesterol" element={<BloodPressureCholesterol />} />
-      <Route path="/resources/heart-health/heart-healthy-eating" element={<HeartHealthyEating />} />
-      <Route path="/resources/heart-health/stress-cardiovascular-risk" element={<StressCardiovascularRisk />} />
-      <Route path="/resources/healthy-living/building-healthy-habits" element={<BuildingHealthyHabits />} />
-      <Route path="/resources/healthy-living/sleep-recovery" element={<SleepRecovery />} />
-      <Route path="/resources/healthy-living/mental-health-resilience" element={<MentalHealthResilience />} />
-      <Route path="/resources/healthy-living/social-connection" element={<SocialConnection />} />
+      <Route path="/learn/prediabetes/understanding-prediabetes" element={<UnderstandingPrediabetes />} />
+      <Route path="/learn/prediabetes/nutrition-blood-sugar" element={<NutritionBloodSugar />} />
+      <Route path="/learn/prediabetes/physical-activity-insulin-sensitivity" element={<ExerciseInsulinSensitivity />} />
+      <Route path="/learn/prediabetes/dpp-program-overview" element={<DPPProgramOverview />} />
+      <Route path="/learn/heart-health/know-your-numbers" element={<KnowYourNumbers />} />
+      <Route path="/learn/heart-health/blood-pressure-cholesterol" element={<BloodPressureCholesterol />} />
+      <Route path="/learn/heart-health/heart-healthy-eating" element={<HeartHealthyEating />} />
+      <Route path="/learn/heart-health/stress-cardiovascular-risk" element={<StressCardiovascularRisk />} />
+      <Route path="/learn/healthy-living/building-healthy-habits" element={<BuildingHealthyHabits />} />
+      <Route path="/learn/healthy-living/sleep-recovery" element={<SleepRecovery />} />
+      <Route path="/learn/healthy-living/mental-health-resilience" element={<MentalHealthResilience />} />
+      <Route path="/learn/healthy-living/social-connection" element={<SocialConnection />} />
       <Route path="/" element={
         <main style={{ 
           backgroundColor: 'var(--bg-secondary)',
@@ -359,7 +374,7 @@ function App() {
 
               {/* Get the Facts */}
               <div 
-                onClick={() => onNavigate('resources')}
+                onClick={() => onNavigate('learn')}
                 className="card"
                 style={{
                   textAlign: 'center',

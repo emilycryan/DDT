@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import ResourcePageLayout from './ResourcePageLayout';
 
 const PAGE_SEQUENCE = [
-  { path: '/resources/prediabetes/understanding-prediabetes', title: 'Understanding Prediabetes' },
-  { path: '/resources/prediabetes/nutrition-blood-sugar', title: 'Nutrition & Blood Sugar' },
-  { path: '/resources/prediabetes/physical-activity-insulin-sensitivity', title: 'Physical Activity & Insulin Sensitivity' },
-  { path: '/resources/prediabetes/dpp-program-overview', title: 'National DPP Lifestyle Change Program Overview' },
+  { path: '/learn/prediabetes/understanding-prediabetes', title: 'Understanding Prediabetes' },
+  { path: '/learn/prediabetes/nutrition-blood-sugar', title: 'Nutrition & Blood Sugar' },
+  { path: '/learn/prediabetes/physical-activity-insulin-sensitivity', title: 'Physical Activity & Insulin Sensitivity' },
+  { path: '/learn/prediabetes/dpp-program-overview', title: 'National DPP Lifestyle Change Program Overview' },
 ];
 
 const linkStyle = {
@@ -25,7 +25,7 @@ const DPPProgramOverview = () => {
   }, []);
 
   return (
-    <ResourcePageLayout categoryLabel="Prediabetes" categoryPath="/resources/prediabetes/understanding-prediabetes" pageSequence={PAGE_SEQUENCE} title="National DPP Lifestyle Change Program Overview">
+    <ResourcePageLayout categoryLabel="Prediabetes" categoryPath="/learn/prediabetes/understanding-prediabetes" pageSequence={PAGE_SEQUENCE} title="National DPP Lifestyle Change Program Overview">
       <h2
         style={{
           fontSize: isMobile ? '1.25rem' : '1.375rem',

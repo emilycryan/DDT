@@ -186,8 +186,8 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
             flex: 1
           }}>
             <Link to="/about" className="header-nav-text-link" style={navLinkStyle}>About</Link>
-            <Link to="/resources" className="header-nav-text-link" style={navLinkStyle}>Resources</Link>
-            <Link to="/support" className="header-nav-text-link" style={navLinkStyle}>Support</Link>
+            <Link to="/learn" className="header-nav-text-link" style={navLinkStyle}>Learn More</Link>
+            <Link to="/action" className="header-nav-text-link" style={navLinkStyle}>Take Action</Link>
             <Link to="/for-practitioners" className="header-nav-text-link" style={navLinkStyle}>For Practitioners</Link>
           </nav>
 
@@ -264,8 +264,8 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
               padding: '15px'
             }}>
               <Link to="/about" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>About</Link>
-              <Link to="/resources" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>Resources</Link>
-              <Link to="/support" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>Support</Link>
+              <Link to="/learn" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>Learn More</Link>
+              <Link to="/action" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>Take Action</Link>
               <Link to="/for-practitioners" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>For Practitioners</Link>
               <Link to="/lifestyle-programs" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#005ea2', textDecoration: 'none', fontSize: '16px', fontWeight: 600, fontFamily: 'var(--font-body)', border: '1px solid #005ea2', padding: '0.75rem 1rem', borderRadius: '0.375rem', marginBottom: '12px' }}>Find a Program</Link>
               <Link to="/get-started" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', backgroundColor: '#005ea2', color: 'white', padding: '0.75rem 1.5rem', borderRadius: '0.375rem', textDecoration: 'none', fontSize: '16px', fontWeight: '600', width: '100%', marginTop: '12px', textAlign: 'center' }}>Get Started</Link>

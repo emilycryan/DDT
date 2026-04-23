@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import ResourcePageLayout from './ResourcePageLayout';
 
 const PAGE_SEQUENCE = [
-  { path: '/resources/prediabetes/understanding-prediabetes', title: 'Understanding Prediabetes' },
-  { path: '/resources/prediabetes/nutrition-blood-sugar', title: 'Nutrition & Blood Sugar' },
-  { path: '/resources/prediabetes/physical-activity-insulin-sensitivity', title: 'Physical Activity & Insulin Sensitivity' },
-  { path: '/resources/prediabetes/dpp-program-overview', title: 'National DPP Lifestyle Change Program Overview' },
+  { path: '/learn/prediabetes/understanding-prediabetes', title: 'Understanding Prediabetes' },
+  { path: '/learn/prediabetes/nutrition-blood-sugar', title: 'Nutrition & Blood Sugar' },
+  { path: '/learn/prediabetes/physical-activity-insulin-sensitivity', title: 'Physical Activity & Insulin Sensitivity' },
+  { path: '/learn/prediabetes/dpp-program-overview', title: 'National DPP Lifestyle Change Program Overview' },
 ];
 
 const riskFactors = [
@@ -30,7 +30,7 @@ const UnderstandingPrediabetes = () => {
   const h2Style = { fontSize: isMobile ? '1.5rem' : '1.75rem', fontFamily: 'var(--font-header)', fontWeight: 600, color: '#1b1b1b', margin: '0 0 1rem 0' };
 
   return (
-    <ResourcePageLayout categoryLabel="Prediabetes" categoryPath="/resources/prediabetes/understanding-prediabetes" pageSequence={PAGE_SEQUENCE} title="Understanding Prediabetes">
+    <ResourcePageLayout categoryLabel="Prediabetes" categoryPath="/learn/prediabetes/understanding-prediabetes" pageSequence={PAGE_SEQUENCE} title="Understanding Prediabetes">
       <div style={{ borderBottom: '1px solid #e0e0e0', marginBottom: '1.5rem' }} />
 
       <p style={{ ...textStyle, margin: '0 0 0.75rem 0' }}>

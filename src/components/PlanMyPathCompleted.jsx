@@ -154,7 +154,7 @@ const PlanMyPathCompleted = () => {
           <div className="plan-print-hide">
             <div style={{ marginBottom: '1.5rem', textAlign: isMobile ? 'center' : 'left' }}>
               <Link
-                to="/support"
+                to="/action"
                 style={{
                   fontSize: '0.875rem',
                   color: '#005ea2',
@@ -162,7 +162,7 @@ const PlanMyPathCompleted = () => {
                   fontWeight: 500,
                 }}
               >
-                ← Back to Support
+                ← Back to Take Action
               </Link>
             </div>
             <PlanPathStepProgress currentStep={7} totalSteps={TOTAL_STEPS} />
@@ -329,7 +329,7 @@ const PlanMyPathCompleted = () => {
             }}
           >
             <Link
-              to="/support/plan-my-path"
+              to="/action/plan-my-path"
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',

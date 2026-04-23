@@ -20,13 +20,13 @@ const educationalCards = [
     title: 'Diabetes Prevention',
     description: 'Over 96 million American adults have prediabetes — and most don\'t know it. Learn how modest weight loss and regular physical activity can cut your risk of type 2 diabetes by more than 50%.',
     bullets: [
-      { text: 'Understanding Prediabetes', path: '/resources/prediabetes/understanding-prediabetes' },
-      { text: 'Nutrition & Blood Sugar', path: '/resources/prediabetes/nutrition-blood-sugar' },
-      { text: 'Physical Activity & Insulin Sensitivity', path: '/resources/prediabetes/physical-activity-insulin-sensitivity' },
-      { text: 'National DPP Lifestyle Change Program Overview', path: '/resources/prediabetes/dpp-program-overview' },
+      { text: 'Understanding Prediabetes', path: '/learn/prediabetes/understanding-prediabetes' },
+      { text: 'Nutrition & Blood Sugar', path: '/learn/prediabetes/nutrition-blood-sugar' },
+      { text: 'Physical Activity & Insulin Sensitivity', path: '/learn/prediabetes/physical-activity-insulin-sensitivity' },
+      { text: 'National DPP Lifestyle Change Program Overview', path: '/learn/prediabetes/dpp-program-overview' },
     ],
     linkText: 'Explore diabetes resources →',
-    linkHref: '/resources/prediabetes/understanding-prediabetes',
+    linkHref: '/learn/prediabetes/understanding-prediabetes',
   },
   {
     icon: (
@@ -37,13 +37,13 @@ const educationalCards = [
     title: 'Heart Health',
     description: 'Heart disease is the leading cause of death in the United States. Discover how lifestyle choices around nutrition, activity, stress, and sleep can measurably reduce your risk — at any age.',
     bullets: [
-      { text: 'Know Your Numbers', path: '/resources/heart-health/know-your-numbers' },
-      { text: 'Blood Pressure & Cholesterol', path: '/resources/heart-health/blood-pressure-cholesterol' },
-      { text: 'Heart-Healthy Eating', path: '/resources/heart-health/heart-healthy-eating' },
-      { text: 'Stress & Cardiovascular Risk', path: '/resources/heart-health/stress-cardiovascular-risk' },
+      { text: 'Know Your Numbers', path: '/learn/heart-health/know-your-numbers' },
+      { text: 'Blood Pressure & Cholesterol', path: '/learn/heart-health/blood-pressure-cholesterol' },
+      { text: 'Heart-Healthy Eating', path: '/learn/heart-health/heart-healthy-eating' },
+      { text: 'Stress & Cardiovascular Risk', path: '/learn/heart-health/stress-cardiovascular-risk' },
     ],
     linkText: 'Explore heart health resources →',
-    linkHref: '/resources/heart-health/know-your-numbers',
+    linkHref: '/learn/heart-health/know-your-numbers',
   },
   {
     icon: (
@@ -55,13 +55,13 @@ const educationalCards = [
     title: 'Overall Healthy Living',
     description: 'Prevention isn\'t one thing — it\'s a combination of daily habits. Find practical guidance on nutrition, physical activity, sleep, stress management, and social well-being that fit real life.',
     bullets: [
-      { text: 'Building Healthy Habits', path: '/resources/healthy-living/building-healthy-habits' },
-      { text: 'Sleep & Recovery', path: '/resources/healthy-living/sleep-recovery' },
-      { text: 'Mental Health & Resilience', path: '/resources/healthy-living/mental-health-resilience' },
-      { text: 'Social Connection', path: '/resources/healthy-living/social-connection' },
+      { text: 'Building Healthy Habits', path: '/learn/healthy-living/building-healthy-habits' },
+      { text: 'Sleep & Recovery', path: '/learn/healthy-living/sleep-recovery' },
+      { text: 'Mental Health & Resilience', path: '/learn/healthy-living/mental-health-resilience' },
+      { text: 'Social Connection', path: '/learn/healthy-living/social-connection' },
     ],
     linkText: 'Explore healthy living guides →',
-    linkHref: '/resources/healthy-living/building-healthy-habits',
+    linkHref: '/learn/healthy-living/building-healthy-habits',
   },
 ];
 
@@ -97,7 +97,7 @@ const Resources = ({ onNavigate }) => {
             Home
           </Link>
           <span style={{ margin: '0 0.5rem', color: '#5c5c5c' }}>/</span>
-          <span style={{ color: '#323a45', fontWeight: 600 }}>Resources</span>
+          <span style={{ color: '#323a45', fontWeight: 600 }}>Learn More</span>
         </nav>
 
         {/* Hero Section */}

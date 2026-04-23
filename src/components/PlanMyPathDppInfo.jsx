@@ -64,7 +64,7 @@ const PlanMyPathDppInfo = () => {
           fontFamily: 'var(--font-body)',
         }}
       >
-        <PlanPathBackLink to="/support/plan-my-path/motivators" isMobile={isMobile}>
+        <PlanPathBackLink to="/action/plan-my-path/motivators" isMobile={isMobile}>
           ← Back to previous step
         </PlanPathBackLink>
 
@@ -220,7 +220,7 @@ const PlanMyPathDppInfo = () => {
         <div style={{ textAlign: 'center' }}>
           <button
             type="button"
-            onClick={() => navigate('/support/plan-my-path/barriers')}
+            onClick={() => navigate('/action/plan-my-path/barriers')}
             style={{
               padding: '1rem 2.25rem',
               backgroundColor: TEAL,

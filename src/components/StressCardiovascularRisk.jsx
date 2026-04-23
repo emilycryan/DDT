@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ResourcePageLayout from './ResourcePageLayout';
 
 const PAGE_SEQUENCE = [
-  { path: '/resources/heart-health/know-your-numbers', title: 'Know Your Numbers' },
-  { path: '/resources/heart-health/blood-pressure-cholesterol', title: 'Blood Pressure & Cholesterol' },
-  { path: '/resources/heart-health/heart-healthy-eating', title: 'Heart-Healthy Eating' },
-  { path: '/resources/heart-health/stress-cardiovascular-risk', title: 'Stress & Cardiovascular Risk' },
+  { path: '/learn/heart-health/know-your-numbers', title: 'Know Your Numbers' },
+  { path: '/learn/heart-health/blood-pressure-cholesterol', title: 'Blood Pressure & Cholesterol' },
+  { path: '/learn/heart-health/heart-healthy-eating', title: 'Heart-Healthy Eating' },
+  { path: '/learn/heart-health/stress-cardiovascular-risk', title: 'Stress & Cardiovascular Risk' },
 ];
 
 const stressCycleSteps = [
@@ -32,7 +32,7 @@ const StressCardiovascularRisk = () => {
   }, []);
 
   return (
-    <ResourcePageLayout categoryLabel="Heart Health" categoryPath="/resources/heart-health/know-your-numbers" pageSequence={PAGE_SEQUENCE} title="Stress & Cardiovascular Risk">
+    <ResourcePageLayout categoryLabel="Heart Health" categoryPath="/learn/heart-health/know-your-numbers" pageSequence={PAGE_SEQUENCE} title="Stress & Cardiovascular Risk">
       <p
         style={{
           fontSize: '1rem',

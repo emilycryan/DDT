@@ -66,8 +66,8 @@ const About = ({ onNavigate }) => {
   };
 
   const handleExploreResources = () => {
-    if (onNavigate) onNavigate('resources');
-    else window.location.href = '/resources';
+    if (onNavigate) onNavigate('learn');
+    else window.location.href = '/learn';
   };
 
   const sidebar = (

@@ -30,7 +30,7 @@ const PlanMyPathSelectDate = () => {
     } catch {
       /* ignore */
     }
-    navigate('/support/plan-my-path/completed');
+    navigate('/action/plan-my-path/completed');
   };
 
   const pad = isMobile ? '1.75rem 1.25rem 3rem' : '3rem 2rem 4rem';
@@ -46,7 +46,7 @@ const PlanMyPathSelectDate = () => {
         }}
       >
         <div className="plan-print-hide">
-          <PlanPathBackLink to="/support/plan-my-path/class-preferences" isMobile={isMobile}>
+          <PlanPathBackLink to="/action/plan-my-path/class-preferences" isMobile={isMobile}>
             ← Back to previous step
           </PlanPathBackLink>
         </div>

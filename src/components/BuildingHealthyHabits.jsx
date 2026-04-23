@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ResourcePageLayout from './ResourcePageLayout';
 
 const PAGE_SEQUENCE = [
-  { path: '/resources/healthy-living/building-healthy-habits', title: 'Building Healthy Habits' },
-  { path: '/resources/healthy-living/sleep-recovery', title: 'Sleep & Recovery' },
-  { path: '/resources/healthy-living/mental-health-resilience', title: 'Mental Health & Resilience' },
-  { path: '/resources/healthy-living/social-connection', title: 'Social Connection' },
+  { path: '/learn/healthy-living/building-healthy-habits', title: 'Building Healthy Habits' },
+  { path: '/learn/healthy-living/sleep-recovery', title: 'Sleep & Recovery' },
+  { path: '/learn/healthy-living/mental-health-resilience', title: 'Mental Health & Resilience' },
+  { path: '/learn/healthy-living/social-connection', title: 'Social Connection' },
 ];
 
 const habitLoopSteps = [
@@ -43,7 +43,7 @@ const BuildingHealthyHabits = () => {
   }, []);
 
   return (
-    <ResourcePageLayout categoryLabel="Healthy Living" categoryPath="/resources/healthy-living/building-healthy-habits" pageSequence={PAGE_SEQUENCE} title="Building Healthy Habits">
+    <ResourcePageLayout categoryLabel="Healthy Living" categoryPath="/learn/healthy-living/building-healthy-habits" pageSequence={PAGE_SEQUENCE} title="Building Healthy Habits">
       <p
         style={{
           fontSize: '1rem',
