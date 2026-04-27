@@ -89,462 +89,172 @@ const Support = () => {
         </p>
       </div>
 
-      <section style={{ ...sectionStyles, backgroundColor: '#f0f4f8', padding: isMobile ? '2rem 1rem' : '3rem 2rem', borderRadius: '0.25rem' }}>
-        <h2
-          style={{
-            fontSize: isMobile ? '1.5rem' : '1.75rem',
-            fontFamily: 'var(--font-header)',
-            fontWeight: 700,
-            color: '#1b1b1b',
-            margin: '0 0 1.5rem 0',
-          }}
-        >
-          Tools and Resources You Can Use Now
-        </h2>
-
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
-            gap: '1.5rem',
-            marginBottom: '2rem',
-          }}
-        >
-          <div
+      <section
+        style={{
+          ...sectionStyles,
+          backgroundColor: '#ffffff',
+          padding: isMobile ? '2rem 1rem' : '3rem 2rem',
+          borderRadius: '0.25rem',
+        }}
+      >
+        <div style={{ maxWidth: 820, marginBottom: '2rem' }}>
+          <span
             style={{
-              backgroundColor: 'white',
-              borderRadius: '0.25rem',
-              padding: '1.5rem',
-              border: '1px solid #e0e0e0',
+              display: 'inline-block',
+              color: '#005ea2',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              letterSpacing: '0.05em',
+              marginBottom: '0.75rem',
+              fontFamily: 'var(--font-body)',
+              textTransform: 'uppercase',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-              <div
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: '0.25rem',
-                  backgroundColor: '#005ea2',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-                  <rect x="2" y="2" width="20" height="14" rx="1"/>
-                  <rect x="5" y="5" width="14" height="8"/>
-                  <path d="M8 20h8M12 16v4" strokeLinecap="round"/>
-                </svg>
-              </div>
-              <h3
-                style={{
-                  fontSize: '1.125rem',
-                  fontFamily: 'var(--font-header)',
-                  fontWeight: 600,
-                  color: '#1b1b1b',
-                  margin: 0,
-                }}
-              >
-                Interactive Tools &amp; Quick Questions
-              </h3>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ backgroundColor: '#f0f4f8', borderRadius: '0.25rem', padding: '1rem 1.25rem', border: '1px solid #e0e0e0' }}>
-                <div style={{ marginBottom: '0.5rem' }}>
-                  <strong style={{ fontFamily: 'var(--font-body)', fontWeight: 600, color: '#1b1b1b', fontSize: '1rem' }}>Quick questions to get started</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
-                  <p style={{ margin: 0, fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', flex: 1, minWidth: 200 }}>
-                    See how your answers relate to conditions like diabetes, heart disease, and stroke.
-                  </p>
-                  <Link
-                    to="/get-started"
-                    style={{
-                      display: 'inline-block',
-                      padding: '0.5rem 1.25rem',
-                      backgroundColor: '#005ea2',
-                      color: 'white',
-                      fontFamily: 'var(--font-body)',
-                      fontWeight: 600,
-                      fontSize: '0.9375rem',
-                      borderRadius: '0.375rem',
-                      textDecoration: 'none',
-                      flexShrink: 0,
-                    }}
-                  >
-                    Get started
-                  </Link>
-                </div>
-              </div>
-
-              <div style={{ backgroundColor: '#f0f4f8', borderRadius: '0.25rem', padding: '1rem 1.25rem', border: '1px solid #e0e0e0' }}>
-                <div style={{ marginBottom: '0.5rem' }}>
-                  <strong style={{ fontFamily: 'var(--font-body)', fontWeight: 600, color: '#1b1b1b', fontSize: '1rem' }}>Plan my Path</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
-                  <p style={{ margin: 0, fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', flex: 1, minWidth: 200 }}>
-                    Create a personalized Action Plan to support a healthy lifestyle
-                  </p>
-                  <Link
-                    to="/action/plan-my-path"
-                    style={{
-                      display: 'inline-block',
-                      padding: '0.5rem 1.25rem',
-                      backgroundColor: 'white',
-                      color: '#1b1b1b',
-                      fontFamily: 'var(--font-body)',
-                      fontWeight: 600,
-                      fontSize: '0.9375rem',
-                      borderRadius: '0.375rem',
-                      textDecoration: 'none',
-                      border: '1px solid #1b1b1b',
-                      flexShrink: 0,
-                    }}
-                  >
-                    Create Plan
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div
+            3 step approach
+          </span>
+          <h2
             style={{
-              backgroundColor: 'white',
-              borderRadius: '0.25rem',
-              padding: '1.5rem',
-              border: '1px solid #e0e0e0',
+              fontSize: isMobile ? '1.5rem' : '1.875rem',
+              fontFamily: 'var(--font-header)',
+              fontWeight: 700,
+              color: '#1b1b1b',
+              margin: '0 0 0.75rem 0',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.25rem' }}>
-              <div
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: '0.25rem',
-                  backgroundColor: '#1b1b1b',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                  <circle cx="9" cy="7" r="4"/>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-                </svg>
-              </div>
-              <h3
-                style={{
-                  fontSize: '1.125rem',
-                  fontFamily: 'var(--font-header)',
-                  fontWeight: 600,
-                  color: '#1b1b1b',
-                  margin: 0,
-                }}
-              >
-                Find a Lifestyle Change Program
-              </h3>
-            </div>
-            <p
-              style={{
-                margin: '0 0 1.25rem 0',
-                fontFamily: 'var(--font-body)',
-                fontSize: '0.9375rem',
-                color: '#323a45',
-                lineHeight: 1.5,
-              }}
-            >
-              CDC-recognized programs are proven to prevent or delay type 2 diabetes and other chronic conditions. Find one that fits your schedule — in person or online.
-            </p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ backgroundColor: '#f0f4f8', borderRadius: '0.25rem', padding: '1rem 1.25rem', border: '1px solid #e0e0e0' }}>
-                <div style={{ marginBottom: '0.5rem' }}>
-                  <strong style={{ fontFamily: 'var(--font-body)', fontWeight: 600, color: '#1b1b1b', fontSize: '1rem' }}>Search for a program near you</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
-                  <p style={{ margin: 0, fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', flex: 1, minWidth: 200 }}>
-                    Browse local and virtual programs in your area.
-                  </p>
-                  <Link
-                    to="/lifestyle-programs"
-                    style={{
-                      display: 'inline-block',
-                      padding: '0.5rem 1.25rem',
-                      backgroundColor: '#005ea2',
-                      color: 'white',
-                      fontFamily: 'var(--font-body)',
-                      fontWeight: 600,
-                      fontSize: '0.9375rem',
-                      borderRadius: '0.375rem',
-                      textDecoration: 'none',
-                      flexShrink: 0,
-                    }}
-                  >
-                    Search Programs
-                  </Link>
-                </div>
-              </div>
-              <div style={{ backgroundColor: '#f0f4f8', borderRadius: '0.25rem', padding: '1rem 1.25rem', border: '1px solid #e0e0e0' }}>
-                <div style={{ marginBottom: '0.5rem' }}>
-                  <strong style={{ fontFamily: 'var(--font-body)', fontWeight: 600, color: '#1b1b1b', fontSize: '1rem' }}>Support groups &amp; coaching</strong>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
-                  <p style={{ margin: 0, fontFamily: 'var(--font-body)', fontSize: '0.9375rem', color: '#323a45', flex: 1, minWidth: 200 }}>
-                    Connect with a coach or community group for ongoing support.
-                  </p>
-                  <a
-                    href="#"
-                    style={{
-                      display: 'inline-block',
-                      padding: '0.5rem 1.25rem',
-                      backgroundColor: 'white',
-                      color: '#1b1b1b',
-                      fontFamily: 'var(--font-body)',
-                      fontWeight: 600,
-                      fontSize: '0.9375rem',
-                      borderRadius: '0.375rem',
-                      textDecoration: 'none',
-                      border: '1px solid #1b1b1b',
-                      flexShrink: 0,
-                    }}
-                  >
-                    Learn More
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+            Tools and Resources You Can Use Now
+          </h2>
+          <p
+            style={{
+              fontSize: '1rem',
+              fontFamily: 'var(--font-body)',
+              color: '#323a45',
+              lineHeight: 1.6,
+              margin: 0,
+            }}
+          >
+            Not sure what to do first? This path gives you a simple way to begin, make a plan, and find support when you are ready.
+          </p>
         </div>
-      </section>
-
-      <section style={{ ...sectionStyles }}>
-        <h2
-          style={{
-            fontSize: isMobile ? '1.5rem' : '1.75rem',
-            fontFamily: 'var(--font-header)',
-            fontWeight: 700,
-            color: '#1b1b1b',
-            margin: '0 0 0.5rem 0',
-          }}
-        >
-          Connect With Support
-        </h2>
-        <p
-          style={{
-            fontSize: '1rem',
-            fontFamily: 'var(--font-body)',
-            color: '#323a45',
-            lineHeight: 1.5,
-            margin: '0 0 1.5rem 0',
-          }}
-        >
-          Programs, communities, and direct help when you need it.
-        </p>
 
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
             gap: '1.5rem',
-            marginBottom: '2rem',
+            alignItems: 'stretch',
           }}
         >
-          <div
-            style={{
-              backgroundColor: '#005ea2',
-              borderRadius: '0.25rem',
-              padding: '2rem',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              border: '1px solid #005ea2',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(0, 94, 162, 0.25)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-          >
-            <span
+          {[
+            {
+              step: '1',
+              title: 'Start with a few questions',
+              description: 'Choose this step if you are just beginning or helping someone else. Answer a few questions to see which next steps may fit your situation.',
+              linkText: 'Go to Get Started →',
+              to: '/get-started',
+              color: '#005ea2',
+              softColor: '#e7f2f5',
+            },
+            {
+              step: '2',
+              title: 'Build your health plan',
+              description: 'Choose this step when you have a health goal in mind. You will think through your goal, what may get in the way, and what support could help.',
+              linkText: 'Create Plan →',
+              to: '/action/plan-my-path',
+              color: '#d83933',
+              softColor: '#f9dede',
+            },
+            {
+              step: '3',
+              title: 'Find the right LCI',
+              description: 'Choose this step when you are ready to join a program. Find a Lifestyle Change Intervention that fits your schedule, needs, and support style.',
+              linkText: 'Find a Program →',
+              to: '/lifestyle-programs',
+              color: '#00bde3',
+              softColor: '#e5f6f9',
+            },
+          ].map((phase) => (
+            <div
+              key={phase.step}
               style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                backgroundColor: 'rgba(255,255,255,0.2)',
-                color: 'white',
-                fontSize: '0.7rem',
-                fontWeight: 600,
-                letterSpacing: '0.05em',
-                padding: '0.35rem 0.875rem',
-                borderRadius: '0.25rem',
-                marginBottom: '1.25rem',
-                fontFamily: 'var(--font-body)',
-                textTransform: 'uppercase',
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-              Local &amp; Online Programs
-            </span>
-
-            <h3
-              style={{
-                fontSize: isMobile ? '1.5rem' : '2rem',
-                fontFamily: 'var(--font-header)',
-                fontWeight: 700,
-                color: 'white',
-                margin: '0 0 1rem 0',
-                lineHeight: 1.2,
-              }}
-            >
-              Lifestyle Change Intervention (LCI) Programs
-            </h3>
-
-            <p
-              style={{
-                fontSize: '1rem',
-                fontFamily: 'var(--font-body)',
-                color: 'rgba(255,255,255,0.95)',
-                lineHeight: 1.6,
-                margin: '0 0 1.5rem 0',
-              }}
-            >
-              CDC-recognized evidence-based lifestyle change programs proven to prevent or delay chronic conditions. Find a program that fits your schedule — in person or online.
-            </p>
-
-            <Link
-              to="/lifestyle-programs"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
+                position: 'relative',
                 backgroundColor: 'white',
-                color: '#005ea2',
                 borderRadius: '0.25rem',
-                padding: '0.75rem 1.25rem',
-                fontFamily: 'var(--font-body)',
-                fontWeight: 600,
-                fontSize: '0.9375rem',
-                textDecoration: 'none',
+                padding: '1.5rem',
+                border: '1px solid #e0e0e0',
+                borderTop: `3px solid ${phase.color}`,
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: isMobile ? 'auto' : 300,
               }}
             >
-              Find a program
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M5 12h14M12 5l7 7-7 7"/>
-              </svg>
-            </Link>
-          </div>
+              <div style={{ marginBottom: '1rem' }}>
+                <div
+                  style={{
+                    width: 40,
+                    height: 40,
+                    borderRadius: '0.25rem',
+                    backgroundColor: phase.softColor,
+                    color: phase.color,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontFamily: 'var(--font-header)',
+                    fontWeight: 700,
+                    fontSize: '1rem',
+                  }}
+                  aria-hidden="true"
+                >
+                  {phase.step}
+                </div>
+              </div>
 
-          <div
-            style={{
-              backgroundColor: '#1b1b1b',
-              borderRadius: '0.25rem',
-              padding: '2rem',
-              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
-              border: '1px solid #1b1b1b',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-2px)';
-              e.currentTarget.style.boxShadow = '0 8px 24px rgba(0,0,0,0.2)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-            }}
-          >
-            <span
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                backgroundColor: 'rgba(255,255,255,0.15)',
-                color: 'white',
-                fontSize: '0.7rem',
-                fontWeight: 600,
-                letterSpacing: '0.05em',
-                padding: '0.35rem 0.875rem',
-                borderRadius: '0.25rem',
-                marginBottom: '1.25rem',
-                fontFamily: 'var(--font-body)',
-                textTransform: 'uppercase',
-              }}
-            >
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
-              </svg>
-              Direct Help
-            </span>
-
-            <h3
-              style={{
-                fontSize: isMobile ? '1.5rem' : '2rem',
-                fontFamily: 'var(--font-header)',
-                fontWeight: 700,
-                color: 'white',
-                margin: '0 0 1rem 0',
-                lineHeight: 1.2,
-              }}
-            >
-              CDC Chronic Disease Contact Center
-            </h3>
-
-            <p
-              style={{
-                fontSize: '1rem',
-                fontFamily: 'var(--font-body)',
-                color: 'rgba(255,255,255,0.9)',
-                lineHeight: 1.6,
-                margin: '0 0 1.5rem 0',
-              }}
-            >
-              Email and call-in support for questions, tools, and referrals. Our team can help connect you with local resources and answer your prevention questions.
-            </p>
-
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem' }}>
-              <a
-                href="tel:800-232-4636"
+              <h3
                 style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  backgroundColor: 'white',
+                  fontSize: '1.25rem',
+                  fontFamily: 'var(--font-header)',
+                  fontWeight: 700,
                   color: '#1b1b1b',
-                  borderRadius: '0.25rem',
-                  padding: '0.75rem 1.25rem',
-                  fontFamily: 'var(--font-body)',
-                  fontWeight: 600,
-                  fontSize: '0.9375rem',
-                  textDecoration: 'none',
+                  lineHeight: 1.25,
+                  margin: '0 0 0.75rem 0',
                 }}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
-                </svg>
-                800-232-4636
-              </a>
-              <a
-                href="mailto:cdcinfo@cdc.gov"
+                {phase.title}
+              </h3>
+
+              <p
+                style={{
+                  fontSize: '0.9375rem',
+                  fontFamily: 'var(--font-body)',
+                  color: '#323a45',
+                  lineHeight: 1.55,
+                  margin: '0 0 1.5rem 0',
+                }}
+              >
+                {phase.description}
+              </p>
+
+              <Link
+                to={phase.to}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '0.5rem',
-                  color: 'white',
+                  marginTop: 'auto',
+                  padding: 0,
+                  backgroundColor: 'transparent',
+                  color: phase.color,
                   fontFamily: 'var(--font-body)',
                   fontWeight: 600,
-                  fontSize: '0.9375rem',
+                  fontSize: '0.875rem',
+                  border: 'none',
+                  borderRadius: 0,
                   textDecoration: 'underline',
+                  textAlign: 'left',
                 }}
               >
-                Send us an email →
-              </a>
+                {phase.linkText}
+              </Link>
             </div>
-          </div>
+          ))}
         </div>
       </section>
 
@@ -555,6 +265,7 @@ const Support = () => {
           padding: isMobile ? '2rem 1rem' : '3rem 2rem',
           borderRadius: '0.25rem',
           border: '1px solid #e0e0e0',
+          order: 2,
         }}
       >
         <h2
@@ -566,9 +277,8 @@ const Support = () => {
             margin: '0 0 0.5rem 0',
           }}
         >
-          Tips That Fit Your Life
+          Tools That Fit Your Life
         </h2>
-
         <p
           style={{
             fontSize: '1rem',
@@ -695,6 +405,204 @@ const Support = () => {
                 </div>
               </div>
             </Link>
+          ))}
+        </div>
+      </section>
+
+      <section style={{ ...sectionStyles, order: 3 }}>
+        <h2
+          style={{
+            fontSize: isMobile ? '1.5rem' : '1.75rem',
+            fontFamily: 'var(--font-header)',
+            fontWeight: 700,
+            color: '#1b1b1b',
+            margin: '0 0 0.5rem 0',
+          }}
+        >
+          Connect With Support
+        </h2>
+
+        <p
+          style={{
+            fontSize: '1rem',
+            fontFamily: 'var(--font-body)',
+            color: '#323a45',
+            lineHeight: 1.5,
+            margin: '0 0 1.5rem 0',
+          }}
+        >
+          Programs, communities, and direct help when you need it.
+        </p>
+
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr',
+            gap: '1.5rem',
+            marginBottom: '2rem',
+          }}
+        >
+          {[
+            {
+              backgroundColor: '#005ea2',
+              borderColor: '#005ea2',
+              shadow: '0 8px 24px rgba(0, 94, 162, 0.25)',
+              labelBackground: 'rgba(255,255,255,0.2)',
+              label: 'Local & Online Programs',
+              title: 'Lifestyle Change Intervention (LCI) Programs',
+              description: 'CDC-recognized evidence-based lifestyle change programs proven to prevent or delay chronic conditions. Find a program that fits your schedule — in person or online.',
+              action: (
+                <Link
+                  to="/lifestyle-programs"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    backgroundColor: 'white',
+                    color: '#005ea2',
+                    borderRadius: '0.25rem',
+                    padding: '0.75rem 1.25rem',
+                    fontFamily: 'var(--font-body)',
+                    fontWeight: 600,
+                    fontSize: '0.9375rem',
+                    textDecoration: 'none',
+                  }}
+                >
+                  Find a program
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
+                </Link>
+              ),
+              icon: (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              ),
+            },
+            {
+              backgroundColor: '#1b1b1b',
+              borderColor: '#1b1b1b',
+              shadow: '0 8px 24px rgba(0,0,0,0.2)',
+              labelBackground: 'rgba(255,255,255,0.15)',
+              label: 'Direct Help',
+              title: 'CDC Chronic Disease Contact Center',
+              description: 'Email and call-in support for questions, tools, and referrals. Our team can help connect you with local resources and answer your prevention questions.',
+              action: (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '1rem' }}>
+                  <a
+                    href="tel:800-232-4636"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      backgroundColor: 'white',
+                      color: '#1b1b1b',
+                      borderRadius: '0.25rem',
+                      padding: '0.75rem 1.25rem',
+                      fontFamily: 'var(--font-body)',
+                      fontWeight: 600,
+                      fontSize: '0.9375rem',
+                      textDecoration: 'none',
+                    }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                    </svg>
+                    800-232-4636
+                  </a>
+                  <a
+                    href="mailto:cdcinfo@cdc.gov"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                      color: 'white',
+                      fontFamily: 'var(--font-body)',
+                      fontWeight: 600,
+                      fontSize: '0.9375rem',
+                      textDecoration: 'underline',
+                    }}
+                  >
+                    Send us an email →
+                  </a>
+                </div>
+              ),
+              icon: (
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+                </svg>
+              ),
+            },
+          ].map((support, i) => (
+            <div
+              key={support.title}
+              style={{
+                backgroundColor: support.backgroundColor,
+                borderRadius: '0.25rem',
+                padding: '2rem',
+                transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                border: `1px solid ${support.borderColor}`,
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = 'translateY(-2px)';
+                e.currentTarget.style.boxShadow = support.shadow;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            >
+              <span
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  backgroundColor: support.labelBackground,
+                  color: 'white',
+                  fontSize: '0.7rem',
+                  fontWeight: 600,
+                  letterSpacing: '0.05em',
+                  padding: '0.35rem 0.875rem',
+                  borderRadius: '0.25rem',
+                  marginBottom: '1.25rem',
+                  fontFamily: 'var(--font-body)',
+                  textTransform: 'uppercase',
+                }}
+              >
+                {support.icon}
+                {support.label}
+              </span>
+
+              <h3
+                style={{
+                  fontSize: isMobile ? '1.5rem' : '2rem',
+                  fontFamily: 'var(--font-header)',
+                  fontWeight: 700,
+                  color: 'white',
+                  margin: '0 0 1rem 0',
+                  lineHeight: 1.2,
+                }}
+              >
+                {support.title}
+              </h3>
+
+              <p
+                style={{
+                  fontSize: '1rem',
+                  fontFamily: 'var(--font-body)',
+                  color: i === 0 ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.9)',
+                  lineHeight: 1.6,
+                  margin: '0 0 1.5rem 0',
+                }}
+              >
+                {support.description}
+              </p>
+
+              {support.action}
+            </div>
           ))}
         </div>
       </section>
