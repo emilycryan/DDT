@@ -30,19 +30,19 @@ const TIME_PREFS = [
     id: 'morning',
     label: 'Morning',
     body: "In the morning. I'm a morning person!",
-    iconColor: '#ca8a04',
+    iconColor: TEAL,
   },
   {
     id: 'afternoon',
     label: 'Afternoon',
     body: "In the afternoon. That's when I have the most free time!",
-    iconColor: '#5b9bd5',
+    iconColor: TEAL,
   },
   {
     id: 'evening',
     label: 'Evening',
     body: 'In the evening. I have more flexibility at the end of the day.',
-    iconColor: '#1e3a5f',
+    iconColor: TEAL,
   },
   {
     id: 'weekend',
@@ -55,11 +55,11 @@ const TIME_PREFS = [
 function IllustrationInPerson() {
   return (
     <svg width="120" height="100" viewBox="0 0 120 100" aria-hidden style={{ display: 'block', margin: '0 auto' }}>
-      <rect x="20" y="35" width="80" height="50" rx="4" fill="#e7f2f5" stroke="#005ea2" strokeWidth="1.5" />
+      <rect x="20" y="35" width="80" height="50" rx="4" fill="#eff6fb" stroke="#005ea2" strokeWidth="1.5" />
       <path d="M28 45h64M28 55h48" stroke="#005ea2" strokeWidth="1.5" strokeLinecap="round" />
       <circle cx="60" cy="22" r="8" fill="#1b1b1b" />
-      <path d="M52 32 L52 38 L68 38 L68 32 Q60 28 52 32" fill="#00687d" />
-      <path d="M48 38 L48 62 L72 62 L72 38" fill="#00687d" />
+      <path d="M52 32 L52 38 L68 38 L68 32 Q60 28 52 32" fill="#005ea2" />
+      <path d="M48 38 L48 62 L72 62 L72 38" fill="#005ea2" />
     </svg>
   );
 }
@@ -68,7 +68,7 @@ function IllustrationOnline() {
   return (
     <svg width="120" height="100" viewBox="0 0 120 100" aria-hidden style={{ display: 'block', margin: '0 auto' }}>
       <ellipse cx="60" cy="78" rx="35" ry="8" fill="#e0e0e0" />
-      <rect x="38" y="48" width="44" height="28" rx="3" fill="#e7f2f5" stroke="#005ea2" strokeWidth="1.5" />
+      <rect x="38" y="48" width="44" height="28" rx="3" fill="#eff6fb" stroke="#005ea2" strokeWidth="1.5" />
       <circle cx="60" cy="28" r="9" fill="#1b1b1b" />
       <path d="M52 38 L52 45 L68 45 L68 38" fill="#b8b8d4" />
       <path d="M54 45 L54 58 L66 58 L66 45" fill="#323a45" />
@@ -79,12 +79,12 @@ function IllustrationOnline() {
 function IllustrationDistance() {
   return (
     <svg width="120" height="100" viewBox="0 0 120 100" aria-hidden style={{ display: 'block', margin: '0 auto' }}>
-      <rect x="42" y="18" width="36" height="58" rx="6" fill="#e7f2f5" stroke="#005ea2" strokeWidth="2" />
+      <rect x="42" y="18" width="36" height="58" rx="6" fill="#eff6fb" stroke="#005ea2" strokeWidth="2" />
       <rect x="48" y="26" width="24" height="32" rx="2" fill="#ffffff" stroke="#c9c9c9" />
-      <circle cx="54" cy="34" r="3" fill="#00687d" />
+      <circle cx="54" cy="34" r="3" fill="#005ea2" />
       <path d="M52 44h16M52 50h12" stroke="#c9c9c9" strokeWidth="1" />
       <circle cx="60" cy="12" r="7" fill="#1b1b1b" />
-      <path d="M54 20 L54 28 L66 28 L66 20" fill="#008480" />
+      <path d="M54 20 L54 28 L66 28 L66 20" fill="#005ea2" />
     </svg>
   );
 }
@@ -196,10 +196,10 @@ const PlanMyPathClassPreferences = () => {
 
   const cardBase = (isOn) => ({
     cursor: 'pointer',
-    backgroundColor: isOn ? 'rgba(0, 104, 125, 0.08)' : '#ffffff',
+    backgroundColor: isOn ? 'rgba(0, 94, 162, 0.08)' : '#ffffff',
     border: `2px solid ${isOn ? TEAL : '#e0e0e0'}`,
     borderRadius: '0.5rem',
-    boxShadow: isOn ? '0 2px 10px rgba(0, 104, 125, 0.15)' : '0 2px 6px rgba(0,0,0,0.06)',
+    boxShadow: isOn ? 'inset 0 4px 0 var(--primary-dark), 0 8px 18px rgba(0, 94, 162, 0.14)' : '0 2px 6px rgba(0,0,0,0.06)',
     fontFamily: 'var(--font-body)',
   });
 
@@ -239,8 +239,8 @@ const PlanMyPathClassPreferences = () => {
             borderRadius: '0.5rem',
             padding: isMobile ? '1.125rem 1.25rem' : '1.375rem 1.5rem',
             marginBottom: '2rem',
-            border: '1px solid #e0e0e0',
-            boxShadow: '0 1px 0 rgba(0,0,0,0.04)',
+            border: '1px solid var(--primary-darker)',
+            boxShadow: '0 8px 18px rgba(26, 68, 128, 0.18)',
           }}
         >
           <p
@@ -248,14 +248,14 @@ const PlanMyPathClassPreferences = () => {
               margin: '0 0 1rem 0',
               fontSize: '1.0625rem',
               lineHeight: 1.65,
-              color: '#323a45',
+              color: '#ffffff',
               textAlign: 'left',
             }}
           >
             Great work. Just a few more questions and your plan will be finished! Let&apos;s look at how the program
             and class schedule could fit into your life.
           </p>
-          <p style={{ margin: 0, fontSize: '1.0625rem', lineHeight: 1.65, color: '#323a45', textAlign: 'left' }}>
+          <p style={{ margin: 0, fontSize: '1.0625rem', lineHeight: 1.65, color: '#ffffff', textAlign: 'left' }}>
             Many providers offer the program, so you can find a class that works best for you. These providers must meet
             CDC standards for recognition and use CDC-approved materials for classes.
           </p>
@@ -400,7 +400,7 @@ const PlanMyPathClassPreferences = () => {
               borderRadius: '0.5rem',
               cursor: 'pointer',
               minWidth: 260,
-              boxShadow: '0 2px 4px rgba(0, 104, 125, 0.25)',
+              boxShadow: '0 2px 4px rgba(0, 94, 162, 0.25)',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = TEAL_DARK;

@@ -26,12 +26,13 @@ function SummaryCard({ title, children, note }) {
   return (
     <article
       style={{
-        border: `2px solid rgba(0, 104, 125, 0.45)`,
+        border: '1px solid #dfe1e2',
+        borderTop: '4px solid var(--primary-dark)',
         borderRadius: '0.5rem',
         padding: '1.25rem 1.5rem',
         marginBottom: '1.25rem',
         backgroundColor: '#ffffff',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
       }}
     >
       <h2
@@ -53,7 +54,7 @@ function SummaryCard({ title, children, note }) {
             margin: '1rem 0 0 0',
             fontSize: '0.875rem',
             fontStyle: 'italic',
-            color: '#323a45',
+            color: '#5c5c5c',
             lineHeight: 1.5,
           }}
         >
@@ -179,7 +180,7 @@ const PlanMyPathCompleted = () => {
               lineHeight: 1.25,
             }}
           >
-            Completed Plan
+            {data.displayName === 'you' ? 'Your' : `${data.displayName}'s`} Completed Action Plan
           </h1>
 
           <div
@@ -188,8 +189,8 @@ const PlanMyPathCompleted = () => {
               borderRadius: '0.5rem',
               padding: isMobile ? '1.125rem 1.25rem' : '1.375rem 1.5rem',
               marginBottom: '2rem',
-              border: '1px solid #e0e0e0',
-              boxShadow: '0 1px 0 rgba(0,0,0,0.04)',
+              border: '1px solid var(--primary-darker)',
+              boxShadow: '0 8px 18px rgba(26, 68, 128, 0.18)',
             }}
           >
             <p
@@ -197,45 +198,12 @@ const PlanMyPathCompleted = () => {
                 margin: 0,
                 fontSize: '1.0625rem',
                 lineHeight: 1.65,
-                color: '#323a45',
+                color: '#ffffff',
                 textAlign: 'center',
               }}
             >
               You have completed your Path 2 Prevention Action Plan! Review your plan below, print a copy, then move
               forward.
-            </p>
-          </div>
-
-          <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 56,
-                height: 56,
-                borderRadius: '0.5rem',
-                backgroundColor: '#e7f2f5',
-                color: TEAL,
-                fontWeight: 800,
-                fontSize: '1.125rem',
-                letterSpacing: '0.06em',
-                marginBottom: '0.75rem',
-                fontFamily: 'var(--font-header)',
-              }}
-            >
-              P2P
-            </div>
-            <p
-              style={{
-                margin: 0,
-                fontSize: '1.25rem',
-                fontFamily: 'var(--font-header)',
-                fontWeight: 700,
-                color: '#1b1b1b',
-              }}
-            >
-              {data.displayName === 'you' ? 'Your' : `${data.displayName}'s`} Action Plan
             </p>
           </div>
 
@@ -272,7 +240,7 @@ const PlanMyPathCompleted = () => {
             note={
               <>
                 Don&apos;t forget to use our{' '}
-                <Link to="/lifestyle-programs" style={{ color: TEAL, fontWeight: 600, fontStyle: 'normal' }}>
+                <Link to="/lifestyle-programs" style={{ color: TEAL, fontWeight: 700, fontStyle: 'normal' }}>
                   Find a Program
                 </Link>{' '}
                 tool to find a program provider that meets your preferences and contact them!
@@ -322,52 +290,36 @@ const PlanMyPathCompleted = () => {
             style={{
               display: 'flex',
               flexDirection: isMobile ? 'column' : 'row',
-              alignItems: 'center',
+              alignItems: isMobile ? 'stretch' : 'center',
               justifyContent: 'space-between',
               gap: '1rem',
               flexWrap: 'wrap',
             }}
           >
-            <Link
-              to="/action/plan-my-path"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                color: TEAL,
-                fontWeight: 600,
-                fontSize: '0.9375rem',
-                textDecoration: 'underline',
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                <path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-              Edit My Plan
-            </Link>
+            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: isMobile ? 'stretch' : 'center', gap: '0.75rem' }}>
+              <Link
+                to="/action/plan-my-path"
+                className="btn btn-secondary"
+                style={{ gap: '0.5rem', textDecoration: 'none', minHeight: 44, padding: '0.65rem 1rem' }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                  <path d="M12 20h9M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+                Edit My Plan
+              </Link>
 
-            <button
-              type="button"
-              onClick={handlePrint}
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                background: 'none',
-                border: 'none',
-                color: TEAL,
-                fontWeight: 600,
-                fontSize: '0.9375rem',
-                textDecoration: 'underline',
-                cursor: 'pointer',
-                fontFamily: 'var(--font-body)',
-              }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
-                <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6v-8z" />
-              </svg>
-              Print My Plan
-            </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={handlePrint}
+                style={{ gap: '0.5rem', minHeight: 44, padding: '0.65rem 1rem' }}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden>
+                  <path d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6v-8z" />
+                </svg>
+                Print My Plan
+              </button>
+            </div>
 
             <button
               type="button"
@@ -383,7 +335,7 @@ const PlanMyPathCompleted = () => {
                 borderRadius: '0.5rem',
                 cursor: 'pointer',
                 minWidth: 200,
-                boxShadow: '0 2px 4px rgba(0, 104, 125, 0.25)',
+                boxShadow: '0 2px 4px rgba(0, 94, 162, 0.25)',
               }}
               onMouseEnter={(e) => {
                 e.currentTarget.style.backgroundColor = TEAL_DARK;

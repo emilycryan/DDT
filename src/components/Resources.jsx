@@ -7,6 +7,8 @@ const EDUCATIONAL_CARD_COLORS = [
   { accent: '#005ea2', iconBg: '#e7f2f5' },   /* Primary */
   { accent: '#d83933', iconBg: '#f9dede' },   /* Secondary — Heart Health */
   { accent: '#00bde3', iconBg: '#e5f6f9' },   /* Accent cool — Prevention card 3 */
+  { accent: '#4d52af', iconBg: '#eeeeff' },   /* Stroke Prevention */
+  { accent: '#008817', iconBg: '#eaf4dd' },   /* COPD Prevention */
 ];
 
 const educationalCards = [
@@ -43,6 +45,45 @@ const educationalCards = [
     ],
     linkText: 'Explore heart health resources →',
     linkHref: '/learn/heart-health/know-your-numbers',
+  },
+  {
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M12 5c-3.5 0-6 2.2-6 5.4 0 2.2 1.2 3.7 3 4.6v3.2c0 .9.7 1.6 1.6 1.6H12" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 5c3.5 0 6 2.2 6 5.4 0 2.2-1.2 3.7-3 4.6v3.2c0 .9-.7 1.6-1.6 1.6H12" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M12 5v14.8M9 9h6M8.5 12.5h7" strokeLinecap="round"/>
+      </svg>
+    ),
+    title: 'Stroke Prevention',
+    description: 'Stroke can happen suddenly, but most strokes are preventable. Learn how to recognize early warning signs, understand your risk, and take simple daily steps to protect your brain and blood vessels.',
+    bullets: [
+      { text: 'Recognizing Stroke Symptoms (FAST)', path: '/learn/stroke-prevention/recognizing-stroke-symptoms-fast' },
+      { text: 'Stroke Risk Factors & Prevention', path: '/learn/stroke-prevention/risk-factors-prevention' },
+      { text: 'Blood Pressure & Brain Health', path: '/learn/stroke-prevention/blood-pressure-brain-health' },
+      { text: 'Recovery & Reducing Future Risk', path: '/learn/stroke-prevention/recovery-reducing-future-risk' },
+    ],
+    linkText: 'Explore stroke resources →',
+    linkHref: '/learn/stroke-prevention/recognizing-stroke-symptoms-fast',
+  },
+  {
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path d="M12 4v16" strokeLinecap="round"/>
+        <path d="M11 9c-2.8 0-5 2.5-5 5.5V18c0 1.1.9 2 2 2 2.2 0 4-1.8 4-4V9z" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M13 9c2.8 0 5 2.5 5 5.5V18c0 1.1-.9 2-2 2-2.2 0-4-1.8-4-4V9z" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M9 6c1.1.8 1.9 1.8 2 3M15 6c-1.1.8-1.9 1.8-2 3" strokeLinecap="round"/>
+      </svg>
+    ),
+    title: 'COPD Prevention',
+    description: 'COPD makes it harder to breathe over time, but many cases are preventable. Learn how to protect your lungs, reduce exposure to harmful triggers, and build habits that support long-term respiratory health.',
+    bullets: [
+      { text: 'Understanding COPD', path: '/learn/copd-prevention/understanding-copd' },
+      { text: 'Risk Factors & Lung Health', path: '/learn/copd-prevention/risk-factors-lung-health' },
+      { text: 'Smoking, Air Quality & Triggers', path: '/learn/copd-prevention/smoking-air-quality-triggers' },
+      { text: 'Breathing, Activity & Daily Management', path: '/learn/copd-prevention/breathing-activity-daily-management' },
+    ],
+    linkText: 'Explore COPD resources →',
+    linkHref: '/learn/copd-prevention/understanding-copd',
   },
   {
     icon: (
@@ -187,7 +228,7 @@ const Resources = ({ onNavigate }) => {
           <div
             style={{
               display: 'grid',
-              gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
               gap: '1.5rem',
             }}
           >

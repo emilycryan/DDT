@@ -7,8 +7,9 @@ import { Link, useLocation } from 'react-router-dom';
  * @param {string} categoryPath - e.g. "/learn/prediabetes/understanding-prediabetes"
  * @param {Array<{path:string,title:string}>} pageSequence - ordered pages for "Next" link
  * @param {string} title - page title
+ * @param {boolean} showPageTiles - whether to show same-category navigation tiles
  */
-const ResourcePageLayout = ({ categoryLabel, categoryPath, pageSequence, title, children }) => {
+const ResourcePageLayout = ({ categoryLabel, categoryPath, pageSequence, title, children, showPageTiles = false }) => {
   const location = useLocation();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
@@ -78,6 +79,45 @@ const ResourcePageLayout = ({ categoryLabel, categoryPath, pageSequence, title, 
         >
           {title}
         </h1>
+
+        {showPageTiles && (
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'repeat(4, 1fr)',
+              gap: '1rem',
+              margin: '0 0 2.5rem 0',
+            }}
+          >
+            {pageSequence.map((page) => {
+              const isActive = page.path === location.pathname;
+              return (
+                <Link
+                  key={page.path}
+                  to={page.path}
+                  style={{
+                    minHeight: 112,
+                    backgroundColor: isActive ? '#e7f2f5' : '#ffffff',
+                    border: isActive ? '2px solid #005ea2' : '1px solid #e0e0e0',
+                    borderTop: isActive ? '4px solid #005ea2' : '3px solid #005ea2',
+                    borderRadius: '0.25rem',
+                    padding: '1rem',
+                    color: isActive ? '#005ea2' : '#1b1b1b',
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    fontFamily: 'var(--font-body)',
+                    fontWeight: 600,
+                    fontSize: '0.9375rem',
+                    lineHeight: 1.35,
+                    textDecoration: 'none',
+                  }}
+                >
+                  {page.title}
+                </Link>
+              );
+            })}
+          </div>
+        )}
 
         {children}
 

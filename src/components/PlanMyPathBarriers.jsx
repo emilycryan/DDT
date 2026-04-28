@@ -164,8 +164,8 @@ const PlanMyPathBarriers = () => {
             borderRadius: '0.5rem',
             padding: isMobile ? '1.125rem 1.25rem' : '1.375rem 1.5rem',
             marginBottom: '1.75rem',
-            border: '1px solid #e0e0e0',
-            boxShadow: '0 1px 0 rgba(0,0,0,0.04)',
+            border: '1px solid var(--primary-darker)',
+            boxShadow: '0 8px 18px rgba(26, 68, 128, 0.18)',
           }}
         >
           <p
@@ -173,7 +173,7 @@ const PlanMyPathBarriers = () => {
               margin: 0,
               fontSize: '1.0625rem',
               lineHeight: 1.65,
-              color: '#323a45',
+              color: '#ffffff',
               textAlign: 'center',
             }}
           >
@@ -229,11 +229,11 @@ const PlanMyPathBarriers = () => {
                   gap: '0.875rem',
                   minHeight: 88,
                   padding: '0.875rem 1rem',
-                  backgroundColor: isOn ? 'rgba(0, 104, 125, 0.08)' : '#ffffff',
+                  backgroundColor: isOn ? 'rgba(0, 94, 162, 0.08)' : '#ffffff',
                   border: `2px solid ${isOn ? TEAL : '#e0e0e0'}`,
                   borderRadius: '0.5rem',
                   cursor: 'pointer',
-                  boxShadow: isOn ? '0 2px 8px rgba(0, 104, 125, 0.15)' : '0 1px 3px rgba(0,0,0,0.08)',
+                  boxShadow: isOn ? 'inset 0 4px 0 var(--primary-dark), 0 8px 18px rgba(0, 94, 162, 0.14)' : '0 1px 3px rgba(0,0,0,0.08)',
                   fontFamily: 'var(--font-body)',
                   textAlign: 'left',
                   gridColumn: spanLast ? '1 / -1' : undefined,
@@ -294,7 +294,7 @@ const PlanMyPathBarriers = () => {
             }}
             onFocus={(e) => {
               e.target.style.borderColor = TEAL;
-              e.target.style.boxShadow = `0 0 0 3px rgba(0, 104, 125, 0.2)`;
+              e.target.style.boxShadow = `0 0 0 3px rgba(0, 94, 162, 0.22)`;
             }}
             onBlur={(e) => {
               e.target.style.borderColor = '#c9c9c9';
@@ -318,7 +318,7 @@ const PlanMyPathBarriers = () => {
               borderRadius: '0.5rem',
               cursor: 'pointer',
               minWidth: 280,
-              boxShadow: '0 2px 4px rgba(0, 104, 125, 0.25)',
+              boxShadow: '0 2px 4px rgba(0, 94, 162, 0.25)',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = TEAL_DARK;

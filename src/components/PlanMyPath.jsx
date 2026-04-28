@@ -28,7 +28,7 @@ function PlanPathPeopleIllustration() {
       <ellipse cx="155" cy="118" rx="22" ry="26" fill="#1b1b1b" />
       <path
         d="M130 155 Q125 195 120 210 L190 210 Q185 175 180 155 Q168 140 155 135 Q142 140 130 155"
-        fill="#008480"
+        fill="#005ea2"
       />
       <path d="M125 175 L115 210 L135 210 Z" fill="#1b1b1b" />
       <path d="M185 175 L195 210 L175 210 Z" fill="#1b1b1b" />
@@ -112,8 +112,8 @@ const PlanMyPath = () => {
             borderRadius: '0.5rem',
             padding: isMobile ? '1.125rem 1.25rem' : '1.375rem 1.5rem',
             marginBottom: '2.5rem',
-            border: '1px solid #e0e0e0',
-            boxShadow: '0 1px 0 rgba(0,0,0,0.04)',
+            border: '1px solid var(--primary-darker)',
+            boxShadow: '0 8px 18px rgba(26, 68, 128, 0.18)',
           }}
         >
           <p
@@ -121,7 +121,7 @@ const PlanMyPath = () => {
               margin: 0,
               fontSize: '1.0625rem',
               lineHeight: 1.65,
-              color: '#323a45',
+              color: '#ffffff',
               textAlign: 'center',
             }}
           >
@@ -171,7 +171,7 @@ const PlanMyPath = () => {
             }}
             onFocus={(e) => {
               e.target.style.borderColor = TEAL;
-              e.target.style.boxShadow = `inset 0 1px 2px rgba(0,0,0,0.04), 0 0 0 3px rgba(0, 104, 125, 0.2)`;
+              e.target.style.boxShadow = `inset 0 1px 2px rgba(0,0,0,0.04), 0 0 0 3px rgba(0, 94, 162, 0.22)`;
             }}
             onBlur={(e) => {
               e.target.style.borderColor = '#c9c9c9';
@@ -199,7 +199,7 @@ const PlanMyPath = () => {
               borderRadius: '0.5rem',
               cursor: 'pointer',
               minWidth: 260,
-              boxShadow: '0 2px 4px rgba(0, 104, 125, 0.25)',
+              boxShadow: '0 2px 4px rgba(0, 94, 162, 0.25)',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = TEAL_DARK;

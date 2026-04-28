@@ -27,6 +27,8 @@ import BuildingHealthyHabits from './components/BuildingHealthyHabits'
 import SleepRecovery from './components/SleepRecovery'
 import MentalHealthResilience from './components/MentalHealthResilience'
 import SocialConnection from './components/SocialConnection'
+import StrokePreventionPlaceholder from './components/StrokePreventionPlaceholder'
+import COPDPreventionPlaceholder from './components/COPDPreventionPlaceholder'
 import HowToReadFoodLabels from './components/HowToReadFoodLabels'
 import MealPlanningOnBudget from './components/MealPlanningOnBudget'
 import MovingMoreWhenBusy from './components/MovingMoreWhenBusy'
@@ -173,6 +175,14 @@ function App() {
       <Route path="/learn/healthy-living/sleep-recovery" element={<SleepRecovery />} />
       <Route path="/learn/healthy-living/mental-health-resilience" element={<MentalHealthResilience />} />
       <Route path="/learn/healthy-living/social-connection" element={<SocialConnection />} />
+      <Route path="/learn/stroke-prevention/recognizing-stroke-symptoms-fast" element={<StrokePreventionPlaceholder title="Recognizing Stroke Symptoms (FAST)" />} />
+      <Route path="/learn/stroke-prevention/risk-factors-prevention" element={<StrokePreventionPlaceholder title="Stroke Risk Factors & Prevention" />} />
+      <Route path="/learn/stroke-prevention/blood-pressure-brain-health" element={<StrokePreventionPlaceholder title="Blood Pressure & Brain Health" />} />
+      <Route path="/learn/stroke-prevention/recovery-reducing-future-risk" element={<StrokePreventionPlaceholder title="Recovery & Reducing Future Risk" />} />
+      <Route path="/learn/copd-prevention/understanding-copd" element={<COPDPreventionPlaceholder title="Understanding COPD" />} />
+      <Route path="/learn/copd-prevention/risk-factors-lung-health" element={<COPDPreventionPlaceholder title="Risk Factors & Lung Health" />} />
+      <Route path="/learn/copd-prevention/smoking-air-quality-triggers" element={<COPDPreventionPlaceholder title="Smoking, Air Quality & Triggers" />} />
+      <Route path="/learn/copd-prevention/breathing-activity-daily-management" element={<COPDPreventionPlaceholder title="Breathing, Activity & Daily Management" />} />
       <Route path="/" element={
         <main style={{ 
           backgroundColor: 'var(--bg-secondary)',

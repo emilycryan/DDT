@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PlanPathStepProgress from './planMyPath/PlanPathStepProgress';
 import PlanPathBackLink from './planMyPath/PlanPathBackLink';
-import { TOTAL_STEPS, TEAL, TEAL_DARK, BANNER_BG, SUCCESS_GREEN, SUCCESS_BG } from './planMyPath/planPathConstants';
+import { TOTAL_STEPS, TEAL, TEAL_DARK, BANNER_BG } from './planMyPath/planPathConstants';
 
 const iconWrap = {
   width: 48,
   height: 48,
   borderRadius: '0.5rem',
-  backgroundColor: '#e7f2f5',
+  backgroundColor: '#eff6fb',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -36,7 +36,7 @@ function IconDollar() {
 
 function IconTip() {
   return (
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={SUCCESS_GREEN} strokeWidth="2" aria-hidden>
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1b1b1b" strokeWidth="2" aria-hidden>
       <path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z" />
     </svg>
   );
@@ -91,8 +91,8 @@ const PlanMyPathDppInfo = () => {
             borderRadius: '0.5rem',
             padding: isMobile ? '1.125rem 1.25rem' : '1.375rem 1.5rem',
             marginBottom: '2rem',
-            border: '1px solid #e0e0e0',
-            boxShadow: '0 1px 0 rgba(0,0,0,0.04)',
+            border: '1px solid var(--primary-darker)',
+            boxShadow: '0 8px 18px rgba(26, 68, 128, 0.18)',
           }}
         >
           <p
@@ -100,7 +100,7 @@ const PlanMyPathDppInfo = () => {
               margin: 0,
               fontSize: '1.0625rem',
               lineHeight: 1.65,
-              color: '#323a45',
+              color: '#ffffff',
               textAlign: 'center',
             }}
           >
@@ -122,7 +122,8 @@ const PlanMyPathDppInfo = () => {
           <article
             style={{
               backgroundColor: '#ffffff',
-              border: '1px solid #e0e0e0',
+              border: '1px solid #dfe1e2',
+              borderTop: '4px solid var(--primary-dark)',
               borderRadius: '0.5rem',
               padding: '1.5rem',
               boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
@@ -161,7 +162,8 @@ const PlanMyPathDppInfo = () => {
           <article
             style={{
               backgroundColor: '#ffffff',
-              border: '1px solid #e0e0e0',
+              border: '1px solid #dfe1e2',
+              borderTop: '4px solid var(--primary-dark)',
               borderRadius: '0.5rem',
               padding: '1.5rem',
               boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
@@ -202,17 +204,19 @@ const PlanMyPathDppInfo = () => {
             gap: '0.875rem',
             alignItems: 'flex-start',
             padding: '1rem 1.25rem',
-            backgroundColor: SUCCESS_BG,
-            border: `1px solid ${SUCCESS_GREEN}`,
+            backgroundColor: '#ffffff',
+            border: '1px solid #dfe1e2',
+            borderTop: '4px solid #1b1b1b',
             borderRadius: '0.5rem',
             marginBottom: '2rem',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
           }}
         >
           <div style={{ flexShrink: 0, marginTop: 2 }}>
             <IconTip />
           </div>
           <p style={{ margin: 0, fontSize: '0.9375rem', lineHeight: 1.55, color: '#1b1b1b' }}>
-            <strong style={{ color: SUCCESS_GREEN }}>Tip:</strong> Have your health insurance information ready when you
+            <strong>Tip:</strong> Have your health insurance information ready when you
             contact a program provider.
           </p>
         </div>
@@ -232,7 +236,7 @@ const PlanMyPathDppInfo = () => {
               borderRadius: '0.5rem',
               cursor: 'pointer',
               minWidth: 260,
-              boxShadow: '0 2px 4px rgba(0, 104, 125, 0.25)',
+              boxShadow: '0 2px 4px rgba(0, 94, 162, 0.25)',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.backgroundColor = TEAL_DARK;
