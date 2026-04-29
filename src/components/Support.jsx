@@ -90,6 +90,7 @@ const Support = () => {
       </div>
 
       <section
+        id="tools-and-resources"
         style={{
           ...sectionStyles,
           backgroundColor: '#ffffff',

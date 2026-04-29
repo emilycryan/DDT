@@ -95,8 +95,13 @@ function App() {
 
   // Scroll to top on route change (including Link clicks)
   useEffect(() => {
+    if (location.hash) {
+      scrollToSection(location.hash.slice(1))
+      return
+    }
+
     window.scrollTo(0, 0)
-  }, [location.pathname])
+  }, [location.pathname, location.hash])
 
   const onNavigate = (page) => {
     const normalizedPage = page === 'resources' ? 'learn' : (page === 'support' ? 'action' : page)
@@ -428,7 +433,7 @@ function App() {
 
               {/* Start Your Journey */}
               <div 
-                onClick={() => onNavigate('risk-assessment')}
+                onClick={() => navigate('/action#tools-and-resources')}
                 className="card"
                 style={{
                   textAlign: 'center',
@@ -458,7 +463,7 @@ function App() {
                   lineHeight: '1.5',
                   margin: 0
                 }}>
-                  Answer a few questions and begin a personalized journey with interactive tools and resources tailored to your needs.
+                  Answer a few questions, create a practical health plan, and find the Lifestyle Change Intervention that best fits your needs.
                 </p>
               </div>
             </div>
