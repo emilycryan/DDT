@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 // "Just Curious" — indirect, denial-friendly. No direct health labels; daily life & reflection.
 // Folks here may be in denial, don't understand impact of choices, or scare easily. Soft framing only.
+// Scoring matches the For Myself / Caregiver flows: 0–10 max, three soft tiers.
 const JUST_CURIOUS_QUESTIONS = [
   {
     id: 'end_of_day',
@@ -10,9 +11,9 @@ const JUST_CURIOUS_QUESTIONS = [
     theme: 'energy',
     options: [
       { label: 'Still have some gas in the tank', value: 'good', score: 0 },
-      { label: 'Okay—ready to wind down', value: 'okay', score: 1 },
-      { label: 'Really depends on the day', value: 'depends', score: 2 },
-      { label: 'Pretty wiped', value: 'wiped', score: 3 },
+      { label: 'Okay—ready to wind down', value: 'okay', score: 0 },
+      { label: 'Really depends on the day', value: 'depends', score: 1 },
+      { label: 'Pretty wiped', value: 'wiped', score: 2 },
     ],
   },
   {
@@ -22,9 +23,9 @@ const JUST_CURIOUS_QUESTIONS = [
     theme: 'sleep',
     options: [
       { label: 'Rested and ready', value: 'rested', score: 0 },
-      { label: 'Mostly okay', value: 'okay', score: 1 },
-      { label: 'Could use more sleep', value: 'could_use_more', score: 2 },
-      { label: "I don't sleep well most nights", value: 'poor', score: 3 },
+      { label: 'Mostly okay', value: 'okay', score: 0 },
+      { label: 'Could use more sleep', value: 'could_use_more', score: 1 },
+      { label: "I don't sleep well most nights", value: 'poor', score: 2 },
     ],
   },
   {
@@ -34,9 +35,9 @@ const JUST_CURIOUS_QUESTIONS = [
     theme: 'eating',
     options: [
       { label: "I try to keep it balanced", value: 'balanced', score: 0 },
-      { label: "I don't really think about it", value: 'dont_think', score: 2 },
-      { label: "I know I could do better", value: 'could_do_better', score: 2 },
-      { label: "I'm not sure where to start", value: 'not_sure', score: 3 },
+      { label: "I don't really think about it", value: 'dont_think', score: 1 },
+      { label: "I know I could do better", value: 'could_do_better', score: 1 },
+      { label: "I'm not sure where to start", value: 'not_sure', score: 2 },
     ],
   },
   {
@@ -46,9 +47,9 @@ const JUST_CURIOUS_QUESTIONS = [
     theme: 'movement',
     options: [
       { label: "It's a regular part of my routine", value: 'regular', score: 0 },
-      { label: 'I fit it in when I can', value: 'when_can', score: 1 },
-      { label: "I know I could do more", value: 'could_do_more', score: 2 },
-      { label: "I've never been one to move much day to day", value: 'rarely', score: 3 },
+      { label: 'I fit it in when I can', value: 'when_can', score: 0 },
+      { label: "I know I could do more", value: 'could_do_more', score: 1 },
+      { label: "I've never been one to move much day to day", value: 'rarely', score: 2 },
     ],
   },
   {
@@ -58,9 +59,9 @@ const JUST_CURIOUS_QUESTIONS = [
     theme: 'stress',
     options: [
       { label: 'Manageable', value: 'manageable', score: 0 },
-      { label: 'Some days are tough', value: 'some_days', score: 1 },
-      { label: 'Pretty high', value: 'high', score: 2 },
-      { label: "I try not to think about it", value: 'avoid', score: 3 },
+      { label: 'Some days are tough', value: 'some_days', score: 0 },
+      { label: 'Pretty high', value: 'high', score: 1 },
+      { label: "I try not to think about it", value: 'avoid', score: 1 },
     ],
   },
   {
@@ -70,12 +71,91 @@ const JUST_CURIOUS_QUESTIONS = [
     theme: 'family',
     options: [
       { label: 'No', value: 'no', score: 0 },
-      { label: 'Not that I know of', value: 'dont_know', score: 1 },
-      { label: 'Yes, a few relatives', value: 'few', score: 2 },
-      { label: 'Yes, quite a few', value: 'many', score: 3 },
+      { label: 'Not that I know of', value: 'dont_know', score: 0 },
+      { label: 'Yes, a few relatives', value: 'few', score: 1 },
+      { label: 'Yes, quite a few', value: 'many', score: 1 },
     ],
   },
 ];
+
+const MAX_SCORE = 10;
+
+function getRiskTier(score) {
+  if (score >= 7) {
+    return {
+      level: 'higher',
+      label: 'Worth a closer look',
+      color: '#b21d38',
+      bg: 'rgba(216, 57, 51, 0.12)',
+      headline: "A few signals here are worth paying attention to.",
+      summary:
+        "Nothing on this page is a diagnosis — just patterns from your answers that tend to add up over time. The good news is that small, doable changes really do move the needle, and you do not have to figure it out alone.",
+      nextSteps: [
+        {
+          title: 'Bring this up at your next checkup',
+          body: "Your doctor can put a few simple numbers behind what you are noticing — blood pressure, cholesterol, blood sugar. That makes the path forward a lot clearer.",
+        },
+        {
+          title: 'Try one small plan',
+          body: "Pick one area — sleep, food, movement, stress — and turn it into a simple weekly habit. Small wins compound faster than people expect.",
+          cta: { label: 'Make a plan', href: '/action/plan-my-path' },
+        },
+        {
+          title: 'See what structured support looks like',
+          body: "Lifestyle change programs offer a coach and a small group over a year. Many people find it is the easiest way to actually stick with new habits.",
+          cta: { label: 'Find a program', href: '/lifestyle-programs' },
+        },
+      ],
+    };
+  }
+  if (score >= 4) {
+    return {
+      level: 'moderate',
+      label: 'A few areas to explore',
+      color: '#946400',
+      bg: 'rgba(245, 158, 11, 0.12)',
+      headline: "A couple of things from your answers are worth a second look.",
+      summary:
+        "Not everything has to change at once. Most people find that picking one or two areas — and giving them a real shot for a few weeks — feels both manageable and surprisingly worthwhile.",
+      nextSteps: [
+        {
+          title: 'Try a small plan',
+          body: "Choose one area — sleep, food, movement, stress — and turn it into a specific weekly routine you can actually keep up with.",
+          cta: { label: 'Make a plan', href: '/action/plan-my-path' },
+        },
+        {
+          title: 'Mention this at your next checkup',
+          body: "Routine bloodwork (blood pressure, cholesterol, blood sugar) gives you a clear baseline so you know what is and is not actually worth worrying about.",
+        },
+        {
+          title: 'Explore at your own pace',
+          body: "Lifestyle change programs are an option if you want guided support. There is no rush — they are there when you are ready.",
+          cta: { label: 'See programs near you', href: '/lifestyle-programs' },
+        },
+      ],
+    };
+  }
+  return {
+    level: 'lower',
+    label: 'You are in a good rhythm',
+    color: '#1a6b3d',
+    bg: 'rgba(0, 120, 51, 0.12)',
+    headline: "Whatever you are doing, a lot of it is working.",
+    summary:
+      "Your answers paint a picture of someone who is mostly in a good rhythm. The thing that usually trips people up is drift — habits slipping a little at a time without anyone noticing. A simple plan and a yearly checkup keep that from happening.",
+    nextSteps: [
+      {
+        title: 'Lock in what is working',
+        body: "A simple plan helps the habits that are protecting your health stay on track even when life gets busy.",
+        cta: { label: 'Make a plan', href: '/action/plan-my-path' },
+      },
+      {
+        title: 'Stay on top of routine checkups',
+        body: 'Annual blood pressure, cholesterol, and blood sugar checks catch any quiet changes early — when they are easiest to do something about.',
+      },
+    ],
+  };
+}
 
 function AssessmentJustCurious({ onBack }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -100,23 +180,6 @@ function AssessmentJustCurious({ onBack }) {
     if (val === undefined || val === null) return sum;
     return sum + getScoreForAnswer(q, val);
   }, 0);
-
-  const maxPossibleScore = JUST_CURIOUS_QUESTIONS.reduce((sum, q) => {
-    const maxOpt = q.options.reduce((max, o) => Math.max(max, o.score ?? 0), 0);
-    return sum + maxOpt;
-  }, 0);
-
-  // Themes that scored higher (score >= 2) — for gentle, tailored suggestions. No labels, no "risk."
-  const themesToHighlight = () => {
-    const out = [];
-    JUST_CURIOUS_QUESTIONS.forEach((q) => {
-      const val = answers[q.id];
-      if (val === undefined || val === null) return;
-      const s = getScoreForAnswer(q, val);
-      if (s >= 2 && q.theme) out.push(q.theme);
-    });
-    return out;
-  };
 
   const handleNext = () => {
     const hasAnswer = answers[currentQuestion.id] !== undefined && answers[currentQuestion.id] !== null && answers[currentQuestion.id] !== '';
@@ -144,44 +207,8 @@ function AssessmentJustCurious({ onBack }) {
     return val !== undefined && val !== null && val !== '';
   };
 
-  // Soft, non-alarming suggestions keyed by theme. No medical jargon.
-  const EXPLORE_SUGGESTIONS = {
-    energy: {
-      title: 'Daily energy',
-      text: 'Small shifts in when you eat, move, or rest can sometimes make a big difference in how you feel by evening. No pressure—just something to play with.',
-    },
-    sleep: {
-      title: 'Sleep and rest',
-      text: 'Lots of people find that a few tweaks to their wind-down routine or schedule help. It might be worth a look when you\'re ready.',
-    },
-    eating: {
-      title: 'Eating in a typical week',
-      text: 'Understanding how food fits into your life—without restrictive rules or labels—can be a useful first step. There\'s no single "right" way.',
-    },
-    movement: {
-      title: 'Movement that fits your life',
-      text: 'Activity doesn\'t have to mean the gym. Finding ways to move that feel doable and even enjoyable is what matters.',
-    },
-    stress: {
-      title: 'Stress and how you cope',
-      text: 'Stress affects everyone differently. Sometimes naming it and trying one or two small strategies can help—when you\'re ready.',
-    },
-    family: {
-      title: 'Family history and you',
-      text: 'Knowing what runs in your family can help you and your doctor decide what to keep an eye on. It\'s just information, not a verdict.',
-    },
-  };
-
-  const defaultSuggestions = [
-    { title: 'What prevention actually looks like', text: 'A lot of "prevention" is small, everyday choices—sleep, movement, how we eat, stress. No one has to do it all at once.' },
-    { title: 'Resources when you\'re ready', text: 'When you want to go deeper, we have articles, tools, and programs. Take what\'s useful and leave the rest.' },
-  ];
-
   if (isComplete) {
-    const highlighted = themesToHighlight();
-    const suggestions = highlighted.length > 0
-      ? highlighted.slice(0, 3).map((t) => EXPLORE_SUGGESTIONS[t]).filter(Boolean)
-      : defaultSuggestions;
+    const tier = getRiskTier(totalScore);
 
     return (
       <main
@@ -191,17 +218,17 @@ function AssessmentJustCurious({ onBack }) {
           padding: '2rem 1rem',
         }}
       >
-        <div style={{ maxWidth: 560, margin: '0 auto' }}>
+        <div style={{ maxWidth: 640, margin: '0 auto' }}>
           <h1
             style={{
               fontFamily: 'var(--font-header)',
               fontWeight: 700,
               color: '#1b1b1b',
-              marginBottom: '1rem',
+              marginBottom: '0.5rem',
               fontSize: '1.75rem',
             }}
           >
-            A few things you might find interesting
+            A snapshot from your answers
           </h1>
           <p
             style={{
@@ -211,58 +238,170 @@ function AssessmentJustCurious({ onBack }) {
               lineHeight: 1.6,
             }}
           >
-            Based on what you shared, here are some areas that might be worth exploring—when and if you feel like it. There’s no test to pass and no judgment. Just ideas.
+            This is just a starting point — no test to pass, no judgment. It looks at the everyday patterns from your answers and gives you one number to help decide what, if anything, is worth exploring next.
           </p>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginBottom: '1.5rem' }}>
-            {suggestions.map((s, i) => (
-              <div
-                key={i}
-                style={{
-                  padding: '1.25rem',
-                  borderLeft: '4px solid #005ea2',
-                  backgroundColor: '#f0f4f8',
-                  border: '1px solid #e0e0e0',
-                  borderRadius: '0.25rem',
-                }}
-              >
-                <h3
-                  style={{
-                    fontSize: '1rem',
-                    fontFamily: 'var(--font-header)',
-                    fontWeight: 600,
-                    color: '#1b1b1b',
-                    margin: '0 0 0.5rem 0',
-                  }}
-                >
-                  {s.title}
-                </h3>
-                <p
-                  style={{
-                    fontSize: '0.9375rem',
-                    fontFamily: 'var(--font-body)',
-                    color: '#323a45',
-                    lineHeight: 1.5,
-                    margin: 0,
-                  }}
-                >
-                  {s.text}
-                </p>
-              </div>
-            ))}
+          <div
+            style={{
+              padding: '1.5rem',
+              marginBottom: '1.5rem',
+              backgroundColor: '#f0f4f8',
+              border: '1px solid #e0e0e0',
+              borderRadius: '0.25rem',
+            }}
+          >
+            <div
+              style={{
+                fontSize: '0.875rem',
+                fontFamily: 'var(--font-body)',
+                color: '#5c5c5c',
+                marginBottom: '0.25rem',
+              }}
+            >
+              Your snapshot score
+            </div>
+            <div
+              style={{
+                fontSize: '2.25rem',
+                fontFamily: 'var(--font-header)',
+                fontWeight: 700,
+                color: '#005ea2',
+                lineHeight: 1.1,
+              }}
+            >
+              {totalScore} <span style={{ fontWeight: 400, color: '#323a45', fontSize: '1.25rem' }}>/ {MAX_SCORE}</span>
+            </div>
+            <div
+              style={{
+                marginTop: '0.75rem',
+                padding: '0.5rem 0.75rem',
+                backgroundColor: tier.bg,
+                borderRadius: '0.25rem',
+                fontSize: '0.9375rem',
+                fontFamily: 'var(--font-body)',
+                color: '#1b1b1b',
+                display: 'inline-block',
+              }}
+            >
+              <strong style={{ color: tier.color }}>{tier.label}</strong>
+            </div>
           </div>
 
+          <h2
+            style={{
+              fontFamily: 'var(--font-header)',
+              fontWeight: 700,
+              color: '#1b1b1b',
+              marginBottom: '0.5rem',
+              fontSize: '1.25rem',
+            }}
+          >
+            {tier.headline}
+          </h2>
           <p
             style={{
               fontFamily: 'var(--font-body)',
-              color: '#5c5c5c',
-              fontSize: '0.875rem',
-              lineHeight: 1.5,
-              marginBottom: '1.5rem',
+              color: '#323a45',
+              fontSize: '1rem',
+              lineHeight: 1.6,
+              marginBottom: '1.75rem',
             }}
           >
-            You can explore our resources anytime—or come back when you’re ready. Either way, you’re in the right place.
+            {tier.summary}
           </p>
+
+          <h3
+            style={{
+              fontFamily: 'var(--font-header)',
+              fontWeight: 700,
+              color: '#1b1b1b',
+              marginBottom: '1rem',
+              fontSize: '1.0625rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.04em',
+            }}
+          >
+            What to do next
+          </h3>
+          <ol
+            style={{
+              listStyle: 'none',
+              padding: 0,
+              margin: '0 0 2rem 0',
+              counterReset: 'next-step',
+            }}
+          >
+            {tier.nextSteps.map((step, idx) => (
+              <li
+                key={idx}
+                style={{
+                  display: 'flex',
+                  gap: '0.875rem',
+                  padding: '1rem 1.25rem',
+                  marginBottom: '0.75rem',
+                  border: '1px solid #e0e0e0',
+                  borderRadius: '0.25rem',
+                  backgroundColor: '#ffffff',
+                }}
+              >
+                <div
+                  style={{
+                    flexShrink: 0,
+                    width: '2rem',
+                    height: '2rem',
+                    borderRadius: '50%',
+                    backgroundColor: '#005ea2',
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontFamily: 'var(--font-header)',
+                    fontWeight: 700,
+                    fontSize: '0.9375rem',
+                  }}
+                >
+                  {idx + 1}
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div
+                    style={{
+                      fontFamily: 'var(--font-header)',
+                      fontWeight: 700,
+                      color: '#1b1b1b',
+                      fontSize: '1rem',
+                      marginBottom: '0.25rem',
+                    }}
+                  >
+                    {step.title}
+                  </div>
+                  <p
+                    style={{
+                      fontFamily: 'var(--font-body)',
+                      color: '#323a45',
+                      fontSize: '0.9375rem',
+                      lineHeight: 1.55,
+                      margin: step.cta ? '0 0 0.5rem 0' : 0,
+                    }}
+                  >
+                    {step.body}
+                  </p>
+                  {step.cta && (
+                    <a
+                      href={step.cta.href}
+                      style={{
+                        fontFamily: 'var(--font-body)',
+                        fontWeight: 600,
+                        color: '#005ea2',
+                        fontSize: '0.9375rem',
+                      }}
+                    >
+                      {step.cta.label} →
+                    </a>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ol>
 
           <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
             <button
@@ -288,12 +427,12 @@ function AssessmentJustCurious({ onBack }) {
                 onClick={onBack}
                 style={{
                   padding: '0.75rem 1.25rem',
-                  backgroundColor: '#005ea2',
-                  color: 'white',
+                  backgroundColor: 'transparent',
+                  color: '#5c5c5c',
                   fontFamily: 'var(--font-body)',
                   fontWeight: 600,
                   fontSize: '1rem',
-                  border: 'none',
+                  border: '2px solid #e0e0e0',
                   borderRadius: '0.25rem',
                   cursor: 'pointer',
                 }}
