@@ -183,7 +183,7 @@ const ForPractitioners = () => {
               bullets: ['Share prediabetes risk education', 'Send National DPP program overview', 'Prompt patients to answer a few questions'],
             },
             {
-              topBorderColor: '#e0e0e0',
+              topBorderColor: '#007833',
               iconColor: '#323a45',
               icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -195,7 +195,7 @@ const ForPractitioners = () => {
               bullets: ['Pull up nutrition or physical activity modules', 'Reference Know Your Numbers data', 'Set SMART goals collaboratively'],
             },
             {
-              topBorderColor: '#e0e0e0',
+              topBorderColor: '#946400',
               iconColor: '#323a45',
               icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -228,6 +228,74 @@ const ForPractitioners = () => {
                   </li>
                 ))}
               </ul>
+            </div>
+          ))}
+        </div>
+
+        <h2 style={{ fontSize: isMobile ? '1.5rem' : '1.75rem', fontFamily: 'var(--font-header)', fontWeight: 700, color: '#1b1b1b', margin: '0 0 0.75rem 0' }}>
+          Practice Pearls
+        </h2>
+        <p style={{ fontSize: '1rem', fontFamily: 'var(--font-body)', color: '#323a45', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+          Small, evidence-aligned shifts in how you frame conversations — applicable across most prevention-focused encounters.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', gap: '1.5rem', marginBottom: '2rem' }}>
+          {[
+            {
+              title: 'Ask permission before discussing weight',
+              body: 'Opening with consent reduces stigma and signals a partnership. Patients who feel asked — rather than told — are more likely to stay engaged in the conversation.',
+              script: 'Would it be okay if we talked about growth and health today?',
+            },
+            {
+              title: 'Anchor on behaviors, not the scale',
+              body: 'Center the discussion on sleep, nutrition, physical activity, stress, and daily routines. These are the levers patients can act on — and the evidence base for risk reduction tracks them, not weight alone.',
+              script: null,
+            },
+            {
+              title: 'Use family-centered language with pediatric patients',
+              body: 'For children and adolescents, frame goals around the household and caregivers. Habits that involve the whole family are more durable, and language that includes parents avoids singling out a child.',
+              script: null,
+            },
+          ].map((pearl, i) => (
+            <div
+              key={i}
+              style={{
+                backgroundColor: 'white',
+                borderRadius: '0.25rem',
+                padding: '1.5rem',
+                border: '1px solid #e0e0e0',
+                borderTop: '3px solid #005ea2',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.75rem',
+              }}
+            >
+              <div
+                style={{
+                  width: '2rem',
+                  height: '2rem',
+                  borderRadius: '50%',
+                  backgroundColor: '#005ea2',
+                  color: 'white',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontFamily: 'var(--font-header)',
+                  fontWeight: 700,
+                  fontSize: '0.875rem',
+                  flexShrink: 0,
+                }}
+                aria-hidden="true"
+              >
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <h3 style={{ fontSize: '1.125rem', fontFamily: 'var(--font-header)', fontWeight: 700, color: '#1b1b1b', margin: 0 }}>{pearl.title}</h3>
+              <p style={{ fontSize: '0.9375rem', fontFamily: 'var(--font-body)', color: '#323a45', lineHeight: 1.55, margin: 0 }}>{pearl.body}</p>
+              {pearl.script && (
+                <p style={{ fontSize: '0.9375rem', fontFamily: 'var(--font-body)', fontStyle: 'italic', color: '#005ea2', lineHeight: 1.5, margin: 0, paddingLeft: '0.75rem', borderLeft: '3px solid #e7f2f5' }}>
+                  &ldquo;{pearl.script}&rdquo;
+                </p>
+              )}
             </div>
           ))}
         </div>
