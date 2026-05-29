@@ -375,17 +375,6 @@ const ForPractitioners = () => {
             {
               icon: (
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#005ea2" strokeWidth="1.5">
-                  <path d="M16 3c-.8 0-1.7.4-2.2 1-.5.6-.8 1.4-.7 2.2.8.1 1.7-.3 2.3-.9.5-.5.9-1.3.6-2.3z"/>
-                  <path d="M11.5 6.5C10.4 5.6 8.9 5 7.5 5 5 5 3 7 3 9.8c0 2.1.8 4.4 2.2 6 1 1.1 2.1 1.7 3.3 1.7 1.1 0 1.8-.4 2.8-.4s1.7.4 2.8.4c1.2 0 2.3-.6 3.3-1.7 1.4-1.6 2.1-3.9 2.1-6.1C21.5 7 19.5 5 17 5c-1.4 0-2.9.6-4 1.5z"/>
-                </svg>
-              ),
-              title: 'Healthy Eating Guide',
-              description: 'A practical, plain-language overview of blood sugar-friendly eating patterns for patients newly diagnosed with prediabetes or elevated risk.',
-              to: '/learn/heart-health/heart-healthy-eating',
-            },
-            {
-              icon: (
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#005ea2" strokeWidth="1.5">
                   <circle cx="12" cy="12" r="10"/>
                   <path d="M12 6v6l4 2"/>
                 </svg>

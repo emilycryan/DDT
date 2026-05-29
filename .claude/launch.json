@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 3003
+    },
+    {
+      "name": "nsf-herd",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/NSF-HERD", "8766"],
+      "port": 8766
     }
   ]
 }

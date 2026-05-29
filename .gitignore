@@ -18,6 +18,9 @@ build/
 # Claude Code worktrees
 .claude/worktrees/
 
+# Brainstorming visual companion scratch files
+.superpowers/
+
 # IDE and editor files
 .vscode/
 .idea/

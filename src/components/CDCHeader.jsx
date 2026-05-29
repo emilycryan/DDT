@@ -1,35 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const navLinkStyle = {
-  color: '#323a45',
-  textDecoration: 'none',
-  fontSize: '16px',
-  fontFamily: 'var(--font-body)',
-  fontWeight: 400,
-  whiteSpace: 'nowrap',
-  background: 'none',
-  border: 'none',
-  cursor: 'pointer',
-};
-
 /* Blue circular CDC logo fallback - USWDS primary blue */
 const cdcLogoFallback = "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40"><circle cx="20" cy="20" r="20" fill="#005ea2"/><text x="20" y="26" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="14" font-weight="700">CDC</text></svg>'
 );
 
-const CDCHeader = ({ goToHomeSection, currentPage }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const CDCHeader = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-      if (window.innerWidth > 768) {
-        setIsMenuOpen(false); // Close mobile menu when switching to desktop
-      }
-    };
-
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
@@ -133,7 +114,7 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
             style={{ height: '40px', width: '40px', flexShrink: 0, objectFit: 'contain' }}
             onError={(e) => { e.target.src = cdcLogoFallback; }}
           />
-          <div style={{ minWidth: 0 }}>
+          <div style={{ minWidth: 0, flex: 1 }}>
             <Link
               to="/"
               style={{
@@ -164,114 +145,27 @@ const CDCHeader = ({ goToHomeSection, currentPage }) => {
               Centers for Disease Control and Prevention
             </div>
           </div>
-        </div>
-
-        {/* Separator */}
-        <div style={{ borderBottom: '1px solid #e0e0e0' }} />
-
-        {/* Bottom tier: Navigation */}
-        <div style={{
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '16px 15px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '24px'
-        }}>
-          {/* Desktop Nav Links (left) */}
-          <nav style={{
-            display: isMobile ? 'none' : 'flex',
-            gap: '18px',
-            flex: 1
-          }}>
-            <Link to="/about" className="header-nav-text-link" style={navLinkStyle}>About</Link>
-            <Link to="/learn" className="header-nav-text-link" style={navLinkStyle}>Learn More</Link>
-            <Link to="/action" className="header-nav-text-link" style={navLinkStyle}>Take Action</Link>
-            <Link to="/for-practitioners" className="header-nav-text-link" style={navLinkStyle}>For Practitioners</Link>
-          </nav>
-
-          {/* Right-side buttons: Find a Program + Get Started */}
-          <div style={{ display: isMobile ? 'none' : 'flex', gap: '12px', alignItems: 'center' }}>
-            <Link
-              to="/lifestyle-programs"
-              style={{
-                ...navLinkStyle,
-                display: 'inline-block',
-                padding: '0.5rem 1rem',
-                borderRadius: '0.375rem',
-                fontSize: '14px',
-                fontWeight: 600,
-                color: '#005ea2',
-                border: '1px solid #005ea2',
-                backgroundColor: 'transparent',
-              }}
-            >
-              Find a Program
-            </Link>
-            <Link
-              to="/get-started"
-              style={{
-                ...navLinkStyle,
-                display: 'inline-block',
-                backgroundColor: '#005ea2',
-                color: 'white',
-                padding: '0.5rem 1rem',
-                borderRadius: '0.375rem',
-                fontSize: '14px',
-                fontWeight: 600
-              }}
-            >
-              Get Started
-            </Link>
-          </div>
-
-          {/* Mobile Hamburger */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+          <Link
+            to="/lifestyle-programs"
             style={{
-              display: isMobile ? 'block' : 'none',
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '5px',
-              marginLeft: 'auto'
+              display: 'inline-block',
+              padding: '0.5rem 1rem',
+              borderRadius: '0.375rem',
+              fontSize: '14px',
+              fontFamily: 'var(--font-body)',
+              fontWeight: 600,
+              color: '#005ea2',
+              border: '1px solid #005ea2',
+              backgroundColor: 'transparent',
+              textDecoration: 'none',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
             }}
-            aria-label="Toggle navigation menu"
           >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="#005ea2">
-              <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-          </button>
+            Find a Program
+          </Link>
         </div>
 
-        {/* Mobile Navigation Menu */}
-        {isMenuOpen && (
-          <div style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            backgroundColor: '#ffffff',
-            borderBottom: '1px solid #e0e0e0',
-            boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-            zIndex: 1000,
-            display: isMobile ? 'block' : 'none'
-          }}>
-            <nav style={{
-              maxWidth: '1200px',
-              margin: '0 auto',
-              padding: '15px'
-            }}>
-              <Link to="/about" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>About</Link>
-              <Link to="/learn" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>Learn More</Link>
-              <Link to="/action" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>Take Action</Link>
-              <Link to="/for-practitioners" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#323a45', textDecoration: 'none', fontSize: '16px', fontWeight: 400, padding: '12px 0', borderBottom: '1px solid #e0e0e0', fontFamily: 'var(--font-body)' }}>For Practitioners</Link>
-              <Link to="/lifestyle-programs" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', color: '#005ea2', textDecoration: 'none', fontSize: '16px', fontWeight: 600, fontFamily: 'var(--font-body)', border: '1px solid #005ea2', padding: '0.75rem 1rem', borderRadius: '0.375rem', marginBottom: '12px' }}>Find a Program</Link>
-              <Link to="/get-started" onClick={() => setIsMenuOpen(false)} style={{ display: 'block', backgroundColor: '#005ea2', color: 'white', padding: '0.75rem 1.5rem', borderRadius: '0.375rem', textDecoration: 'none', fontSize: '16px', fontWeight: '600', width: '100%', marginTop: '12px', textAlign: 'center' }}>Get Started</Link>
-            </nav>
-          </div>
-        )}
       </header>
     </>
   );
