@@ -173,11 +173,7 @@ async function addSamplePrograms() {
     `, [virtualId, 'virtual-live', 'English', 16, 45.00, 25, 'open', 'Wednesdays 7:00 PM - 8:00 PM']);
 
     console.log('\n🎉 All sample programs added successfully!');
-    console.log('\nYou can now test the chatbot with queries like:');
-    console.log('- "Tell me about LCI"');
-    console.log('- "What is LCI Health?"');
-    console.log('- "More information about Riverside Medical Center"');
-    console.log('- "Details about virtual wellness programs"');
+    console.log('\nVerify them via the API: GET http://localhost:3004/api/programs/all');
 
   } catch (error) {
     console.error('❌ Error adding sample programs:', error.message);

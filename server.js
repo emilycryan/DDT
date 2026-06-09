@@ -2,9 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 // Use PostgreSQL (Neon, Supabase, or local)
-import { searchProgramsByLocation, searchProgramsByName, getProgramById, searchProgramsByDeliveryMode, getAllPrograms } from './lib/local-db.js';
-import { semanticSearch, analyzeUserIntent, generateFollowUpQuestions } from './lib/vector-search.js';
-import { getProgramStats } from './lib/pgvector-db.js';
+import { searchProgramsByLocation, getProgramById, searchProgramsByDeliveryMode, getAllPrograms } from './lib/local-db.js';
 
 // Load environment variables
 dotenv.config({ path: '.env.local' });
@@ -15,18 +13,6 @@ const PORT = 3004;
 // Middleware
 app.use(cors());
 app.use(express.json());
-
-// Check pgvector status
-async function checkPgVectorStatus() {
-  try {
-    const stats = await getProgramStats();
-    console.log(`📊 pgvector status: ${stats.programs_with_embeddings}/${stats.total_programs} programs with embeddings`);
-    return stats.programs_with_embeddings > 0;
-  } catch (error) {
-    console.error('⚠️  pgvector not available:', error.message);
-    return false;
-  }
-}
 
 // Sample API endpoint
 app.get('/api/hello', (req, res) => {
@@ -45,78 +31,7 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// Vector search endpoint for intelligent program matching (using pgvector)
-app.post('/api/programs/semantic-search', async (req, res) => {
-  try {
-    const { query, conversation_history = [], limit = 5 } = req.body;
-
-    if (!query) {
-      return res.status(400).json({ 
-        message: 'Search query is required' 
-      });
-    }
-
-    // Check if pgvector is available
-    const pgvectorAvailable = await checkPgVectorStatus();
-    
-    if (!pgvectorAvailable) {
-      // Fallback to Airtable search
-      console.log('🔄 pgvector not available, using Airtable search...');
-      const fallbackResults = await getAllPrograms();
-      
-      // Simple text matching on organization name and description
-      const filteredResults = fallbackResults.filter(program => {
-        const searchLower = query.toLowerCase();
-        const orgMatch = program.organization_name?.toLowerCase().includes(searchLower);
-        const descMatch = program.description?.toLowerCase().includes(searchLower);
-        return orgMatch || descMatch;
-      }).slice(0, limit);
-      
-      return res.status(200).json({
-        success: true,
-        query,
-        intent_analysis: { intent: 'search_programs', confidence: 0.5 },
-        results: filteredResults,
-        count: filteredResults.length,
-        fallback: true
-      });
-    }
-
-    // Analyze user intent
-    const intentAnalysis = await analyzeUserIntent(query, conversation_history);
-    
-    // Perform semantic search with pgvector
-    const searchResults = await semanticSearch(query, null, limit);
-    
-    // Generate follow-up questions
-    const followUpQuestions = generateFollowUpQuestions(searchResults, intentAnalysis.preferences);
-    
-    return res.status(200).json({
-      success: true,
-      query,
-      intent_analysis: {
-        ...intentAnalysis,
-        questions_to_ask: followUpQuestions
-      },
-      results: searchResults.map(program => ({
-        ...program,
-        embedding: undefined, // Don't send embeddings back to client
-        searchText: undefined // Don't send search text back
-      })),
-      count: searchResults.length,
-      pgvector: true
-    });
-
-  } catch (error) {
-    console.error('Semantic search error:', error);
-    return res.status(500).json({ 
-      message: 'Error performing semantic search',
-      error: error.message 
-    });
-  }
-});
-
-// Get all programs endpoint (for chatbot delivery mode filtering)
+// Get all programs endpoint (used by the Lifestyle Programs listing)
 app.get('/api/programs/all', async (req, res) => {
   try {
     const programs = await getAllPrograms();
@@ -208,35 +123,6 @@ app.get('/api/programs/search', async (req, res) => {
   }
 });
 
-// Search programs by organization name (for chatbot)
-app.get('/api/programs/search-by-name', async (req, res) => {
-  try {
-    const { name } = req.query;
-
-    if (!name) {
-      return res.status(400).json({ 
-        message: 'Organization name parameter is required' 
-      });
-    }
-
-    const programs = await searchProgramsByName(name);
-
-    return res.status(200).json({
-      success: true,
-      count: programs.length,
-      programs: programs,
-      searchTerm: name
-    });
-
-  } catch (error) {
-    console.error('Program name search error:', error);
-    return res.status(500).json({ 
-      message: 'Error searching programs by name',
-      error: error.message 
-    });
-  }
-});
-
 // Get specific program by ID
 app.get('/api/programs/:id', async (req, res) => {
   try {
@@ -296,20 +182,7 @@ app.listen(PORT, async () => {
   console.log(`  GET  http://localhost:${PORT}/api/hello`);
   console.log(`  GET  http://localhost:${PORT}/api/health`);
   console.log(`  GET  http://localhost:${PORT}/api/programs/all`);
-  console.log(`  POST http://localhost:${PORT}/api/programs/semantic-search`);
   console.log(`  GET  http://localhost:${PORT}/api/programs/search?state=GA&city=Atlanta`);
-  console.log(`  GET  http://localhost:${PORT}/api/programs/search-by-name?name=Sample`);
   console.log(`  GET  http://localhost:${PORT}/api/programs/1`);
   console.log(`  POST http://localhost:${PORT}/api/data`);
-  
-  // Check pgvector status
-  console.log('\n🔍 Checking pgvector status...');
-  const pgvectorStatus = await checkPgVectorStatus();
-  
-  if (pgvectorStatus) {
-    console.log('✅ pgvector is ready for semantic search');
-  } else {
-    console.log('⚠️  pgvector not available - using fallback search');
-    console.log('   To set up pgvector, run: node scripts/setup-pgvector.js');
-  }
 });

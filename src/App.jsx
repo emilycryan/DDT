@@ -3,7 +3,6 @@ import { Routes, Route, useNavigate, useLocation, Navigate } from 'react-router-
 import './App.css'
 import CDCHeader from './components/CDCHeader'
 import CDCFooter from './components/CDCFooter'
-import Chatbot from './components/Chatbot'
 import AssessmentChronicConditions from './components/AssessmentChronicConditions'
 import AssessmentCaregiver from './components/AssessmentCaregiver'
 import AssessmentJustCurious from './components/AssessmentJustCurious'
@@ -99,11 +98,6 @@ function App() {
     setTimeout(() => scrollToSection(sectionId), 150)
   }
 
-  const handleChatbotNavigate = (destination) => {
-    if (['about', 'learn', 'action', 'resources', 'support', 'for-practitioners', 'how-it-works', 'lifestyle-programs', 'plan-my-path'].includes(destination)) onNavigate(destination)
-    else goToHomeSection(destination)
-  }
-
   const navigateTo = (destination) => {
     if (['about', 'learn', 'action', 'resources', 'support', 'for-practitioners', 'how-it-works', 'lifestyle-programs', 'plan-my-path'].includes(destination)) onNavigate(destination)
     else goToHomeSection(destination)
@@ -156,9 +150,6 @@ function App() {
 
       {/* CDC Footer */}
       <CDCFooter />
-      
-      {/* Chatbot */}
-      <Chatbot onNavigate={handleChatbotNavigate} />
     </div>
   )
 }
