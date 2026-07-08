@@ -12,6 +12,84 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/NSF-HERD", "8766"],
       "port": 8766
+    },
+    {
+      "name": "nsvsp",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/NVSSP", "8767"],
+      "port": 8767
+    },
+    {
+      "name": "DDT static",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/DDT/DDT", "8781"],
+      "port": 8781
+    },
+    {
+      "name": "DDT-copy static",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/DDT/DDT-copy", "8782"],
+      "port": 8782
+    },
+    {
+      "name": "rfp-visuals",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/tmp/mermaid-demo", "8790"],
+      "port": 8790
+    },
+    {
+      "name": "rfp-icf",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/rfp-visuals/output/icf-gallery", "8791"],
+      "port": 8791
+    },
+    {
+      "name": "persona-forge-fema",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/persona-forge/projects/fema-disaster-assistance-program-reimagining", "8792"],
+      "port": 8792
+    },
+    {
+      "name": "recovery-journal-dist",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/recovery-journal/dist", "8793"],
+      "port": 8793
+    },
+    {
+      "name": "recovery-journal-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "/Users/63172/Sites/recovery-journal", "run", "dev"],
+      "port": 4321
+    },
+    {
+      "name": "persona-forge-demo",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/persona-forge/examples/freshplate-meal-kit", "8794"],
+      "port": 8794
+    },
+    {
+      "name": "persona-forge-wacares",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/persona-forge-projects/projects/washington-state-cares-proposal", "8795"],
+      "port": 8795
+    },
+    {
+      "name": "gallery-wall",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/gallery-wall", "8796"],
+      "port": 8796
+    },
+    {
+      "name": "pht-spec",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/project-health-tracker", "8799"],
+      "port": 8799
+    },
+    {
+      "name": "pht-next",
+      "runtimeExecutable": "sh",
+      "runtimeArgs": ["-c", "cd /Users/63172/Sites/project-health-tracker && exec npm run dev"],
+      "port": 3000
     }
   ]
 }
