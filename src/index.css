@@ -1,54 +1,59 @@
-/* USWDS-aligned typography - Public Sans throughout */
-@import url('https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap');
+/* USWDS typography — Source Sans (body/UI), Merriweather (headings), Public Sans kept as fallback */
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Merriweather:wght@300;400;700;900&family=Public+Sans:wght@300;400;600;700&display=swap');
 
-/* CSS Custom Properties - USWDS-aligned colors */
+/* CSS Custom Properties — values from the USWDS v3 design kit (~/Sites/uswds-design-kit).
+   Variable names are DDT's originals so existing inline styles pick up the new values. */
 :root {
-  /* USWDS Primary */
+  /* USWDS Primary (blue-60v family) */
   --primary-dark: #005ea2;
-  --primary-darker: #1b4480;
+  --primary-darker: #1a4480;
   --primary-medium: #0076d6;
   --primary-light: #58b4ff;
-  
-  /* Secondary Accent */
-  --accent-yellow: #face00;
-  --accent-yellow-light: #fde047;
-  --accent-yellow-dark: #eab308;
-  --accent-yellow-darker: #ca8a04;
-  
-  /* Support Neutrals */
+
+  /* Accent — USWDS gold (gold-20v), replaces the old #face00 yellow */
+  --accent-yellow: #ffbe2e;
+  --accent-yellow-light: #fee685;
+  --accent-yellow-dark: #e5a000;
+  --accent-yellow-darker: #e5a000;
+
+  /* Support Neutrals — gray-cool family */
   --neutral-off-white: #f1f3f6;
   --neutral-light-grey: #dfe1e2;
-  --neutral-medium-grey: #64748b;
-  --neutral-dark-grey: #374151;
-  --neutral-charcoal: #1e293b;
-  
-  /* Accent Warm */
-  --accent-warm: #f97316;
-  --accent-warm-light: #fb923c;
-  --accent-warm-muted: #fed7aa;
-  
-  /* Mood Board Colors */
+  --neutral-medium-grey: #565c65;
+  --neutral-dark-grey: #3d4551;
+  --neutral-charcoal: #1c1d1f;
+
+  /* Accent Warm — USWDS orange-30v family */
+  --accent-warm: #fa9441;
+  --accent-warm-light: #ffbc78;
+  --accent-warm-muted: #f2e4d4;
+
+  /* Mood Board Colors — mapped to USWDS blue-warm / gold / gray-cool */
   --mood-dark-navy: #1a4480;
-  --mood-dark-navy-darker: #0f2749;
-  --mood-golden-yellow: #face00;
-  --mood-golden-yellow-darker: #ca8a04;
-  --mood-dark-grey: #374151;
-  --mood-dark-grey-darker: #1f2937;
-  
-  /* Text Colors - deep gun metal (no blue-grey tint) */
+  --mood-dark-navy-darker: #162e51;
+  --mood-golden-yellow: #ffbe2e;
+  --mood-golden-yellow-darker: #e5a000;
+  --mood-dark-grey: #3d4551;
+  --mood-dark-grey-darker: #2d2e2f;
+
+  /* Text Colors — USWDS ink */
   --text-primary: #1b1b1b;
-  --text-secondary: #333333;
+  --text-secondary: #1b1b1b;
   --text-muted: #5c5c5c;
   --text-white: #ffffff;
-  
-  /* Background Colors */
+
+  /* Background Colors — flat white / gray-cool-2 */
   --bg-primary: #ffffff;
-  --bg-secondary: #f1f3f6;
+  --bg-secondary: #f7f9fa;
   --bg-accent: #1a4480;
-  
-  /* Typography - Public Sans sitewide */
-  --font-header: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Typography — Merriweather headings, Source Sans body */
+  --font-header: 'Merriweather', Georgia, Cambria, 'Times New Roman', serif;
+  --font-body: 'Source Sans 3', 'Source Sans Pro', 'Public Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+  /* USWDS focus signature — 4px blue-40v outline */
+  --focus-color: #2491ff;
+  --focus-outline: 0.25rem solid var(--focus-color);
 }
 
 /* Base styles */
@@ -64,7 +69,7 @@ html, body {
   width: 100%;
   font-family: var(--font-body);
   font-size: 16px;
-  line-height: 1.6;
+  line-height: 1.62;
   color: var(--text-primary);
   background-color: var(--bg-primary);
 }
@@ -76,63 +81,62 @@ html, body {
   min-height: 100vh;
 }
 
-/* Typography System */
+/* USWDS focus signature, applied to every interactive element */
+:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 0;
+}
+
+/* Typography System — USWDS scale, Merriweather headings at line-height 1.15 */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-header);
   font-weight: 700;
-  line-height: 1.2;
+  line-height: 1.15;
   margin: 0;
   color: var(--text-primary);
 }
 
 h1 {
-  font-size: 3rem;
-  font-weight: 800;
-  letter-spacing: -0.025em;
+  font-size: 2.5rem;
 }
 
 h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
+  font-size: 2rem;
 }
 
 h3 {
-  font-size: 1.875rem;
-  font-weight: 600;
+  font-size: 1.5rem;
 }
 
 h4 {
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.25rem;
 }
 
 h5 {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.125rem;
 }
 
 h6 {
-  font-size: 1.125rem;
-  font-weight: 500;
+  font-size: 1rem;
 }
 
 p {
   margin: 0 0 1rem 0;
-  line-height: 1.6;
+  line-height: 1.62;
   font-family: var(--font-body);
   color: var(--text-secondary);
 }
 
-/* Button System */
+/* Button System — USWDS: 4px radius, bold label, darker-on-hover, no lifts or glows */
 .btn {
   font-family: var(--font-body);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0.25rem;
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out, border-color 0.15s ease-in-out;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -141,9 +145,9 @@ p {
   outline: none;
 }
 
-.btn:focus {
-  outline: 2px solid var(--accent-yellow);
-  outline-offset: 2px;
+.btn:focus-visible {
+  outline: var(--focus-outline);
+  outline-offset: 0;
 }
 
 .btn-primary {
@@ -153,24 +157,24 @@ p {
 
 .btn-primary:hover {
   background-color: var(--primary-darker);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(15, 39, 73, 0.25);
+}
+
+.btn-primary:active {
+  background-color: var(--mood-dark-navy-darker);
 }
 
 .btn-secondary {
   background-color: transparent;
   color: var(--primary-dark);
-  border: 1px solid var(--primary-dark);
+  box-shadow: inset 0 0 0 2px var(--primary-dark);
 }
 
 .btn-secondary:hover {
-  background-color: var(--primary-dark);
-  color: var(--text-white);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(26, 68, 128, 0.25);
+  color: var(--primary-darker);
+  box-shadow: inset 0 0 0 2px var(--primary-darker);
 }
 
-/* Header nav text links - blue hover + underline */
+/* Header nav text links — blue hover + underline */
 .header-nav-text-link {
   transition: color 0.15s ease, text-decoration 0.15s ease;
 }
@@ -179,8 +183,8 @@ p {
   text-decoration: underline !important;
 }
 .header-nav-text-link:focus-visible {
-  outline: 2px solid #005ea2;
-  outline-offset: 2px;
+  outline: var(--focus-outline);
+  outline-offset: 0;
 }
 
 .btn-accent {
@@ -189,28 +193,25 @@ p {
 }
 
 .btn-accent:hover {
-  background-color: var(--accent-yellow-darker);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(202, 138, 4, 0.25);
+  background-color: var(--accent-yellow-dark);
 }
 
-/* Card System */
+/* Card System — USWDS: white, 1px border, 8px radius, minimal shadow, no hover lift */
 .card {
   background-color: var(--bg-primary);
-  border-radius: 0.75rem;
+  border-radius: 0.5rem;
   padding: 1.5rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--neutral-light-grey);
-  transition: all 0.2s ease-in-out;
+  transition: box-shadow 0.15s ease-in-out;
 }
 
 .card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card-featured {
-  background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-medium) 100%);
+  background: var(--primary-dark);
   color: var(--text-white);
   border: none;
 }
@@ -229,18 +230,7 @@ p {
 .image-overlay {
   position: relative;
   overflow: hidden;
-  border-radius: 0.75rem;
-}
-
-.image-overlay::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(26, 68, 128, 0.1) 0%, rgba(37, 99, 235, 0.05) 100%);
-  z-index: 1;
+  border-radius: 0.5rem;
 }
 
 .image-overlay img {
@@ -301,30 +291,30 @@ p {
   html, body {
     font-size: 16px;
   }
-  
+
   h1 {
-    font-size: 2.25rem;
-  }
-  
-  h2 {
     font-size: 2rem;
   }
-  
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
   h3 {
-    font-size: 1.5rem;
+    font-size: 1.375rem;
   }
-  
+
   h4 {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
   }
-  
+
   .btn {
     font-size: 1rem;
     min-height: 44px;
     width: 100%;
     max-width: 300px;
   }
-  
+
   .card {
     padding: 1.25rem;
   }
@@ -385,12 +375,12 @@ p {
   animation: spin 1s linear infinite;
 }
 
-/* Hero Section Styles */
+/* Hero Section — USWDS: solid dark-blue band, no gradients */
 .hero-overlay {
-  background: linear-gradient(135deg, rgba(26, 68, 128, 0.9) 0%, rgba(37, 99, 235, 0.8) 100%);
+  background: var(--mood-dark-navy-darker);
   color: var(--text-white);
   padding: 4rem 2rem;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   position: relative;
   overflow: hidden;
 }
@@ -405,12 +395,12 @@ p {
   color: rgba(255, 255, 255, 0.9);
 }
 
-/* Quote/Testimonial Styles - straight edges, no rounded corners */
+/* Quote/Testimonial — USWDS alert signature: thick 8px left bar on a tinted surface */
 .quote-card {
-  background-color: #e8e8e8;
+  background-color: #edeff0;
   padding: 1rem 1.25rem;
   border-radius: 0;
-  border-left: 4px solid var(--primary-dark);
+  border-left: 8px solid var(--primary-dark);
   font-weight: 500;
   color: var(--text-primary);
 }
