@@ -92,10 +92,22 @@
       "port": 8798
     },
     {
+      "name": "pf-projects-va",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/persona-forge-projects/projects/department-of-veterans-affairs", "8800"],
+      "port": 8800
+    },
+    {
       "name": "pht-spec",
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/project-health-tracker", "8799"],
       "port": 8799
+    },
+    {
+      "name": "wa-state",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "--directory", "/Users/63172/Sites/WA-state", "8801"],
+      "port": 8801
     },
     {
       "name": "pht-next",
