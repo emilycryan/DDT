@@ -1,52 +1,11 @@
 import { useSurvey } from '../context/SurveyContext.jsx'
-import { QUESTIONS, SECTIONS, buildCtx } from '../survey/questions.js'
+import { QUESTIONS, buildCtx } from '../survey/questions.js'
 import NameQuestion from '../components/questions/NameQuestion.jsx'
 import RadioQuestion from '../components/questions/RadioQuestion.jsx'
 import CheckboxQuestion from '../components/questions/CheckboxQuestion.jsx'
 import AgeQuestion from '../components/questions/AgeQuestion.jsx'
 import ZipQuestion from '../components/questions/ZipQuestion.jsx'
 import LanguageQuestion from '../components/questions/LanguageQuestion.jsx'
-
-function SectionProgress({ current }) {
-  const currentIndex = SECTIONS.indexOf(current)
-  return (
-    <div
-      className="usa-step-indicator usa-step-indicator--no-labels margin-bottom-4"
-      aria-label={`Section ${currentIndex + 1} of ${SECTIONS.length}: ${current}`}
-    >
-      <ol className="usa-step-indicator__segments">
-        {SECTIONS.map((section, index) => (
-          <li
-            key={section}
-            className={`usa-step-indicator__segment${
-              index < currentIndex
-                ? ' usa-step-indicator__segment--complete'
-                : index === currentIndex
-                  ? ' usa-step-indicator__segment--current'
-                  : ''
-            }`}
-          >
-            <span className="usa-step-indicator__segment-label">{section}</span>
-          </li>
-        ))}
-      </ol>
-      <div className="usa-step-indicator__header">
-        <h2 className="usa-step-indicator__heading">
-          <span className="usa-step-indicator__heading-counter">
-            <span className="usa-sr-only">Section</span>
-            <span className="usa-step-indicator__current-step">
-              {currentIndex + 1}
-            </span>
-            <span className="usa-step-indicator__total-steps">
-              {' '}of {SECTIONS.length}
-            </span>
-          </span>
-          <span className="usa-step-indicator__heading-text">{current}</span>
-        </h2>
-      </div>
-    </div>
-  )
-}
 
 export default function Survey() {
   const { currentQuestionId, answers, answerQuestion, goBack } = useSurvey()
@@ -108,7 +67,6 @@ export default function Survey() {
         <div className="grid-container">
           <div className="grid-row">
             <div className="tablet:grid-col-10 desktop:grid-col-8">
-              <SectionProgress current={question.section} />
               {intro && <p className="usa-intro">{intro}</p>}
               {/* key forces a fresh fieldset per question so local state resets */}
               <h1
