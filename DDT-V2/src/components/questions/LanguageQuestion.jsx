@@ -5,9 +5,24 @@ import { useState } from 'react'
  * "Another language" reveals a free-text field whose value replaces it.
  * Answer: array of 1–3 language strings.
  */
-export default function LanguageQuestion({ question, onAnswer }) {
-  const [choices, setChoices] = useState(['', '', ''])
-  const [otherText, setOtherText] = useState('')
+export default function LanguageQuestion({ question, initial, onAnswer }) {
+  // initial: array of resolved language strings; custom entries map back
+  // to the "Another language" option with their text restored
+  const [choices, setChoices] = useState(() => {
+    const base = ['', '', '']
+    ;(initial ?? []).slice(0, 3).forEach((lang, i) => {
+      base[i] = question.languageOptions.includes(lang)
+        ? lang
+        : 'Another language'
+    })
+    return base
+  })
+  const [otherText, setOtherText] = useState(() => {
+    const custom = (initial ?? []).find(
+      (lang) => !question.languageOptions.includes(lang),
+    )
+    return custom ?? ''
+  })
 
   const labels = ['1st choice', '2nd choice (optional)', '3rd choice (optional)']
   const hasOther = choices.includes('Another language')

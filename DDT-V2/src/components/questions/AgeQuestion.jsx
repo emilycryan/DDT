@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 /** Age dropdown 0–100 (Q04). */
-export default function AgeQuestion({ question, onAnswer }) {
-  const [age, setAge] = useState('')
+export default function AgeQuestion({ question, initial, onAnswer }) {
+  const [age, setAge] = useState(initial != null ? String(initial) : '')
 
   function submit(event) {
     event.preventDefault()

@@ -5,9 +5,10 @@ import { useState } from 'react'
  * block: a Name field plus a decline checkbox. Checking the box clears
  * and disables the field. Null answer = declined to share.
  */
-export default function NameQuestion({ question, onAnswer }) {
-  const [value, setValue] = useState('')
-  const [declined, setDeclined] = useState(false)
+export default function NameQuestion({ question, initial, onAnswer }) {
+  // initial: undefined = not yet answered, null = declined, string = name
+  const [value, setValue] = useState(typeof initial === 'string' ? initial : '')
+  const [declined, setDeclined] = useState(initial === null)
 
   const canSubmit = declined || value.trim() !== ''
 

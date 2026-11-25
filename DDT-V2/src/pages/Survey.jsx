@@ -30,32 +30,41 @@ export default function Survey() {
   const ctx = buildCtx(answers)
   const { intro, question: prompt, hint } = question.text(ctx, answers)
   const options = question.options ? question.options(ctx) : null
+  // previously given answers, so Back shows the screen as it was left
+  const initial = answers[question.id]
+  const initialOther = answers[`${question.id}_other`]
   const onAnswer = (value, extra) =>
     answerQuestion(question.id, value, extra)
 
   let body
   switch (question.type) {
     case 'name':
-      body = <NameQuestion question={question} onAnswer={onAnswer} />
+      body = <NameQuestion question={question} initial={initial} onAnswer={onAnswer} />
       break
     case 'radio':
       body = (
-        <RadioQuestion question={question} options={options} onAnswer={onAnswer} />
+        <RadioQuestion question={question} options={options} initial={initial} onAnswer={onAnswer} />
       )
       break
     case 'checkbox':
       body = (
-        <CheckboxQuestion question={question} options={options} onAnswer={onAnswer} />
+        <CheckboxQuestion
+          question={question}
+          options={options}
+          initial={initial}
+          initialOther={initialOther}
+          onAnswer={onAnswer}
+        />
       )
       break
     case 'age':
-      body = <AgeQuestion question={question} onAnswer={onAnswer} />
+      body = <AgeQuestion question={question} initial={initial} onAnswer={onAnswer} />
       break
     case 'zip':
-      body = <ZipQuestion question={question} onAnswer={onAnswer} />
+      body = <ZipQuestion question={question} initial={initial} onAnswer={onAnswer} />
       break
     case 'language':
-      body = <LanguageQuestion question={question} onAnswer={onAnswer} />
+      body = <LanguageQuestion question={question} initial={initial} onAnswer={onAnswer} />
       break
     default:
       body = null

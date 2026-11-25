@@ -1,8 +1,8 @@
 import { useState } from 'react'
 
 /** Single-select (Q02, Q07, Q09, Q10, Q11, Q16). */
-export default function RadioQuestion({ question, options, onAnswer }) {
-  const [selected, setSelected] = useState(null)
+export default function RadioQuestion({ question, options, initial, onAnswer }) {
+  const [selected, setSelected] = useState(initial ?? null)
 
   function submit(event) {
     event.preventDefault()

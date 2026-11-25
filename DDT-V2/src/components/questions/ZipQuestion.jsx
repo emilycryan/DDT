@@ -17,11 +17,12 @@ const STATES = [
  * state dropdown / current location / online only / show all.
  * Answer shape: { zip } or { preference, state? }.
  */
-export default function ZipQuestion({ question, onAnswer }) {
-  const [zip, setZip] = useState('')
-  const [optedOut, setOptedOut] = useState(false)
-  const [preference, setPreference] = useState(null)
-  const [state, setState] = useState('')
+export default function ZipQuestion({ question, initial, onAnswer }) {
+  // initial: { zip } or { preference, state? }
+  const [zip, setZip] = useState(initial?.zip ?? '')
+  const [optedOut, setOptedOut] = useState(Boolean(initial?.preference))
+  const [preference, setPreference] = useState(initial?.preference ?? null)
+  const [state, setState] = useState(initial?.state ?? '')
 
   const zipValid = /^\d{5}$/.test(zip)
 

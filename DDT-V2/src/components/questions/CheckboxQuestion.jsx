@@ -5,9 +5,9 @@ import { useState } from 'react'
  * `other: true` reveal a free-text field; its text is stored under
  * answers.<questionId>_other.
  */
-export default function CheckboxQuestion({ question, options, onAnswer }) {
-  const [selected, setSelected] = useState([])
-  const [otherText, setOtherText] = useState('')
+export default function CheckboxQuestion({ question, options, initial, initialOther, onAnswer }) {
+  const [selected, setSelected] = useState(initial ?? [])
+  const [otherText, setOtherText] = useState(initialOther ?? '')
 
   function toggle(value) {
     setSelected((prev) =>
