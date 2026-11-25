@@ -1,13 +1,28 @@
 import { useState } from 'react'
 
-/** Optional free-text name (Q01, Q03). Null answer = declined to share. */
+/**
+ * Optional free-text name (Q01, Q03), mirroring the deck's response
+ * block: a Name field plus a decline checkbox. Checking the box clears
+ * and disables the field. Null answer = declined to share.
+ */
 export default function NameQuestion({ question, onAnswer }) {
   const [value, setValue] = useState('')
+  const [declined, setDeclined] = useState(false)
+
+  const canSubmit = declined || value.trim() !== ''
 
   function submit(event) {
     event.preventDefault()
-    const name = value.trim()
-    onAnswer(name ? name : null)
+    if (!canSubmit) return
+    onAnswer(declined ? null : value.trim())
+  }
+
+  function toggleDeclined() {
+    setDeclined((prev) => {
+      const next = !prev
+      if (next) setValue('')
+      return next
+    })
   }
 
   return (
@@ -22,17 +37,26 @@ export default function NameQuestion({ question, onAnswer }) {
         type="text"
         autoComplete="off"
         value={value}
+        disabled={declined}
         onChange={(event) => setValue(event.target.value)}
       />
-      <button type="submit" className="usa-button margin-top-3" disabled={!value.trim()}>
+      <div className="usa-checkbox margin-top-2">
+        <input
+          className="usa-checkbox__input"
+          id={`${question.id}-decline`}
+          type="checkbox"
+          checked={declined}
+          onChange={toggleDeclined}
+        />
+        <label
+          className="usa-checkbox__label"
+          htmlFor={`${question.id}-decline`}
+        >
+          {question.skipLabel}
+        </label>
+      </div>
+      <button type="submit" className="usa-button margin-top-3" disabled={!canSubmit}>
         Next
-      </button>
-      <button
-        type="button"
-        className="usa-button usa-button--unstyled margin-top-2 display-block"
-        onClick={() => onAnswer(null)}
-      >
-        {question.skipLabel}
       </button>
     </form>
   )
