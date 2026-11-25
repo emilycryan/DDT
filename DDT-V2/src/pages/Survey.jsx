@@ -1,15 +1,55 @@
-import { useState } from 'react'
 import { useSurvey } from '../context/SurveyContext.jsx'
-import { QUESTIONS } from '../survey/questions.js'
+import { QUESTIONS, SECTIONS, buildCtx } from '../survey/questions.js'
+import NameQuestion from '../components/questions/NameQuestion.jsx'
+import RadioQuestion from '../components/questions/RadioQuestion.jsx'
+import CheckboxQuestion from '../components/questions/CheckboxQuestion.jsx'
+import AgeQuestion from '../components/questions/AgeQuestion.jsx'
+import ZipQuestion from '../components/questions/ZipQuestion.jsx'
+import LanguageQuestion from '../components/questions/LanguageQuestion.jsx'
 
-/** Replace "{name}" (or any {questionId}) in question text with stored answers. */
-function interpolate(text, answers) {
-  return text.replace(/\{(\w+)\}/g, (match, key) => answers[key] ?? match)
+function SectionProgress({ current }) {
+  const currentIndex = SECTIONS.indexOf(current)
+  return (
+    <div
+      className="usa-step-indicator usa-step-indicator--no-labels margin-bottom-4"
+      aria-label={`Section ${currentIndex + 1} of ${SECTIONS.length}: ${current}`}
+    >
+      <ol className="usa-step-indicator__segments">
+        {SECTIONS.map((section, index) => (
+          <li
+            key={section}
+            className={`usa-step-indicator__segment${
+              index < currentIndex
+                ? ' usa-step-indicator__segment--complete'
+                : index === currentIndex
+                  ? ' usa-step-indicator__segment--current'
+                  : ''
+            }`}
+          >
+            <span className="usa-step-indicator__segment-label">{section}</span>
+          </li>
+        ))}
+      </ol>
+      <div className="usa-step-indicator__header">
+        <h2 className="usa-step-indicator__heading">
+          <span className="usa-step-indicator__heading-counter">
+            <span className="usa-sr-only">Section</span>
+            <span className="usa-step-indicator__current-step">
+              {currentIndex + 1}
+            </span>
+            <span className="usa-step-indicator__total-steps">
+              {' '}of {SECTIONS.length}
+            </span>
+          </span>
+          <span className="usa-step-indicator__heading-text">{current}</span>
+        </h2>
+      </div>
+    </div>
+  )
 }
 
 export default function Survey() {
   const { currentQuestionId, answers, answerQuestion, goBack } = useSurvey()
-  const [textValue, setTextValue] = useState('')
 
   const question = QUESTIONS[currentQuestionId]
   if (!question) {
@@ -28,18 +68,38 @@ export default function Survey() {
     )
   }
 
-  const prompt = interpolate(question.question, answers)
+  const ctx = buildCtx(answers)
+  const { intro, question: prompt, hint } = question.text(ctx, answers)
+  const options = question.options ? question.options(ctx) : null
+  const onAnswer = (value, extra) =>
+    answerQuestion(question.id, value, extra)
 
-  function submitText(event) {
-    event.preventDefault()
-    const value = textValue.trim()
-    if (!value) return
-    setTextValue('')
-    answerQuestion(question.id, value, question.next)
-  }
-
-  function choose(option) {
-    answerQuestion(question.id, option.value, option.next)
+  let body
+  switch (question.type) {
+    case 'name':
+      body = <NameQuestion question={question} onAnswer={onAnswer} />
+      break
+    case 'radio':
+      body = (
+        <RadioQuestion question={question} options={options} onAnswer={onAnswer} />
+      )
+      break
+    case 'checkbox':
+      body = (
+        <CheckboxQuestion question={question} options={options} onAnswer={onAnswer} />
+      )
+      break
+    case 'age':
+      body = <AgeQuestion question={question} onAnswer={onAnswer} />
+      break
+    case 'zip':
+      body = <ZipQuestion question={question} onAnswer={onAnswer} />
+      break
+    case 'language':
+      body = <LanguageQuestion question={question} onAnswer={onAnswer} />
+      break
+    default:
+      body = null
   }
 
   return (
@@ -47,52 +107,24 @@ export default function Survey() {
       <section className="usa-section">
         <div className="grid-container">
           <div className="grid-row">
-            <div className="tablet:grid-col-8 desktop:grid-col-6">
-              <h1 className="font-heading-xl text-primary-darker margin-top-0">
+            <div className="tablet:grid-col-10 desktop:grid-col-8">
+              <SectionProgress current={question.section} />
+              {intro && <p className="usa-intro">{intro}</p>}
+              {/* key forces a fresh fieldset per question so local state resets */}
+              <h1
+                className="font-heading-xl text-primary-darker margin-top-0"
+                key={`${question.id}-h`}
+              >
                 {prompt}
               </h1>
-
-              {question.type === 'text' && (
-                <form className="usa-form" onSubmit={submitText}>
-                  <label className="usa-label" htmlFor={question.id}>
-                    Your answer
-                  </label>
-                  <input
-                    className="usa-input"
-                    id={question.id}
-                    name={question.id}
-                    type="text"
-                    value={textValue}
-                    onChange={(event) => setTextValue(event.target.value)}
-                  />
-                  <button type="submit" className="usa-button margin-top-3">
-                    Next
-                  </button>
-                </form>
-              )}
-
-              {question.type === 'choice' && (
-                <fieldset className="usa-fieldset">
-                  <legend className="usa-sr-only">{prompt}</legend>
-                  {question.options.map((option) => (
-                    <button
-                      key={option.value}
-                      type="button"
-                      className="usa-button usa-button--outline display-block margin-top-2"
-                      onClick={() => choose(option)}
-                    >
-                      {option.label}
-                    </button>
-                  ))}
-                </fieldset>
-              )}
-
+              {hint && <p className="usa-hint margin-bottom-2">{hint}</p>}
+              <div key={question.id}>{body}</div>
               <button
                 type="button"
                 className="usa-button usa-button--unstyled margin-top-4"
                 onClick={goBack}
               >
-                Back
+                &larr; Back
               </button>
             </div>
           </div>

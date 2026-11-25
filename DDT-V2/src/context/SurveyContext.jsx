@@ -1,14 +1,18 @@
 import { createContext, useCallback, useContext, useMemo, useState } from 'react'
-import { FIRST_QUESTION_ID } from '../survey/questions.js'
+import { FIRST_QUESTION_ID, END, resolveNext } from '../survey/questions.js'
 
 /**
  * All survey state lives in React memory only. Nothing is written to
  * localStorage, cookies, or a server — when the user leaves or refreshes
  * the page, everything is gone.
  *
- * answers is a map of questionId -> answer value, so any answer
- * (e.g. the user's name) can be read back while the survey is running
- * and used to drive branching or interpolation in question text.
+ * answers maps questionId -> answer value:
+ *   name questions   → string | null (null = declined to share)
+ *   radio            → option value string
+ *   checkbox         → array of option value strings (+ answers.<id>_other text)
+ *   age              → number
+ *   zip (location)   → { zip } or { preference, state? }
+ *   language         → array of up to 3 language strings
  */
 const SurveyContext = createContext(null)
 
@@ -27,15 +31,24 @@ export function SurveyProvider({ children }) {
     setPhase('survey')
   }, [])
 
-  const answerQuestion = useCallback((questionId, value, nextQuestionId) => {
-    setAnswers((prev) => ({ ...prev, [questionId]: value }))
-    if (nextQuestionId) {
-      setHistory((prev) => [...prev, questionId])
-      setCurrentQuestionId(nextQuestionId)
-    } else {
-      setPhase('results')
-    }
-  }, [])
+  /**
+   * Record the answer(s) and advance. `extra` lets a question store
+   * secondary values (e.g. "Something else" free text) in the same step.
+   */
+  const answerQuestion = useCallback(
+    (questionId, value, extra = {}) => {
+      const newAnswers = { ...answers, [questionId]: value, ...extra }
+      setAnswers(newAnswers)
+      const nextId = resolveNext(questionId, newAnswers)
+      if (nextId === END) {
+        setPhase('results')
+      } else {
+        setHistory((prev) => [...prev, questionId])
+        setCurrentQuestionId(nextId)
+      }
+    },
+    [answers],
+  )
 
   const goBack = useCallback(() => {
     setHistory((prev) => {
