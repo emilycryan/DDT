@@ -59,7 +59,7 @@ export const QUESTIONS = {
       question: 'Before we start, what would you like us to call you?',
       hint: 'This is optional. We’ll only use it to personalize this session, and it won’t be saved.',
     }),
-    skipLabel: 'I rather not share my name',
+    skipLabel: 'I’d rather not share my name',
     next: () => 'role',
   },
 
@@ -97,7 +97,7 @@ export const QUESTIONS = {
         'In that case, what would you like us to call the person you are caring for?',
       hint: 'Again, this is optional and this information won’t be saved.',
     }),
-    skipLabel: 'I rather not share their name',
+    skipLabel: 'I’d rather not share their name',
     next: () => 'age',
   },
 
