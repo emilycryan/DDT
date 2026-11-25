@@ -9,10 +9,21 @@ export default function CheckboxQuestion({ question, options, initial, initialOt
   const [selected, setSelected] = useState(initial ?? [])
   const [otherText, setOtherText] = useState(initialOther ?? '')
 
+  const exclusiveValues = options.filter((o) => o.exclusive).map((o) => o.value)
+
   function toggle(value) {
-    setSelected((prev) =>
-      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value],
-    )
+    setSelected((prev) => {
+      if (prev.includes(value)) {
+        return prev.filter((v) => v !== value)
+      }
+      // an exclusive option (e.g. "I prefer not to answer") wipes out
+      // every other selection; picking anything else unchecks it
+      if (exclusiveValues.includes(value)) {
+        setOtherText('')
+        return [value]
+      }
+      return [...prev.filter((v) => !exclusiveValues.includes(v)), value]
+    })
   }
 
   const otherSelected = options.some(

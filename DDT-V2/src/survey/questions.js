@@ -276,7 +276,7 @@ export const QUESTIONS = {
             { value: 'support_changes', label: 'They’d like support with health changes they’ve been trying to make.' },
             { value: 'other', label: 'Something else:', other: true },
             { value: 'not_sure', label: 'I’m not sure what has prompted their interest.' },
-            { value: 'prefer_not', label: 'I prefer not to answer.' },
+            { value: 'prefer_not', label: 'I prefer not to answer.', exclusive: true },
           ]
         : [
             { value: 'provider', label: 'A doctor or another health care provider recommended it.' },
@@ -291,7 +291,7 @@ export const QUESTIONS = {
             { value: 'support_changes', label: 'I’d like support with health changes I’ve been trying to make.' },
             { value: 'other', label: 'Something else:', other: true },
             { value: 'not_sure', label: 'I’m not sure.' },
-            { value: 'prefer_not', label: 'I prefer not to answer.' },
+            { value: 'prefer_not', label: 'I prefer not to answer.', exclusive: true },
           ],
     next: () => 'importance',
   },
@@ -414,7 +414,7 @@ export const QUESTIONS = {
       { value: 'groups', label: 'Do not like group activities' },
       { value: 'nothing', label: 'Nothing right now' },
       { value: 'not_sure', label: 'Not sure' },
-      { value: 'prefer_not', label: 'Prefer not to answer' },
+      { value: 'prefer_not', label: 'Prefer not to answer', exclusive: true },
     ],
     next: () => 'format',
   },
