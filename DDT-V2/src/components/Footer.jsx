@@ -1,19 +1,17 @@
 export default function Footer() {
   return (
-    <footer className="usa-footer usa-footer--slim">
-      <div className="usa-footer__secondary-section">
-        <div className="grid-container">
-          <div className="usa-footer__logo grid-row grid-gap-2">
-            <div className="grid-col-auto">
-              <p className="usa-footer__logo-heading">Find Your Path</p>
-            </div>
-            <div className="grid-col-fill">
-              <p className="usa-footer__contact-info">
-                Prototype — your answers are not saved and are cleared when you
-                leave this site.
-              </p>
-            </div>
+    <footer className="bg-base-darkest">
+      <div className="grid-container padding-y-4">
+        <div className="grid-row grid-gap-2 flex-align-center">
+          <div className="grid-col-12 tablet:grid-col-auto">
+            <p className="font-heading-md text-white margin-0">Find Your Path</p>
           </div>
+        </div>
+        <div className="border-top border-base-dark margin-top-2 padding-top-2">
+          <p className="font-body-3xs text-base-lighter margin-0 measure-5">
+            This site is a prototype. Your answers are never saved &mdash;
+            everything is cleared the moment you leave.
+          </p>
         </div>
       </div>
     </footer>
