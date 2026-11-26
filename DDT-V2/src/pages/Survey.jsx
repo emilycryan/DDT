@@ -76,6 +76,9 @@ export default function Survey() {
         <div className="grid-container">
           <div className="grid-row">
             <div className="tablet:grid-col-10 desktop:grid-col-8">
+              <p className="font-mono-xs text-base margin-bottom-1">
+                {question.num}
+              </p>
               {intro && <p className="usa-intro">{intro}</p>}
               {/* key forces a fresh fieldset per question so local state resets */}
               <h1

@@ -53,6 +53,7 @@ export const QUESTIONS = {
   /* Q01 */
   respondent_name: {
     id: 'respondent_name',
+    num: 'Q01',
     type: 'name',
     section: 'About you',
     text: () => ({
@@ -66,6 +67,7 @@ export const QUESTIONS = {
   /* Q02 */
   role: {
     id: 'role',
+    num: 'Q02',
     type: 'radio',
     section: 'About you',
     text: ({ rName }) => ({
@@ -90,6 +92,7 @@ export const QUESTIONS = {
   /* Q03 — caregivers only */
   participant_name: {
     id: 'participant_name',
+    num: 'Q03',
     type: 'name',
     section: 'About you',
     text: () => ({
@@ -104,6 +107,7 @@ export const QUESTIONS = {
   /* Q04 */
   age: {
     id: 'age',
+    num: 'Q04',
     type: 'age',
     section: 'About you',
     text: ({ isCaregiver, rName, p }) => {
@@ -124,6 +128,7 @@ export const QUESTIONS = {
   /* Q05 */
   health_goals: {
     id: 'health_goals',
+    num: 'Q05',
     type: 'checkbox',
     section: 'Health',
     text: ({ isCaregiver, p, pThey }) =>
@@ -162,6 +167,7 @@ export const QUESTIONS = {
   /* Q06 */
   health_condition: {
     id: 'health_condition',
+    num: 'Q06',
     type: 'checkbox',
     section: 'Health',
     text: (ctx, answers) => {
@@ -212,6 +218,7 @@ export const QUESTIONS = {
   /* Q07 — radio (single-select per stakeholder correction); "ready now" skips to Q13a */
   readiness: {
     id: 'readiness',
+    num: 'Q07',
     type: 'radio',
     section: 'Readiness',
     text: ({ isCaregiver, rName, p }) =>
@@ -246,6 +253,7 @@ export const QUESTIONS = {
   /* Q08 */
   motivation: {
     id: 'motivation',
+    num: 'Q08',
     type: 'checkbox',
     section: 'Readiness',
     text: ({ isCaregiver, p }) =>
@@ -299,6 +307,7 @@ export const QUESTIONS = {
   /* Q09 */
   importance: {
     id: 'importance',
+    num: 'Q09',
     type: 'radio',
     section: 'Readiness',
     text: ({ isCaregiver, p }) =>
@@ -326,6 +335,7 @@ export const QUESTIONS = {
   /* Q10 */
   confidence: {
     id: 'confidence',
+    num: 'Q10',
     type: 'radio',
     section: 'Readiness',
     text: ({ isCaregiver, p }) =>
@@ -349,6 +359,7 @@ export const QUESTIONS = {
   /* Q11 */
   past_experience: {
     id: 'past_experience',
+    num: 'Q11',
     type: 'radio',
     section: 'Readiness',
     text: ({ isCaregiver, p }) =>
@@ -382,6 +393,7 @@ export const QUESTIONS = {
   /* Q12 */
   barriers: {
     id: 'barriers',
+    num: 'Q12',
     type: 'checkbox',
     section: 'Readiness',
     text: ({ isCaregiver, p }) =>
@@ -422,6 +434,7 @@ export const QUESTIONS = {
   /* Q13a */
   format: {
     id: 'format',
+    num: 'Q13a',
     type: 'checkbox',
     section: 'Logistics',
     text: ({ isCaregiver, p }) =>
@@ -450,6 +463,7 @@ export const QUESTIONS = {
   /* Q13b */
   participation: {
     id: 'participation',
+    num: 'Q13b',
     type: 'checkbox',
     section: 'Logistics',
     text: ({ isCaregiver, p }) =>
@@ -477,6 +491,7 @@ export const QUESTIONS = {
   /* Q14 — ZIP with opt-out follow-up */
   location: {
     id: 'location',
+    num: 'Q14',
     type: 'zip',
     section: 'Logistics',
     text: ({ isCaregiver }) =>
@@ -503,6 +518,7 @@ export const QUESTIONS = {
   /* Q15 */
   language: {
     id: 'language',
+    num: 'Q15',
     type: 'language',
     section: 'Logistics',
     text: ({ isCaregiver }) =>
@@ -539,6 +555,7 @@ export const QUESTIONS = {
   /* Q16 — skipped for minor caregivers */
   support: {
     id: 'support',
+    num: 'Q16',
     type: 'radio',
     section: 'Logistics',
     text: ({ isCaregiver, p }) =>
